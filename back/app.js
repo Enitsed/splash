@@ -7,31 +7,20 @@ const app = express();
 
 app.use(bodyParser.json());
 
+var schema = buildSchema(`
+    type Query {
+        hello: String
+    }
+`)
+
+var root = {
+    
+}
+
 app.use('/graphql', graphqlHttp({
-    schema: buildSchema(`
-        type RootQuery {
-            events: [String!]!
-        }
-
-        type RootMutation {
-            createEvent(name: String): String
-        }
-
-        schema {
-            query: RootQuery
-            mutation: RootMutation
-        }
-    `),
-    rootValue: {
-        events : () => {
-            return ['A', 'B', 'C'];
-        },
-        createEvent: (args) => {
-            const eventName = args.name;
-            return eventName;
-        },   
-    },
+    schema: schema,
+    rootValue: root,
     graphiql: true
 }));
 
-app.listen(3010);
+app.listen(3010, () => console.log('Port is listening'));
