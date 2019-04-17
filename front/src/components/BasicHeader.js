@@ -15,6 +15,7 @@ class Header extends Component {
 
 const BasicHeader = styled(Header)`
     width : 100%;
+    padding-top : 5px;
     background-color: rgb(219, 112, 147);
     height : 200px;
 `;
