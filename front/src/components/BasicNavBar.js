@@ -2,21 +2,45 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 class NavBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLogin : false,
+        }
+    }
+
+    login = () => {
+        this.setState({isLogin : true});
+    }
+    
+    logout = () => {
+        this.setState({isLogin : false});
+    }
 
     render() {
-        return ( 
-            <nav className = { this.props.className } >
-                <StyledButton>
-                    로그인
-                </StyledButton>
-            </nav>
-        );
+        const isLogged = this.state.isLogin;
+
+        if(!isLogged) {
+            return (
+                <nav className = { this.props.className } >
+                    <StyledButton clickHandler={this.login}>로그인</StyledButton>
+                    <StyledButton>회원가입</StyledButton>
+                </nav>
+            )
+        } else {
+            return (
+                <nav className = { this.props.className } >
+                    <StyledButton clickHandler={this.logout}>로그아웃</StyledButton>
+                    <StyledButton>마이페이지</StyledButton>
+                </nav>
+            )
+        }
     }
 }
 
 class Button extends Component {
     render() {
-        return <a href="#">Hello </a>
+        return <button className={ this.props.className } onClick={this.props.clickHandler}>{this.props.children}</button>
     }
 }
 
@@ -27,6 +51,7 @@ const StyledButton = styled(Button)`
     margin : 5px;
     padding : 5px;
     text-align : middle;
+    text-decoration : none;
 `
 
 const BasicNavBar = styled(NavBar)`
