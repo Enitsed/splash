@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BasicHeader from '../components/BasicHeader';
+import BasicContainer from '../components/BasicContainer';
 import BasicFooter from '../components/BasicFooter';
 
 class BasicLayout extends Component {
@@ -8,6 +9,7 @@ class BasicLayout extends Component {
         return (
             <div>
             <BasicHeader></BasicHeader>
+            <BasicContainer></BasicContainer>
             <BasicFooter></BasicFooter>
             </div>
         );
