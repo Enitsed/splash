@@ -9,7 +9,8 @@ class BasicLayout extends Component {
         return (
             <div>
             <BasicHeader></BasicHeader>
-            <BasicContainer></BasicContainer>
+            <BasicContainer>
+            </BasicContainer>
             <BasicFooter></BasicFooter>
             </div>
         );
