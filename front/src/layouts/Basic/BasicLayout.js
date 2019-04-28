@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import BasicHeader from '../components/BasicHeader';
-import BasicContainer from '../components/BasicContainer';
-import BasicFooter from '../components/BasicFooter';
+import BasicHeader from '../../components/Basic/BasicHeader';
+import BasicContainer from '../../components/Basic/BasicContainer';
+import BasicFooter from '../../components/Basic/BasicFooter';
 
 class BasicLayout extends Component {
 

@@ -16,6 +16,7 @@ const BasicContainer = styled(Container)`
     display : flex;
     margin : 0 auto;
     width : 90%;
+    min-height : 80vh;
     background-color: #231232;
 `;
 
