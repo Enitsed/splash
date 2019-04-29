@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import BasicButton from './BasicButton';
+import styled from 'styled-components';
 
 class NavBar extends Component {
     constructor(props) {
@@ -23,30 +23,28 @@ class NavBar extends Component {
 
         if(!isLogged) {
             return (
-                <nav className = { this.props.className } >
+                <div className = { this.props.className }>
                     <BasicButton clickHandler={this.login}>로그인</BasicButton>
                     <BasicButton>회원가입</BasicButton>
-                </nav>
+                </div>
             )
         } else {
             return (
-                <nav className = { this.props.className } >
+                <div className = { this.props.className } >
                     <BasicButton clickHandler={this.logout}>로그아웃</BasicButton>
                     <BasicButton>마이페이지</BasicButton>
-                </nav>
+                </div>
             )
         }
     }
 }
 
 const BasicNavBar = styled(NavBar)`
-    display : flex;
-    float : right;
-    background-color : #8888;
-    width : 300px;
-    height : 50px;
-    padding : 5px;
-    justify-content : center;
-`
+    position : absolute;
+    min-width : 200px;
+    min-height : 50px;
+    top : 5px;
+    right : 5px;
+`;
 
 export default BasicNavBar;

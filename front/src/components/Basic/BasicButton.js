@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Button } from 'semantic-ui-react';
 
-class Button extends Component {
+class BasicButton extends Component {
     render() {
-        return <button className={ this.props.className } onClick={this.props.clickHandler}>{this.props.children}</button>
+        return (
+            <Button onClick={this.props.clickHandler}>
+                {this.props.children}
+            </Button>
+        )
     }
 }
-
-const BasicButton = styled(Button)`
-    color : red;
-    border : 1px solid yellow;
-    border-radius : 5px;
-    margin : 5px;
-    padding : 5px;
-    text-align : middle;
-    text-decoration : none;
-`
 
 export default BasicButton;

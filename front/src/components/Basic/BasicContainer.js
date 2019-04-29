@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
+import { Container } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-class Container extends Component {
+class CustomContainer extends Component {
 
     render() {
         return (
-            <div className={this.props.className}>
+            <Container className={this.props.className}>
                 {this.props.children}
-            </div>
+            </Container>
         );
     }
 }
 
-const BasicContainer = styled(Container)`
-    display : flex;
-    margin : 0 auto;
-    width : 90%;
+const BasicContainer = styled(CustomContainer)`
+    background-color: skyblue;
     min-height : 80vh;
-    background-color: #231232;
 `;
 
 export default BasicContainer;
