@@ -6,7 +6,9 @@ class Footer extends Component {
     render() {
         return (
             <div className={this.props.className}>
-                {this.props.children}
+                <div>
+                    {this.props.children}
+                </div>
             </div>
         );
     }
@@ -18,6 +20,15 @@ const BasicFooter = styled(Footer)`
     display : flex;
     justify-content : center;
     background-color : skyblue;
+    
+    div {
+        min-width : 50vw;
+        padding : 20px;
+        
+        p {
+            line-height : 30px;
+        }
+    }
 `;
 
 export default BasicFooter;

@@ -16,12 +16,11 @@ class CustomHeader extends Component {
 }
 
 const BasicHeader = styled(CustomHeader)`
-    position : relative;
+    padding-top : 5vh;
     text-align : center;
-    justify-content : center;
-    min-width : 100px;
-    min-height : 50px;
-    top: 20px;
+    width : 100%;
+    min-height : 10vh;
+    background-color : skyblue;
 `;
 
 export default BasicHeader;
