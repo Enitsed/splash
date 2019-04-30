@@ -4,6 +4,8 @@ import BasicNavBar from '../../components/Basic/BasicNavBar';
 import BasicContainer from '../../components/Basic/BasicContainer';
 import BasicFooter from '../../components/Basic/BasicFooter';
 import styled from 'styled-components';
+import { Card } from 'semantic-ui-react';
+import AlbumContainer from '../../components/Album/AlbumContainer';
 
 class Layout extends Component {
 
@@ -13,8 +15,9 @@ class Layout extends Component {
                 <BasicHeader>
                     <h2>연습장</h2>
                 </BasicHeader>
-                <BasicNavBar></BasicNavBar>
+                <BasicNavBar />
                 <BasicContainer>
+                    <AlbumContainer></AlbumContainer>
                 </BasicContainer>
                 <BasicFooter>
                     <h2>By Me</h2>
