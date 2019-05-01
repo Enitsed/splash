@@ -1,15 +1,18 @@
-let router = require('express').Router();
+const graphql = require('../Graphql/graphql');
+const express = require('express');
 
-/*
- * Main Router ('/main')
- * writer : enitsed
- */
+module.exports = class Routes {
+    
+    /**
+     * Applies the routes to specific paths
+     * @param {*} app - The instance of express which will be serving requests.
+     */
+    constructor(app) {
+        //Throws if no instance of express was passed
+        if (app == null) throw new Error("You must provide an instance of express");
 
+        //Registers the base GraphQLi base endpoint
+        app.use('/graphql', graphql);
+    }
 
-// test ('/main/test')
-router.get('/test', function(req, res, next) {
-    res.send('Test TEST SETS');
-});
-
-
-module.exports = router;
+};

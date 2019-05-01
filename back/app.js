@@ -1,33 +1,56 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const graphqlHttp = require('express-graphql');
-const { buildSchema } = require('graphql');
+const Routes = require('./controllers/Main/MainRouter');
 
-// create app
-const app = express();
+class App {
 
-// body parser
-app.use(bodyParser.json());
+  /**
+   * 
+   * 
+   * Sets the properties to be used by this class to create the server
+   * 
+   */
+  constructor() {
+      this.expressApp = express();
 
-// router setting
-app.use('/main', require('./Controllers/Main/MainRouter'));
+      //Literal object containing the configurations
+      this.configs = {
+          get port() {
+              return process.env.PORT || 3010;
+          }
+      }
+  }
 
-// graphql schema seting
-var schema = buildSchema(`
-    type Query {
-        hello: String
-    }
-`)
+  /**
+   * 
+   * 
+   * Applies any middleware to be used by this app
+   * 
+   */
+  applyMiddleware() {
+      //Allows the server to parse json
+      this.expressApp.use(bodyParser.json());
 
-var root = {
-    
+      //Registers the routes used by the app
+      new Routes(this.expressApp);
+  }
+
+  /**
+   * 
+   * 
+   * Runs the app
+   * 
+   */
+  run() {
+      this.expressApp.listen(this.configs.port, () => {
+          console.log("Express server running project on port " + this.configs.port + ".");
+          console.log(`Environment: ${process.env.STAGE || "development"}`);
+      })
+  }
 }
 
-app.use('/graphql', graphqlHttp({
-    schema: schema,
-    rootValue: root,
-    graphiql: true
-}));
-
-// port listening
-app.listen(3010, () => console.log('Port is listening'));
+//Runs the thing
+const app = new App();
+app.applyMiddleware();
+app.run();
