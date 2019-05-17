@@ -1,5 +1,6 @@
 const { GraphQLList,
     GraphQLID,
+    GraphQlInt,
     GraphQLString,
     GraphQLFloat } = require('graphql');
 const type = require('./type');
@@ -11,11 +12,14 @@ module.exports = {
     users: {
         type: new GraphQLList(type),
         args: {
-            type: {
+            name: {
                 type: GraphQLString
             },
-            price: {
-                type: GraphQLFloat
+            age: {
+                type: GraphQlInt
+            },
+            gender: {
+                type: GraphQLString
             }
         },
         resolve: User.findMatching.bind(User)
