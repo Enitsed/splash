@@ -34,13 +34,14 @@ class User extends DAO {
     /**
      * Creates a new user
      */
-    static async createEntry(_, {type, name}) {
+    static async createEntry(_, {name, age, gender}) {
         const connection = await mySQLWrapper.getConnectionFromPool();
         try {
             let _result = await this.insert(connection, {
                 data: {
-                    type,
-                    name
+                    name,
+                    age,
+                    gender
                 }
             });
 
@@ -54,15 +55,16 @@ class User extends DAO {
     /**
      * Updates a user 
      */
-    static async updateEntry(_, {id, type, name}) {
+    static async updateEntry(_, {id, name, age, gender}) {
         const connection = await mySQLWrapper.getConnectionFromPool();
         try {
 
             await this.update(connection, {
                 id,
                 data: {
-                    type,
-                    name
+                    name,
+                    age,
+                    gender
                 }
             });
 

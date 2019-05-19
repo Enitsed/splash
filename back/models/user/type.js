@@ -1,7 +1,7 @@
 let {
     GraphQLID,
     GraphQLString,
-    GraphQLFloat,
+    GraphQLInt,
     GraphQLObjectType,
     GraphQLNonNull,
     GraphQLList
@@ -15,11 +15,14 @@ module.exports = new GraphQLObjectType({
         id: {
             type: new GraphQLNonNull(GraphQLID)
         },
-        type: {
-            type: new GraphQLNonNull(GraphQLString)
-        },
         name: {
             type: new GraphQLNonNull(GraphQLString)
-        }
+        },
+        age: {
+            type: new GraphQLNonNull(GraphQLInt)
+        },
+        gender: {
+            type: new GraphQLNonNull(GraphQLString)
+        },
     }
 })
