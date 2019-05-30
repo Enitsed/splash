@@ -7,14 +7,14 @@ class User extends DAO {
      * Overrides TABLE_NAME with this class' backing table at MySQL
      */
     static get TABLE_NAME() {
-        return 'users';
+        return 'user';
     }
 
     /**
-     * Returns a user by its ID
+     * Returns a user by its user_seq
      */
-    static async getByID(_, {id}) {
-        return await this.find(id);
+    static async getByUserSeq(_, {user_seq}) {
+        return await this.find(user_seq);
     }
 
     /**
@@ -34,17 +34,23 @@ class User extends DAO {
     /**
      * Creates a new user
      */
-    static async createEntry(_, {type, name}) {
+    static async createEntry(_, {user_name, user_id, user_password}) {
         const connection = await mySQLWrapper.getConnectionFromPool();
         try {
             let _result = await this.insert(connection, {
                 data: {
-                    type,
-                    name
+                    user_name,
+                    user_id,
+                    user_password,
+                    gender,
+                    phone_num,
+                    email,
+                    user_status,
+                    create_time
                 }
             });
 
-            return this.getByID(_, {id: _result.insertId});
+            return this.getByUserSeq(_, {user_seq: _result.insertId});
         } finally {
             // Releases the connection
             if (connection != null) connection.release();
@@ -54,19 +60,25 @@ class User extends DAO {
     /**
      * Updates a user 
      */
-    static async updateEntry(_, {id, type, name}) {
+    static async updateEntry(_, {user_name, user_id, user_password}) {
         const connection = await mySQLWrapper.getConnectionFromPool();
         try {
 
             await this.update(connection, {
-                id,
+                user_seq,
                 data: {
-                    type,
-                    name
+                    user_name,
+                    user_id,
+                    user_password,
+                    gender,
+                    phone_num,
+                    email,
+                    user_status,
+                    create_time
                 }
             });
 
-            return this.getByID(_, {id});
+            return this.getByUserSeq(_, {user_seq});
         } finally {
             // Releases the connection
             if (connection != null) connection.release();

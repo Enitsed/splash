@@ -11,11 +11,11 @@ module.exports = {
     users: {
         type: new GraphQLList(type),
         args: {
-            type: {
+            gender: {
                 type: GraphQLString
             },
-            price: {
-                type: GraphQLFloat
+            address: {
+                type: GraphQLString
             }
         },
         resolve: User.findMatching.bind(User)
@@ -23,10 +23,10 @@ module.exports = {
     user: {
         type,
         args: {
-            id: {
+            user_seq : {
                 type: GraphQLID
             }
         },
-        resolve: User.getByID.bind(User)
+        resolve: User.getByUserSeq.bind(User)
     }
 }
