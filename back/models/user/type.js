@@ -1,6 +1,7 @@
 let {
     GraphQLID,
     GraphQLString,
+    GraphQLInt,
     GraphQLObjectType,
     GraphQLNonNull
 } = require('graphql');

@@ -1,5 +1,6 @@
 const { GraphQLList,
     GraphQLID,
+    GraphQlInt,
     GraphQLString,
     GraphQLFloat } = require('graphql');
 const type = require('./type');
@@ -11,10 +12,13 @@ module.exports = {
     users: {
         type: new GraphQLList(type),
         args: {
-            gender: {
+            user_id: {
                 type: GraphQLString
             },
-            address: {
+            name: {
+                type: GraphQLString
+            },
+            gender: {
                 type: GraphQLString
             }
         },
