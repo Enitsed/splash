@@ -10,10 +10,13 @@
   "author": "enitsed",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^2.6.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
-    "graphql": "^14.1.1",
+    "graphql": "^14.3.1",
+    "graphql-custom-types": "^1.5.0",
+    "graphql-tools": "^4.0.4",
     "mysql": "^2.17.1"
   },
   "devDependencies": {

@@ -13,6 +13,10 @@ module.exports = class Routes {
 
         //Registers the base GraphQLi base endpoint
         app.use('/graphql', graphql);
+
+        app.get('/user', function(req, res) {
+            res.send("he");
+        });
     }
 
 };
