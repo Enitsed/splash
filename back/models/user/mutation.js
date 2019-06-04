@@ -1,8 +1,11 @@
-const { 
-    GraphQLNonNull,
-    GraphQLString,
-    GraphQLList,
+const {
     GraphQLID,
+    GraphQLString,
+    GraphQLInt,
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLList,
+    GraphQlInt,
     GraphQLFloat
 } = require('graphql');
 const type = require('./type');

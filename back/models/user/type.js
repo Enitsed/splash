@@ -1,9 +1,12 @@
-let {
+const {
     GraphQLID,
     GraphQLString,
     GraphQLInt,
     GraphQLObjectType,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLList,
+    GraphQlInt,
+    GraphQLFloat
 } = require('graphql');
 let TimestampType = require('../common/GraphQLTimestamp');
 

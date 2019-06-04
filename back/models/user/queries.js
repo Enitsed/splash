@@ -1,8 +1,13 @@
-const { GraphQLList,
+const {
     GraphQLID,
-    GraphQlInt,
     GraphQLString,
-    GraphQLFloat } = require('graphql');
+    GraphQLInt,
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLList,
+    GraphQlInt,
+    GraphQLFloat
+} = require('graphql');
 const type = require('./type');
 const mutation = require('./mutation');
 const User = require("./user");
@@ -12,10 +17,10 @@ module.exports = {
     users: {
         type: new GraphQLList(type),
         args: {
-            user_id: {
-                type: GraphQLString
+            user_seq: {
+                type: GraphQLID
             },
-            name: {
+            user_id: {
                 type: GraphQLString
             },
             gender: {
@@ -25,7 +30,7 @@ module.exports = {
         resolve: User.findMatching.bind(User)
     },
     user: {
-        type,
+        type: type,
         args: {
             user_seq : {
                 type: GraphQLID
