@@ -15,21 +15,16 @@ class NavBar extends Component {
     requestUserData = () => {
         let usersQuery = "{user(user_seq : 1){user_seq,user_name,gender,user_status}}";
         
-        return new Promise(
-            (resolve, reject) => {
-                axios.get('/graphql', {
-                    params : {
-                        query : usersQuery
-                    }
-                })
-                .then((response) => {
-                    resolve(response.data);
-                }).catch(function(err) {
-                    console.log(err);
-                });
+        return axios.get('/graphql', {
+            params : {
+                query : usersQuery
             }
-        ).then( data => { this.setState({user : data.data.user}); });
-
+        }).then((response) => {
+            console.log(response);
+            this.setState({user : response.data.data.user});
+        }).catch(function(err) {
+            console.log(err);
+        });
     }
 
     login = () => {
@@ -51,14 +46,14 @@ class NavBar extends Component {
                     <BasicButton clickHandler={this.login}>로그인</BasicButton>
                     <BasicButton>회원가입</BasicButton>
                 </div>
-            )
+            );
         } else {
             return (
                 <div className = { this.props.className } >
                     <BasicButton clickHandler={this.logout}>{this.state.user.user_name}님 로그아웃</BasicButton>
                     <BasicButton>마이페이지</BasicButton>
                 </div>
-            )
+            );
         }
     }
 }

@@ -4,7 +4,6 @@ import BasicNavBar from '../../components/Basic/BasicNavBar';
 import BasicContainer from '../../components/Basic/BasicContainer';
 import BasicFooter from '../../components/Basic/BasicFooter';
 import styled from 'styled-components';
-import { Card } from 'semantic-ui-react';
 import AlbumContainer from '../../components/Album/AlbumContainer';
 
 class Layout extends Component {
