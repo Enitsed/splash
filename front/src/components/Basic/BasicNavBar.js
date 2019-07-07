@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BasicButton from './BasicButton';
 import styled from 'styled-components';
-import axios from 'axios';
 
 class NavBar extends Component {
     constructor(props) {
@@ -12,23 +11,8 @@ class NavBar extends Component {
         }
     }
 
-    requestUserData = () => {
-        let usersQuery = "{user(user_seq : 1){user_seq,user_name,gender,user_status}}";
-        
-        return axios.get('/graphql', {
-            params : {
-                query : usersQuery
-            }
-        }).then((response) => {
-            console.log(response);
-            this.setState({user : response.data.data.user});
-        }).catch(function(err) {
-            console.log(err);
-        });
-    }
-
     login = () => {
-        this.requestUserData();
+        this.props.userService.requestUserData();
         console.log(this.state.user);
         this.setState({isLogin : true});
     }
