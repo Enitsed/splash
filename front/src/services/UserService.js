@@ -5,11 +5,21 @@ class UserService extends Component {
     constructor(props) {
         super(props);
         this.requestUserData.bind(this);
+        this.clearUserData.bind(this);
+
+        this.state = {
+          user : {},
+          isLogged : false
+        };
+    }
+
+    componentDidMount() {
+        console.log('called');
     }
 
     requestUserData = () => {
         let usersQuery = "{user(user_seq : 1){user_seq,user_name,gender,user_status}}";
-        
+
         return axios.get('/graphql', {
             params : {
                 query : usersQuery
@@ -17,9 +27,18 @@ class UserService extends Component {
         }).then((response) => {
             console.log(response);
             this.setState({user : response.data.data.user});
+            this.setState({isLogged : true});
         }).catch(function(err) {
             console.log(err);
         });
+    }
+
+    clearUserData = () => {
+      this.setState({user : {}, isLogged : false});
+    }
+
+    render() {
+      return false;
     }
 
 }

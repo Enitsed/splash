@@ -26,7 +26,7 @@ class CustomContainer extends Component {
 const BasicContainer = styled(CustomContainer)`
     background-color: skyblue;
     min-height : 80vh;
-    
+
     .breadcrumb {
         padding : 10px;
     }

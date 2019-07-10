@@ -8,16 +8,16 @@ import AlbumContainer from '../../components/Album/AlbumContainer';
 import UserService from '../../services/UserService';
 
 class Layout extends Component {
-    
+
     render() {
-        let userService = new UserService();
+      const userService = new UserService();
 
         return (
             <div className={this.props.className}>
                 <BasicHeader>
                     <h2>연습장</h2>
                 </BasicHeader>
-                <BasicNavBar userService={userService}/>
+                <BasicNavBar userService={userService} />
                 <BasicContainer>
                     <AlbumContainer></AlbumContainer>
                 </BasicContainer>
