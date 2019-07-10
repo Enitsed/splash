@@ -17,8 +17,9 @@ class UserService extends Component {
         console.log('called');
     }
 
-    requestUserData = () => {
-        let usersQuery = "{user(user_seq : 1){user_seq,user_name,gender,user_status}}";
+
+    requestUserData = (userSeq) => {
+        let usersQuery = "{user(user_seq : " + userSeq + "){user_seq,user_name,gender,user_status}}";
 
         return axios.get('/graphql', {
             params : {
