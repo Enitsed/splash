@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 export default class UserService extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +12,7 @@ export default class UserService extends Component {
     };
   }
 
-  requestUserData = userSeq => {
+  requestUserData = (userSeq, props) => {
     let usersQuery =
       '{user(user_seq : ' +
       userSeq +
@@ -27,6 +26,7 @@ export default class UserService extends Component {
       })
       .then(response => {
         console.log(response);
+        console.log(props);
         this.setState({ user: response.data.data.user });
         this.setState({ isLogged: true });
       })

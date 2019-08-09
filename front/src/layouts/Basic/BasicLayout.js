@@ -5,18 +5,15 @@ import BasicNavBar from '../../components/Basic/BasicNavBar';
 import BasicContainer from '../../components/Basic/BasicContainer';
 import BasicFooter from '../../components/Basic/BasicFooter';
 import AlbumContainer from '../../components/Album/AlbumContainer';
-import UserService from '../../services/UserService';
 
 class Layout extends Component {
   render() {
-    const userService = new UserService();
-
     return (
       <div className={this.props.className}>
         <BasicHeader>
           <h2>연습장</h2>
         </BasicHeader>
-        <BasicNavBar userService={userService} />
+        <BasicNavBar />
         <BasicContainer>
           <AlbumContainer />
         </BasicContainer>

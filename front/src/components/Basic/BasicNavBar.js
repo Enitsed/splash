@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import UserService from '../../services/UserService';
 import BasicButton from './BasicButton';
 
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { userService } = this.props;
-    const { isLogged, requestUserData, clearUserData, user } = userService;
+    const {
+      isLogged,
+      requestUserData,
+      clearUserData,
+      user,
+    } = new UserService();
+
+    const props = this.props;
 
     if (!isLogged) {
       return (
-        <div className={this.props.className}>
-          <BasicButton clickHandler={requestUserData} text="로그인" />
+        <div className={props.className}>
+          <BasicButton
+            clickHandler={() => {
+              requestUserData(1, props.store);
+            }}
+            text="로그인"
+          />
           <BasicButton text="회원가입" />
         </div>
       );
     }
     return (
-      <div className={this.props.className}>
+      <div className={props.className}>
         <BasicButton
           clickHandler={clearUserData}
           text="{{user.user_name}}님 로그아웃"
