@@ -3,7 +3,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import BasicLayout from './layouts/Basic/BasicLayout';
-import reducer from './components/Reducers';
+import reducer from './Reducers';
 
 export default class App extends Component {
   render() {
