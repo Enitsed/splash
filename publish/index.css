@@ -3,28 +3,29 @@
 }
 
 header {
-    display: flex;
     color: antiquewhite;
     background: #225533;
     min-height: 5em;
-    flex-direction: column;
 }
 
 .header {
     display: flex;
+    align-items: center;
+    text-align: center;
     width: 100%;
-    margin-top: 1.5em;
-    min-height: 3em;
-    flex-flow: row;
+    min-height: 5em;
 }
 
 .header .title {
-    text-align: center;
-    min-width: 80%;
+    flex-grow: 3;
+}
+
+.header .title h2 {
 }
 
 .header .nav {
-    min-width: 20%;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .header .nav .btn_header {
@@ -46,11 +47,10 @@ header {
 
 .menu ul {
     display: flex;
-    padding-left: 1em;
+    justify-content: center;
 }
 
 .menu ul li {
-    display: inline-block;
     background-color: #224433;
     margin: 5px;
     padding: 5px;
@@ -74,4 +74,11 @@ header {
 .menu ul li a {
     color: antiquewhite;
     text-decoration: none;
+}
+
+.container {
+    background-color: aquamarine;
+    margin: 0% auto;
+    width : 90%;
+    height: 100%;
 }
