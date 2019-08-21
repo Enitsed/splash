@@ -93,31 +93,14 @@ header {
     width: 100%;
     min-height: 600px;
     margin: 0;
-    border-left : 0px;
+    border-left: 0px;
     border-bottom: 0px;
-    border-right : 0px;
+    border-right: 0px;
     border-style: solid;
 }
 
-.poem-title {
-    line-height: 200px;
-    text-align: center;
-}
-
-.poem-title :nth-child(1) {
-    color : lightskyblue;
-}
-
-.poem-title :nth-child(2) {
-    color : darkorange;
-}
-
-.poem-title :nth-child(3) {
-    color : black;
-}
-
 footer {
-    min-height : 10em;
+    min-height: 10em;
     background-color: var(--main-light-color);
 }
 
@@ -137,6 +120,58 @@ footer {
     font-size: 10px;
 }
 
-@media screen and (min-width: 1024px) {
-    
+/* main.html */
+
+.poem-title {
+    line-height: 400px;
+    text-align: center;
 }
+
+.poem-title :nth-child(1) {
+    color: lightskyblue;
+    background-image: url("/resources/images/ocean_morning.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.poem-title :nth-child(2) {
+    color: darkorange;
+    background-image: url("/resources/images/ocean_sunset.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.poem-title :nth-child(3) {
+    color: black;
+    background-image: url("/resources/images/ocean_evening.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* board.html */
+.board_table {
+    position: relative;
+    display: block;
+    margin: 0px auto;
+    width: 90%;
+    top: 2em;
+    text-align: center;
+    color: turquoise;
+    border: 1px solid black;
+}
+
+.board_table .board_table_head {
+    width: 100%;
+    background-color: yellowgreen;
+}
+
+.board_table .board_table_body {
+    width: 100%;
+    background-color: green;
+}
+
+@media screen and (min-width: 1024px) {}
