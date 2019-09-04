@@ -5,21 +5,15 @@ import BasicButton from './BasicButton';
 
 class NavBar extends Component {
   render() {
-    const {
-      isLogged,
-      requestUserData,
-      clearUserData,
-      user,
-    } = new UserService();
-
-    const props = this.props;
+    const { isLogged, requestUserData, clearUserData } = new UserService();
+    const { className, store } = this.props;
 
     if (!isLogged) {
       return (
-        <div className={props.className}>
+        <div className={className}>
           <BasicButton
             clickHandler={() => {
-              requestUserData(1, props.store);
+              requestUserData(1, store);
             }}
             text="로그인"
           />
@@ -28,7 +22,7 @@ class NavBar extends Component {
       );
     }
     return (
-      <div className={props.className}>
+      <div className={className}>
         <BasicButton
           clickHandler={clearUserData}
           text="{{user.user_name}}님 로그아웃"

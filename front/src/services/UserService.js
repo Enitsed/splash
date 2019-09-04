@@ -5,14 +5,9 @@ export default class UserService extends Component {
     super(props);
     this.requestUserData.bind(this);
     this.clearUserData.bind(this);
-
-    this.state = {
-      user: {},
-      isLogged: false,
-    };
   }
 
-  requestUserData = (userSeq, props) => {
+  requestUserData = userSeq => {
     let usersQuery =
       '{user(user_seq : ' +
       userSeq +
@@ -25,10 +20,7 @@ export default class UserService extends Component {
         },
       })
       .then(response => {
-        console.log(response);
-        console.log(props);
-        this.setState({ user: response.data.data.user });
-        this.setState({ isLogged: true });
+        return response.data.data.user;
       })
       .catch(function(err) {
         console.log(err);
