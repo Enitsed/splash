@@ -4,10 +4,18 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Hello</title>
-    <link href="/index.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/index.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <title>Hello</title>
+
+    <link href="/index.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script type="text/javascript" src="/index.js"></script>
 </head>
 
 <body>
@@ -44,49 +52,62 @@
         <section class="contents">
             <table class="board_table">
                 <thead class="board_table_head">
+                    <caption>Freeboard</caption>
                     <tr class="board_table_row">
-                        <th>NO</th>
-                        <th>title</th>
-                        <th>name</th>
-                        <th>date</th>
+                        <th scope="col" width="100px;">Number</th>
+                        <th scope="col" width="300px;">Title</th>
+                        <th scope="col" width="100px;">Writer</th>
+                        <th scope="col" width="150px;">Date</th>
+                        <th scope="col" width="100px;">Views</th>
                     </tr>
                 </thead>
                 <tbody class="board_table_body">
                     <tr class="board_table_row">
-                        <th>1</th>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
+                        <th scope="row">2</th>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
                     </tr>
                     <tr class="board_table_row">
-                        <th>1</th>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
+                        <th scope="row">1</th>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
                     </tr>
                 </tbody>
             </table>
         </section>
         <section class="contents">
-
+            <table class="board_table">
+                <thead class="board_table_head">
+                    <caption>Album</caption>
+                    <tr class="board_table_row">
+                        <th scope="col" width="100px;">Number</th>
+                        <th scope="col" width="300px;">Title</th>
+                        <th scope="col" width="100px;">Writer</th>
+                        <th scope="col" width="150px;">Date</th>
+                        <th scope="col" width="100px;">Views</th>
+                    </tr>
+                </thead>
+                <tbody class="board_table_body">
+                    <tr class="board_table_row">
+                        <th scope="row">2</th>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="board_table_row">
+                        <th scope="row">1</th>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </div>
     <footer>

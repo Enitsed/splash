@@ -85,7 +85,7 @@ header {
 .container {
     margin: 0% auto;
     width: 90%;
-    min-height: 1200px;
+    min-height: 600px;
 }
 
 .contents {
@@ -127,6 +127,11 @@ footer {
     text-align: center;
 }
 
+.poem-title>p {
+    line-height: inherit;
+    margin: 0;
+}
+
 .poem-title :nth-child(1) {
     color: lightskyblue;
     background-image: url("/resources/images/ocean_morning.jpg");
@@ -155,23 +160,22 @@ footer {
 /* board.html */
 .board_table {
     position: relative;
-    display: block;
     margin: 0px auto;
     width: 90%;
-    top: 2em;
+    top: 1em;
     text-align: center;
-    color: turquoise;
-    border: 1px solid black;
+    color: antiquewhite;
+    border-spacing: 5px 5px;
 }
 
 .board_table .board_table_head {
     width: 100%;
-    background-color: yellowgreen;
+    background-color: var(--main-color);
 }
 
 .board_table .board_table_body {
     width: 100%;
-    background-color: green;
+    background-color: var(--main-color);
 }
 
 @media screen and (min-width: 1024px) {}
