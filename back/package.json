@@ -12,6 +12,7 @@
   "dependencies": {
     "apollo-server-express": "^2.8.1",
     "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-graphql": "^0.7.1",
     "graphql": "^14.4.2",
