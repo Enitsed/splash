@@ -128,6 +128,9 @@ footer {
 }
 
 .poem-title>p {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     line-height: inherit;
     margin: 0;
 }
@@ -135,25 +138,16 @@ footer {
 .poem-title :nth-child(1) {
     color: lightskyblue;
     background-image: url("/resources/images/ocean_morning.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
 }
 
 .poem-title :nth-child(2) {
     color: darkorange;
     background-image: url("/resources/images/ocean_sunset.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
 }
 
 .poem-title :nth-child(3) {
     color: black;
     background-image: url("/resources/images/ocean_evening.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
 }
 
 
