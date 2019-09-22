@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
 
 class BasicButton extends Component {
   render() {
-    const { text, clickHandler } = this.props;
-    return <Button onClick={clickHandler}>{text}</Button>;
+    return (
+      <button
+        className={this.props.className}
+        onClick={this.props.clickHandler}
+        type="button"
+      >
+        {this.props.text}
+      </button>
+    );
   }
 }
 

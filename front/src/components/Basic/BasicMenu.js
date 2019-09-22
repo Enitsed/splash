@@ -1,15 +1,9 @@
-import React, { Component } from 'React';
-import { Menu } from 'semantic-ui-react';
+import React, { Component } from 'react';
 
 class BasicMenu extends Component {
-
-    render() {
-        return (
-            <Menu>
-                {this.props.children}
-            </Menu>
-        );
-    }
+  render() {
+    return <div className="menu">{this.props.children}</div>;
+  }
 }
 
 export default BasicMenu;

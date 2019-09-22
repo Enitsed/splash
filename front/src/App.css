@@ -1,0 +1,168 @@
+header {
+    color: antiquewhite;
+    background: var(--main-light-color);
+    min-height: 5em;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-height: 5em;
+}
+
+.header .title {
+    flex-grow: 3;
+}
+
+.header .title h2 {}
+
+.header .nav {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.header .nav .btn_header {
+    padding: 7px;
+    border-radius: 5px;
+    color: antiquewhite;
+    background: var(--main-color);
+    cursor: pointer;
+}
+
+.header .nav .btn_header:hover {
+    background-color: antiquewhite;
+    color: var(--main-light-color);
+}
+
+.menu {
+    background-color: var(--main-light-color);
+    min-height: 3em;
+}
+
+.menu ul {
+    display: flex;
+    justify-content: center;
+}
+
+.menu ul li {
+    background-color: var(--main-color);
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid antiquewhite;
+    border-radius: 5px;
+    list-style: none;
+    height: 100%;
+    text-align: center;
+    min-width: 10%;
+}
+
+.menu ul li:hover {
+    background-color: antiquewhite;
+    color: var(--main-color);
+}
+
+.menu ul li:hover a {
+    color: var(--main-color);
+}
+
+.menu ul li a {
+    display: block;
+    color: antiquewhite;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    margin: 0% auto;
+    width: 90%;
+    min-height: 600px;
+}
+
+.contents {
+    background-color: var(--main-light-color);
+    width: 100%;
+    min-height: 600px;
+    margin: 0;
+    border-left: 0px;
+    border-bottom: 0px;
+    border-right: 0px;
+    border-style: solid;
+}
+
+footer {
+    min-height: 10em;
+    background-color: var(--main-light-color);
+}
+
+.footer {
+    text-align: center;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+.footer h2.footer-title {
+    color: antiquewhite;
+}
+
+.footer p.footer-text {
+    color: antiquewhite;
+    line-height: 3em;
+    font-size: 10px;
+}
+
+/* main.html */
+
+.poem-title {
+    line-height: 400px;
+    text-align: center;
+}
+
+.poem-title>p {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    line-height: inherit;
+    margin: 0;
+}
+
+.poem-title :nth-child(1) {
+    color: lightskyblue;
+    background-image: url("/resources/images/ocean_morning.jpg");
+}
+
+.poem-title :nth-child(2) {
+    color: darkorange;
+    background-image: url("/resources/images/ocean_sunset.jpg");
+}
+
+.poem-title :nth-child(3) {
+    color: black;
+    background-image: url("/resources/images/ocean_evening.jpg");
+}
+
+
+/* board.html */
+.board_table {
+    position: relative;
+    margin: 0px auto;
+    width: 90%;
+    top: 1em;
+    text-align: center;
+    color: antiquewhite;
+    border-spacing: 5px 5px;
+}
+
+.board_table .board_table_head {
+    width: 100%;
+    background-color: var(--main-color);
+}
+
+.board_table .board_table_body {
+    width: 100%;
+    background-color: var(--main-color);
+}
+
+@media screen and (min-width: 1024px) {}
