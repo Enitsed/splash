@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
 export default class LoginModal extends Component {
   state = { modalOpen: false }
@@ -21,18 +21,18 @@ export default class LoginModal extends Component {
       >
         <Header icon='browser' content='Login Form' />
         <Modal.Content>
-            <div className="ui big form">
-                <div className="two fields">
-                    <div className="field">
+            <Form size="big">
+                <Form.Group widths="equal">
+                    <Form.Field>
                     <label>ID</label>
                     <input placeholder="ID" type="text" />
-                    </div>
-                    <div className="field">
+                    </Form.Field>
+                    <Form.Field>
                     <label>Password</label>
                     <input placeholder="Password" type="password" />
-                    </div>
-                </div>
-            </div>
+                    </Form.Field>
+                </Form.Group>
+            </Form>
         </Modal.Content>
         <Modal.Actions>
           <Button color='green' onClick={this.handleClose} inverted>

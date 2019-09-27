@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
 export default class JoinModal extends Component {
   state = { modalOpen: false }
@@ -21,20 +21,20 @@ export default class JoinModal extends Component {
       >
         <Header icon='browser' content='Join Form' />
         <Modal.Content>
-            <div className="ui big form">
-                <div className="field">
+            <Form size="big">
+                <Form.Field>
                     <label>ID</label>
                     <input placeholder="ID" type="text" />
-                </div>
-                <div className="field">
+                </Form.Field>
+                <Form.Field>
                     <label>Password</label>
                     <input placeholder="Password" type="password" />
-                </div>
-                <div className="field">
+                </Form.Field>
+                <Form.Field>
                     <label>Name</label>
                     <input placeholder="Name" type="text" />
-                </div>
-            </div>
+                </Form.Field>
+            </Form>
         </Modal.Content>
         <Modal.Actions>
           <Button color='red' onClick={this.handleClose} inverted>
