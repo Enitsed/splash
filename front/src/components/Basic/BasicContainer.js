@@ -5,7 +5,7 @@ class CustomContainer extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <div className="contents">{this.props.children}</div>
+        <section className="contents">{this.props.children}</section>
       </div>
     );
   }

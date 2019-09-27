@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import BasicNavBar from './BasicNavBar';
 import BasicMenu from './BasicMenu';
+import { Link } from 'react-router-dom'
 
 class CustomHeader extends Component {
   constructor(props) {
@@ -27,19 +28,19 @@ class CustomHeader extends Component {
         <BasicMenu>
           <ul>
             <li role="button">
-              <a href="#">home</a>
+              <Link to="/">home</Link>
             </li>
             <li role="button">
-              <a href="#">timeline</a>
+              <Link to="/timeline">timeline</Link>
             </li>
             <li role="button">
-              <a href="#">board</a>
+              <Link to="/board">board</Link>
             </li>
             <li role="button">
-              <a href="#">album</a>
+              <Link to="/album">album</Link>
             </li>
             <li role="button">
-              <a href="#">about me</a>
+              <Link to="/about">about me</Link>
             </li>
           </ul>
         </BasicMenu>

@@ -130,17 +130,17 @@ footer {
 
 .poem-title :nth-child(1) {
     color: lightskyblue;
-    background-image: url("/resources/images/ocean_morning.jpg");
+    background-image: url("/assets/images/ocean_morning.jpg");
 }
 
 .poem-title :nth-child(2) {
     color: darkorange;
-    background-image: url("/resources/images/ocean_sunset.jpg");
+    background-image: url("/assets/images/ocean_sunset.jpg");
 }
 
 .poem-title :nth-child(3) {
     color: black;
-    background-image: url("/resources/images/ocean_evening.jpg");
+    background-image: url("/assets/images/ocean_evening.jpg");
 }
 
 

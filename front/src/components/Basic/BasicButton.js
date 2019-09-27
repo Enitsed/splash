@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
-class BasicButton extends Component {
+class CustomButton extends Component {
   render() {
     return (
       <button
+        type="button"
         className={this.props.className}
         onClick={this.props.clickHandler}
-        type="button"
       >
         {this.props.text}
       </button>
     );
   }
 }
+
+const BasicButton = styled(CustomButton)``;
 
 export default BasicButton;

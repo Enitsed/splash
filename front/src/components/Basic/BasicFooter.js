@@ -2,33 +2,22 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 class Footer extends Component {
-
-    render() {
-        return (
-            <div className={this.props.className}>
-                <div>
-                    {this.props.children}
-                </div>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <footer>
+        <div className="footer">
+          <h2 className="footer-title">
+            2019. 08. 31. 계약 종료.
+          </h2>
+          <p className="footer-text">
+            copyright by enitsed.
+          </p>
+        </div>
+      </footer>
+    );
+  }
 }
 
-const BasicFooter = styled(Footer)`
-    width : 100%;
-    min-height : 20vh;
-    display : flex;
-    justify-content : center;
-    background-color : skyblue;
-    
-    div {
-        min-width : 50vw;
-        padding : 20px;
-        
-        p {
-            line-height : 30px;
-        }
-    }
-`;
+const BasicFooter = styled(Footer)``;
 
 export default BasicFooter;
