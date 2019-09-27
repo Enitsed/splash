@@ -14,6 +14,7 @@ class Layout extends Component {
         <BasicHeader />
         <BasicContainer className="container">
           <Route path="/" exact component={testComponent} />
+          <Route path="/timeline" exact component={testComponent2} />
         </BasicContainer>
         <BasicFooter />
       </div>
@@ -26,6 +27,12 @@ function testComponent() {
   <p>아침엔 푸른바다</p>
   <p>저녁엔 주황바다</p>
   <p>새벽엔 검은바다</p>
+  </div>;
+}
+
+function testComponent2() {
+  return <div className="poem-title">
+  <p>꼬꼬댁 꼬꼬</p>
   </div>;
 }
 

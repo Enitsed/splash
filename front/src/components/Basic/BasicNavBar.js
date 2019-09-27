@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import BasicButton from './BasicButton';
+import LoginModal from '../User/LoginModal';
+import JoinModal from '../User/JoinModal';
 
 class NavBar extends Component {
   render() {
     return (
       <div className="nav">
-        <BasicButton
-          className="btn_header"
-          text="Login"
-          clickHandler={this.openModal}
-        />
-        <BasicButton
-          className="btn_header"
-          text="Join"
-          clickHandler={this.openModal}
-        />
+        <LoginModal />
+        <JoinModal />
         <BasicButton
           className="btn_header"
           text="Find ID / Password"
+          size="tiny"
           clickHandler={this.openModal}
         />
       </div>
