@@ -8,10 +8,14 @@ export class LoginModal extends Component {
     modalOpen: false,
   }
 
-  handleOpen = () => this.setState({ modalOpen: true })
+  handleOpen = () => {
+    this.setState({ modalOpen: true })
+  }
   
-  handleClose = () => this.setState({ modalOpen: false })
-  
+  handleClose = () => {
+    this.setState({ modalOpen: false })
+  }
+
   render() {
     return (
       <Modal

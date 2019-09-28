@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 export default class App extends Component {
   render() {
     const store = createStore(reducer);
-    store.subscribe((e) => {console.log(store.getState());});
+    const unsubscribe = store.subscribe(() => console.log(store.getState()))
     return (
       <Provider store={store}>
         <Router>
