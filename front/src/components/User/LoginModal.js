@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { Login } from '../../Actions/User/UserAction'
 
-export default class LoginModal extends Component {
-  state = { modalOpen: false }
+export class LoginModal extends Component {
+  state = { 
+    modalOpen: false,
+  }
 
   handleOpen = () => this.setState({ modalOpen: true })
-
+  
   handleClose = () => this.setState({ modalOpen: false })
-
+  
   render() {
     return (
       <Modal
@@ -35,7 +39,7 @@ export default class LoginModal extends Component {
             </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={this.handleClose} inverted>
+          <Button color='green' onClick={this.props.tryLogin} inverted>
             <Icon name='checkmark' /> Log in
           </Button>
         </Modal.Actions>
@@ -43,3 +47,16 @@ export default class LoginModal extends Component {
     )
   }
 }
+
+const mapStateToProps = ({UserReducer}) => ({
+  IsLogin : UserReducer.IsLogin,
+  User : UserReducer.User
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    tryLogin : IsLogin => dispatch(Login(IsLogin))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal)
