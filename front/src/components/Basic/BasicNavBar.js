@@ -4,20 +4,27 @@ import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
 import { connect } from 'react-redux';
-import { Logout } from '../../Actions/User/UserAction';
+import { Logout } from '../../Redux/Actions/UserAction';
 
 class NavBar extends Component {
-  
-  clickHandler = (e) => {
+  clickHandler = e => {
     console.log(this.state);
     console.log(this.props);
     return this.props.tryLogout();
-  }
+  };
 
   render() {
     return (
       <div className="nav">
-        { !this.props.IsLogin ? <LoginModal /> : <BasicButton className="btn_header" clickHandler={this.clickHandler} text="Logout"></BasicButton>}
+        {!this.props.IsLogin ? (
+          <LoginModal />
+        ) : (
+          <BasicButton
+            className="btn_header"
+            clickHandler={this.clickHandler}
+            text="Logout"
+          ></BasicButton>
+        )}
         <JoinModal />
         <BasicButton
           className="btn_header"
@@ -32,14 +39,17 @@ class NavBar extends Component {
 
 const BasicNavBar = styled(NavBar)``;
 
-const mapStateToProps = ({UserReducer}) => ({
-  IsLogin : UserReducer.IsLogin
-})
+const mapStateToProps = ({ UserReducer }) => ({
+  IsLogin: UserReducer.IsLogin,
+});
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    tryLogout : IsLogin => dispatch(Logout(IsLogin))
-  }
-}
+    tryLogout: IsLogin => dispatch(Logout(IsLogin)),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicNavBar)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BasicNavBar);

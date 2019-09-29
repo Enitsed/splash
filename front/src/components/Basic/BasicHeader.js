@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import BasicNavBar from './BasicNavBar';
 import BasicMenu from './BasicMenu';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class CustomHeader extends Component {
   constructor(props) {
