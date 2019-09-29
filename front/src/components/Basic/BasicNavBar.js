@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
-import { connect } from 'react-redux';
-import { Logout } from '../../Redux/Actions/UserAction';
+import { Logout } from '../../Redux/Actions';
 
 class NavBar extends Component {
   clickHandler = e => {

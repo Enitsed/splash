@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
-import * as reducers from './UserReducer';
+import UserReducer from './UserReducer';
 
-const indexReducer = combineReducers(reducers);
+// Combined Reducer
+// this will be our stores
+// If you want to add more reducers, Import them and Add it below
+const reducers = combineReducers({
+  UserReducer,
+});
 
-export default indexReducer;
+export default reducers;

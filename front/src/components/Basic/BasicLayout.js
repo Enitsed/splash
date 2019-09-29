@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import BasicHeader from './BasicHeader';
-import BasicNavBar from './BasicNavBar';
 import BasicContainer from './BasicContainer';
 import BasicFooter from './BasicFooter';
 import AlbumContainer from '../Album/AlbumContainer';
@@ -15,6 +14,7 @@ class Layout extends Component {
         <BasicContainer className="container">
           <Route path="/" exact component={testComponent} />
           <Route path="/timeline" exact component={testComponent2} />
+          <Route path="/album" exact component={AlbumContainer} />
         </BasicContainer>
         <BasicFooter />
       </div>
