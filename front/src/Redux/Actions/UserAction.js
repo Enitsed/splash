@@ -9,11 +9,11 @@ const Login = payload => ({
   },
 });
 
-const Logout = payload => ({
+const Logout = () => ({
   type: UserActionTypes.LOG_OUT,
   payload: {
     IsLogin: false,
-    User: payload,
+    User: null,
   },
 });
 

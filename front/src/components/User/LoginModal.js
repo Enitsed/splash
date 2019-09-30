@@ -6,6 +6,11 @@ import { Login } from '../../Redux/Actions';
 export class LoginModal extends Component {
   state = {
     modalOpen: false,
+    User: {
+      name: 'default',
+      age: '11',
+    },
+    IsLogin: false,
   };
 
   handleOpen = () => {
@@ -14,6 +19,10 @@ export class LoginModal extends Component {
 
   handleClose = () => {
     this.setState({ modalOpen: false });
+  };
+
+  login = () => {
+    this.props.tryLogin(this.state.User);
   };
 
   render() {
@@ -44,7 +53,7 @@ export class LoginModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={this.props.tryLogin} inverted>
+          <Button color="green" onClick={this.login} inverted>
             <Icon name="checkmark" /> Log in
           </Button>
         </Modal.Actions>
@@ -53,18 +62,13 @@ export class LoginModal extends Component {
   }
 }
 
-const mapStateToProps = ({ UserReducer }) => ({
-  IsLogin: UserReducer.IsLogin,
-  User: UserReducer.User,
-});
-
 const mapDispatchToProps = dispatch => {
   return {
-    tryLogin: IsLogin => dispatch(Login(IsLogin)),
+    tryLogin: User => dispatch(Login(User)),
   };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(LoginModal);

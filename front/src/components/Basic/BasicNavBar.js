@@ -7,33 +7,37 @@ import JoinModal from '../User/JoinModal';
 import { Logout } from '../../Redux/Actions';
 
 class NavBar extends Component {
-  clickHandler = e => {
-    console.log(this.state);
-    console.log(this.props);
+  clickHandler = () => {
     return this.props.tryLogout();
   };
 
   render() {
-    return (
-      <div className="nav">
-        {!this.props.IsLogin ? (
-          <LoginModal />
-        ) : (
+    if (this.props.IsLogin) {
+      return (
+        <div className="nav">
+          <p>{'Welcome! ' + this.props.User.name}</p>
           <BasicButton
             className="btn_header"
             clickHandler={this.clickHandler}
             text="Logout"
-          ></BasicButton>
-        )}
-        <JoinModal />
-        <BasicButton
-          className="btn_header"
-          text="Find ID / Password"
-          size="tiny"
-          clickHandler={this.openModal}
-        />
-      </div>
-    );
+            size="tiny"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="nav">
+          <LoginModal />
+          <JoinModal />
+          <BasicButton
+            className="btn_header"
+            text="Find ID / Password"
+            size="tiny"
+            clickHandler={this.openModal}
+          />
+        </div>
+      );
+    }
   }
 }
 
@@ -41,11 +45,12 @@ const BasicNavBar = styled(NavBar)``;
 
 const mapStateToProps = ({ UserReducer }) => ({
   IsLogin: UserReducer.IsLogin,
+  User: UserReducer.User,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    tryLogout: IsLogin => dispatch(Logout(IsLogin)),
+    tryLogout: () => dispatch(Logout()),
   };
 };
 

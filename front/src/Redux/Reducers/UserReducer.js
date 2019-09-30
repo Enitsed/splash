@@ -1,8 +1,8 @@
 // define User Initial States
 const initialState = {
   User: {
-    name: 'test',
-    age: '11',
+    name: '',
+    age: '',
   },
   IsLogin: false,
 };
