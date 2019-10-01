@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import BasicHeader from './BasicHeader';
 import BasicContainer from './BasicContainer';
 import BasicFooter from './BasicFooter';
-import AlbumContainer from '../Album/AlbumContainer';
+import AlbumWrapper from '../Album/AlbumWrapper';
 
 class Layout extends Component {
   render() {
@@ -14,7 +14,7 @@ class Layout extends Component {
         <BasicContainer className="container">
           <Route path="/" exact component={testComponent} />
           <Route path="/timeline" exact component={testComponent2} />
-          <Route path="/album" exact component={AlbumContainer} />
+          <Route path="/album" exact component={AlbumWrapper} />
         </BasicContainer>
         <BasicFooter />
       </div>
