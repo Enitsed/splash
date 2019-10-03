@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
+import MediaQuery from 'react-responsive';
 import BasicNavBar from './BasicNavBar';
 import BasicMenu from './BasicMenu';
 
@@ -20,6 +22,9 @@ class CustomHeader extends Component {
     return (
       <header>
         <div className="header">
+          <MediaQuery maxDeviceWidth={1224}>
+            <Icon className="sidebar" size="big" />
+          </MediaQuery>
           <div className="title">
             <h1>Wicked Child</h1>
           </div>
