@@ -4,16 +4,16 @@ import { UserActionTypes } from '../ActionTypes';
 const Login = payload => ({
   type: UserActionTypes.LOG_IN,
   payload: {
-    IsLogin: true,
-    User: payload,
+    userLogin: true,
+    userData: payload,
   },
 });
 
 const Logout = () => ({
   type: UserActionTypes.LOG_OUT,
   payload: {
-    IsLogin: false,
-    User: null,
+    userLogin: false,
+    userData: null,
   },
 });
 

@@ -9,13 +9,6 @@ import BasicMenu from './BasicMenu';
 class CustomHeader extends Component {
   constructor(props) {
     super(props);
-
-    this.openModal.bind(this);
-  }
-
-  openModal(e) {
-    // TODO open a modal for the button
-    console.log(e);
   }
 
   render() {

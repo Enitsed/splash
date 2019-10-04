@@ -1,6 +1,6 @@
 // define User Initial States
 const initialState = {
-  User: {
+  userData: {
     name: '',
     age: '',
   },

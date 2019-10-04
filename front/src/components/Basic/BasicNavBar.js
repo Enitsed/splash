@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
+import FindInfoModal from '../User/FindInfoModal';
 import { Logout } from '../../Redux/Actions';
 
 class NavBar extends Component {
@@ -12,10 +13,10 @@ class NavBar extends Component {
   };
 
   render() {
-    if (this.props.IsLogin) {
+    if (this.props.userLogin) {
       return (
         <div className="nav">
-          <p>{'Welcome! ' + this.props.User.name}</p>
+          <p>{'Welcome! ' + this.props.userData.name}</p>
           <BasicButton
             className="btn_header"
             clickHandler={this.clickHandler}
@@ -29,12 +30,7 @@ class NavBar extends Component {
         <div className="nav">
           <LoginModal />
           <JoinModal />
-          <BasicButton
-            className="btn_header"
-            text="Find ID / Password"
-            size="tiny"
-            clickHandler={this.openModal}
-          />
+          <FindInfoModal />
         </div>
       );
     }
@@ -44,8 +40,8 @@ class NavBar extends Component {
 const BasicNavBar = styled(NavBar)``;
 
 const mapStateToProps = ({ UserReducer }) => ({
-  IsLogin: UserReducer.IsLogin,
-  User: UserReducer.User,
+  userLogin: UserReducer.userLogin,
+  userData: UserReducer.userData,
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Login } from '../../Redux/Actions';
 
-export class LoginModal extends Component {
+export class FindInfoModal extends Component {
   state = {
     modalOpen: false,
-    userData: {
-      name: 'default',
-      age: '11',
-    },
   };
 
   handleOpen = () => {
@@ -20,23 +15,19 @@ export class LoginModal extends Component {
     this.setState({ modalOpen: false });
   };
 
-  login = () => {
-    this.props.tryLogin(this.state.userData);
-  };
-
   render() {
     return (
       <Modal
         trigger={
           <Button className="btn_header" size="tiny" onClick={this.handleOpen}>
-            Login
+            Find ID / Password
           </Button>
         }
         open={this.state.modalOpen}
         onClose={this.handleClose}
         size="small"
       >
-        <Header icon="browser" content="Login Form" />
+        <Header icon="browser" content="Find ID / Password" />
         <Modal.Content>
           <Form size="big">
             <Form.Group widths="equal">
@@ -52,8 +43,8 @@ export class LoginModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={this.login} inverted>
-            <Icon name="checkmark" /> Log in
+          <Button color="green" onClick={null} inverted>
+            <Icon name="checkmark" /> Submit
           </Button>
         </Modal.Actions>
       </Modal>
@@ -62,12 +53,10 @@ export class LoginModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    tryLogin: userData => dispatch(Login(userData)),
-  };
+  return {};
 };
 
 export default connect(
   null,
   mapDispatchToProps,
-)(LoginModal);
+)(FindInfoModal);
