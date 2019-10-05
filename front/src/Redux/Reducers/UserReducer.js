@@ -1,8 +1,10 @@
 // define User Initial States
 const initialState = {
   userData: {
-    name: '',
-    age: '',
+    user_seq: 0,
+    user_name: '',
+    gender: '',
+    user_status: 0,
   },
   IsLogin: false,
 };
@@ -11,13 +13,13 @@ const initialState = {
 const UserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOG_IN':
-      console.log(state);
       state = Object.assign(payload);
+      console.log(state);
       alert('로그인 되었습니다.');
       return state;
     case 'LOG_OUT':
-      console.log(state);
       state = Object.assign(payload);
+      console.log(state);
       alert('로그아웃 되었습니다.');
       return state;
     default:

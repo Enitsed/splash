@@ -27,9 +27,7 @@ export default class UserService extends Component {
       });
   };
 
-  clearUserData = () => {
-    this.setState({ userData: {}, userLogin: false });
-  };
+  clearUserData = () => {};
 
   render() {
     return false;

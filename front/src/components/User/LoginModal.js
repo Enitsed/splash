@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
+import UserService from '../../services/UserService';
 
 export class LoginModal extends Component {
   state = {
     modalOpen: false,
-    userData: {
-      name: 'default',
-      age: '11',
-    },
+    userData: {},
+    id: '',
+    password: '',
   };
 
   handleOpen = () => {
@@ -21,7 +21,37 @@ export class LoginModal extends Component {
   };
 
   login = () => {
-    this.props.tryLogin(this.state.userData);
+    let { id, password } = this.state;
+
+    if (id === '') {
+      alert('아이디를 입력해주세요.');
+      return;
+    }
+
+    if (password === '') {
+      alert('비밀번호를 입력해주세요.');
+      return;
+    }
+
+    let user = new UserService().requestUserData(1);
+    if (user !== undefined) {
+      user
+        .then(userData => {
+          console.log(userData);
+          this.props.tryLogin(userData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  idInputHandler = e => {
+    this.setState({ id: e.target.value });
+  };
+
+  passwordInputHandler = e => {
+    this.setState({ password: e.target.value });
   };
 
   render() {
@@ -42,11 +72,19 @@ export class LoginModal extends Component {
             <Form.Group widths="equal">
               <Form.Field>
                 <label>ID</label>
-                <input placeholder="ID" type="text" />
+                <input
+                  placeholder="ID"
+                  type="text"
+                  onChange={this.idInputHandler}
+                />
               </Form.Field>
               <Form.Field>
                 <label>Password</label>
-                <input placeholder="Password" type="password" />
+                <input
+                  placeholder="Password"
+                  type="password"
+                  onChange={this.passwordInputHandler}
+                />
               </Form.Field>
             </Form.Group>
           </Form>
