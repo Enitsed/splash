@@ -11,19 +11,30 @@ class CustomHeader extends Component {
     super(props);
   }
 
+  state = { active: false };
+
+  toggleActive = () => {
+    console.log('toggle');
+    this.setState({ active: !this.state.active });
+  };
+
   render() {
     return (
       <header>
         <div className="header">
           <MediaQuery maxDeviceWidth={1224}>
-            <Icon className="sidebar" size="big" />
+            <Icon
+              className="sidebar main_logo"
+              size="big"
+              onClick={this.toggleActive}
+            />
           </MediaQuery>
           <div className="title">
             <h1>Wicked Child</h1>
           </div>
           <BasicNavBar />
         </div>
-        <BasicMenu>
+        <BasicMenu className={this.state.active ? 'menu active' : 'menu'}>
           <ul>
             <li role="button">
               <Link to="/">home</Link>

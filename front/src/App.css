@@ -18,6 +18,10 @@ header {
 
 .header .title h2 {}
 
+.header .main_logo {
+    margin-left: 10px;
+}
+
 .header .nav {
     flex-grow: 1;
     text-align: center;
@@ -167,8 +171,29 @@ footer {
 
 @media screen and (max-width: 1024px) {
 
+    .header .nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header .nav button:first-of-type {
+        margin-top: 10px;
+    }
+
+    .header .nav button {
+        margin: 5px;
+    }
+
+    .header .nav button:last-of-type {
+        margin-bottom: 10px;
+    }
+
     .menu {
         display: none;
+    }
+
+    .menu.active {
+        display: block;
     }
 
     .menu ul {
