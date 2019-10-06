@@ -10,7 +10,7 @@
   "author": "enitsed",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.9.4",
+    "apollo-server-express": "^2.9.5",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "ejs": "^2.7.1",

@@ -1,15 +1,21 @@
-const graphqlHTTP = require('express-graphql');
-const router = require('express').Router();
-const schema = require('../../schema/schema');
+const graphqlHTTP = require("express-graphql");
+const router = require("express").Router();
+const schema = require("../../schema/schema");
 
-router.get('/', graphqlHTTP({
+router.get(
+  "/",
+  graphqlHTTP({
     schema,
-    graphiql: () => process.env.NODE_ENV === 'production'
-}));
+    graphiql: () => process.env.NODE_ENV === "production"
+  })
+);
 
-router.post('/', graphqlHTTP({
+router.post(
+  "/",
+  graphqlHTTP({
     schema,
     graphiql: false
-}));
+  })
+);
 
 module.exports = router;

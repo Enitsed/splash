@@ -16,7 +16,10 @@ class NavBar extends Component {
     if (this.props.userLogin) {
       return (
         <div className="nav">
-          <p>{'Welcome! ' + this.props.userData.user_name}</p>
+          <p>
+            Welcome!
+            {this.props.userData ? this.props.userData.user_name : null}
+          </p>
           <BasicButton
             className="btn_header"
             clickHandler={this.clickHandler}
