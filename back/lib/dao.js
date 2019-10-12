@@ -5,7 +5,7 @@ class DAO {
    * This property can be overriden when the ID column is differet from 'id'
    */
   static get PRIMARY_KEY() {
-    return "user_seq";
+    return "seq";
   }
 
   /**
