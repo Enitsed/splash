@@ -10,6 +10,13 @@ class User extends DAO {
   }
 
   /**
+   * this overrides an ID
+   */
+  static get PRIMARY_KEY() {
+    return "user_seq";
+  }
+
+  /**
    * Returns a user by its user_seq
    */
   static async getByUserSeq(_, { user_seq }) {
