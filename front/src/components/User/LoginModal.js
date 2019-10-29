@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
-import UserService from '../../services/UserService';
+import { requestUserData } from '../../services/UserService';
 
 export class LoginModal extends Component {
   state = {
@@ -32,7 +32,7 @@ export class LoginModal extends Component {
       return;
     }
 
-    let user = new UserService().requestUserData(1);
+    let user = requestUserData(1);
     if (user !== undefined) {
       user
         .then(userData => {

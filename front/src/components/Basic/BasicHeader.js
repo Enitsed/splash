@@ -22,7 +22,7 @@ class CustomHeader extends Component {
     return (
       <header>
         <div className="header">
-          <MediaQuery maxDeviceWidth={1224}>
+          <MediaQuery maxWidth={1024}>
             <Icon
               className="sidebar main_logo"
               size="big"
@@ -34,7 +34,7 @@ class CustomHeader extends Component {
           </div>
           <BasicNavBar />
         </div>
-        <BasicMenu className={this.state.active ? 'menu active' : 'menu'}>
+        <BasicMenu className={this.state.active ? 'menu' : 'menu hidden'}>
           <ul>
             <li role="button">
               <Link to="/">home</Link>

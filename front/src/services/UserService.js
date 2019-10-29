@@ -1,35 +1,22 @@
-import React, { Component } from 'react';
 import axios from 'axios';
-export default class UserService extends Component {
-  constructor(props) {
-    super(props);
-    this.requestUserData.bind(this);
-    this.clearUserData.bind(this);
-  }
 
-  requestUserData = userSeq => {
-    let usersQuery =
-      '{user(user_seq : ' +
-      userSeq +
-      '){user_seq,user_name,gender,user_status}}';
+const requestUserData = userSeq => {
+  const usersQuery = `{user(user_seq : ${userSeq}){user_seq,user_name,gender,user_status}}`;
 
-    return axios
-      .get('/graphql', {
-        params: {
-          query: usersQuery,
-        },
-      })
-      .then(response => {
-        return response.data.data.user;
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-  };
+  return axios
+    .get('/graphql', {
+      params: {
+        query: usersQuery,
+      },
+    })
+    .then(response => {
+      return response.data.data.user;
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
 
-  clearUserData = () => {};
+const clearUserData = () => {};
 
-  render() {
-    return false;
-  }
-}
+export { requestUserData, clearUserData };
