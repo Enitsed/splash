@@ -10,21 +10,22 @@
   "author": "enitsed",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.9.5",
-    "bcrypt": "^3.0.6",
+    "apollo-server-express": "^2.9.11",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
-    "ejs": "^2.7.1",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-graphql": "^0.7.1",
-    "express-session": "^1.16.2",
+    "express-session": "^1.17.0",
     "graphql": "^14.5.8",
     "graphql-custom-types": "^1.5.1",
-    "graphql-tools": "^4.0.5",
+    "graphql-tools": "^4.0.6",
     "mysql": "^2.17.1",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "sequelize": "^5.21.2"
   },
   "devDependencies": {
-    "dotenv": "^8.1.0",
-    "nodemon": "^1.19.3"
+    "dotenv": "^8.2.0",
+    "nodemon": "^1.19.4"
   }
 }
