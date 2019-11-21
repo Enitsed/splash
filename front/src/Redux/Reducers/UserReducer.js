@@ -13,12 +13,12 @@ const initialState = {
 const UserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOG_IN':
-      state = Object.assign(payload);
+	  state = JSON.parse(JSON.stringify(payload));
       console.log(state);
       alert('로그인 되었습니다.');
       return state;
     case 'LOG_OUT':
-      state = Object.assign(payload);
+	  state = JSON.parse(JSON.stringify(payload));
       console.log(state);
       alert('로그아웃 되었습니다.');
       return state;

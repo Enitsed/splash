@@ -72,6 +72,13 @@ header {
     margin: 0;
 }
 
+.albumWrapper {
+    width: 95%;
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+    padding: 1.5rem;
+}
+
 footer {
     min-height: 10em;
     background-color: var(--main-light-color);

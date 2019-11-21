@@ -32,11 +32,14 @@
     ],
     "rules": {
       "react/prefer-stateless-function": 0,
-      "react/jsx-filename-extension": 0
+      "react/jsx-filename-extension": 0,
+      "import/no-named-as-default": 0,
+      "import/no-named-as-default-member": 0
     },
     "env": {
-      "browser": true
-    }
+      "browser": true,
+	  "NODE_ENV": "production"
+	}
   },
   "browserslist": [
     ">0.2%",

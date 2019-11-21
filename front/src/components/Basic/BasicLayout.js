@@ -11,9 +11,11 @@ class Layout extends Component {
     return (
       <div className={this.props.className}>
         <BasicHeader />
-        <Route path="/" exact component={testComponent} />
-        <Route path="/timeline" exact component={testComponent2} />
-        <Route path="/album" exact component={AlbumWrapper} />
+        <BasicContainer>
+          <Route path="/" exact component={testComponent} />
+          <Route path="/timeline" exact component={testComponent2} />
+          <Route path="/album" exact component={AlbumWrapper} />
+        </BasicContainer>
         <BasicFooter />
       </div>
     );
