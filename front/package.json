@@ -37,8 +37,7 @@
       "import/no-named-as-default-member": 0
     },
     "env": {
-      "browser": true,
-      "NODE_ENV": "production"
+      "browser": true
     }
   },
   "browserslist": [
