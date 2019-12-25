@@ -9,7 +9,6 @@ const {
   GraphQLFloat
 } = require("graphql");
 const type = require("./type");
-const mutation = require("./mutation");
 const User = require("./user");
 
 // Defines the queries
@@ -32,10 +31,13 @@ module.exports = {
   user: {
     type: type,
     args: {
-      user_seq: {
-        type: GraphQLID
+      user_id: {
+        type: new GraphQLNonNull(GraphQLString)
+      },
+      user_password: {
+        type: new GraphQLNonNull(GraphQLString)
       }
     },
-    resolve: User.getByUserSeq.bind(User)
+    resolve: User.getUserInfo.bind(User)
   }
 };

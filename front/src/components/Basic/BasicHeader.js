@@ -10,11 +10,10 @@ class CustomHeader extends Component {
   constructor(props) {
     super(props);
   }
-
+  
   state = { active: false };
 
   toggleActive = () => {
-    console.log('toggle');
     this.setState({ active: !this.state.active });
   };
 

@@ -8,9 +8,9 @@ const {
   GraphQlInt,
   GraphQLFloat
 } = require("graphql");
-const TimestampType = require("../common/GraphQLTimestamp");
 const type = require("./type");
 const User = require("./user");
+let TimestampType = require("../common/GraphQLTimestamp");
 
 // Defines the mutations
 module.exports = {

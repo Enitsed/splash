@@ -14,7 +14,7 @@ router.post(
   "/",
   graphqlHTTP({
     schema,
-    graphiql: false
+    graphiql: () => false
   })
 );
 

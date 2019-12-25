@@ -19,7 +19,7 @@ class authManage extends DAO {
   /**
    * Returns a login_history by its seq
    */
-  static async getByauthManageSeq(_, { seq }) {
+  static async getByAuthManageSeq(_, { seq }) {
     return await this.find(seq);
   }
 
@@ -56,7 +56,7 @@ class authManage extends DAO {
         }
       });
 
-      return this.getByauthManageSeq(_, { seq: _result.insertId });
+      return this.getByAuthManageSeq(_, { seq: _result.insertId });
     } finally {
       // Releases the connection
       if (connection != null) connection.release();
@@ -83,7 +83,7 @@ class authManage extends DAO {
         }
       });
 
-      return this.getByauthManageSeq(_, { seq });
+      return this.getByAuthManageSeq(_, { seq });
     } finally {
       // Releases the connection
       if (connection != null) connection.release();

@@ -32,15 +32,15 @@ export class LoginModal extends Component {
       return;
     }
 
-    let user = requestUserData(1);
+    let user = requestUserData(id, password);
     if (user !== undefined) {
       user
         .then(userData => {
-          if (userData === undefined) {
+          if (!!!userData || userData === undefined) {
             alert('회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.');
             return;
           }
-          console.log(userData);
+
           this.props.tryLogin(userData);
         })
         .catch(err => {
@@ -108,7 +108,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(LoginModal);
+export default connect(null, mapDispatchToProps)(LoginModal);

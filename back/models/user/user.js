@@ -1,12 +1,13 @@
 const DAO = require("../../lib/dao");
 const mySQLWrapper = require("../../lib/mySqlWrapper");
+const bcrypt = require("bcrypt");
 
 class User extends DAO {
   /**
    * Overrides TABLE_NAME with this class' backing table at MySQL
    */
   static get TABLE_NAME() {
-    return "user";
+    return "users";
   }
 
   /**
@@ -19,7 +20,9 @@ class User extends DAO {
   /**
    * Returns a user by its user_seq
    */
-  static async getByUserSeq(_, { user_seq }) {
+  static async getByUserSeq(_, {
+    user_seq
+  }) {
     return await this.find(user_seq);
   }
 
@@ -41,8 +44,7 @@ class User extends DAO {
    * Creates a new user
    */
   static async createEntry(
-    _,
-    {
+    _, {
       user_name,
       user_id,
       user_password,
@@ -56,6 +58,10 @@ class User extends DAO {
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
+      await bcrypt.hash(user_password, 10).then(resolve => {
+        user_password = resolve;
+      });
+
       let _result = await this.insert(connection, {
         data: {
           user_name,
@@ -70,7 +76,9 @@ class User extends DAO {
         }
       });
 
-      return this.getByUserSeq(_, { user_seq: _result.insertId });
+      return this.getByUserSeq(_, {
+        user_seq: _result.insertId
+      });
     } finally {
       // Releases the connection
       if (connection != null) connection.release();
@@ -81,8 +89,7 @@ class User extends DAO {
    * Updates a user
    */
   static async updateEntry(
-    _,
-    {
+    _, {
       user_seq,
       user_name,
       user_id,
@@ -112,11 +119,43 @@ class User extends DAO {
         }
       });
 
-      return this.getByUserSeq(_, { user_seq });
+      return this.getByUserSeq(_, {
+        user_seq
+      });
     } finally {
       // Releases the connection
       if (connection != null) connection.release();
     }
+  }
+
+  /**
+   * Returns a user by its user_id and password
+   */
+  static async getUserInfo(_, {
+    user_id,
+    user_password
+  }) {
+    let fields = {
+      user_id,
+      user_password
+    };
+    let user_seq = await this.findByFields({
+      fields
+    }).then(result => {
+      if (result.length < 1) {
+        throw new Error("user not found");
+      }
+
+      if (result.length > 1) {
+        throw new Error("duplicated User Exists");
+      }
+
+      return result.shift().user_seq;
+    });
+
+    return await this.getByUserSeq(_, {
+      user_seq
+    });
   }
 }
 

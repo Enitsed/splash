@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const Routes = require("./controllers/Main/MainRouter");
+const ejs = require("ejs");
+const path = require("path");
 
 class App {
   /**
@@ -31,8 +33,15 @@ class App {
     //Allows the server to parse json
     this.expressApp.use(bodyParser.json());
 
+    // set view path
+    this.expressApp.set("views", "./src");
+    this.expressApp.set("view engine", "ejs");
+    this.expressApp.engine("html", ejs.renderFile);
+    this.expressApp.use(express.static("./src"));
+
     //Registers the routes used by the app
     new Routes(this.expressApp);
+    // set app view Directory and template engine
   }
 
   /**

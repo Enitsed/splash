@@ -1,22 +1,35 @@
 import axios from 'axios';
 
-const requestUserData = userSeq => {
-  const usersQuery = `{user(user_seq : ${userSeq}){user_seq,user_name,gender,user_status}}`;
+const requestUserData = (userId, userPassword) => {
+  const userQuery =
+  `query getUserInfo($user_id: String!, $user_password: String!) {
+    getUserInfo(user_id: $user_id, user_password: $user_password) {
+      user_seq,
+      user_name,
+      gender,
+      user_status
+    }
+  }`;
 
   return axios
-    .get('/graphql', {
-      params: {
-        query: usersQuery,
-      },
+    .post('/graphql', {
+      query: userQuery,
+      variables: {
+        "user_id": userId,
+        "user_password": userPassword
+      }
     })
     .then(response => {
-      return response.data.data.user;
+      return response.data.data.getUserInfo;
     })
-    .catch(function(err) {
-      console.log(err);
+    .catch(err => {
+      return err;
     });
 };
 
 const clearUserData = () => {};
 
-export { requestUserData, clearUserData };
+export {
+  requestUserData,
+  clearUserData
+};
