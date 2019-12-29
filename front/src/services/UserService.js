@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const requestUserData = (userId, userPassword) => {
-  const userQuery =
-  `query getUserInfo($user_id: String!, $user_password: String!) {
+  const userQuery = `query getUserInfo($user_id: String!, $user_password: String!) {
     getUserInfo(user_id: $user_id, user_password: $user_password) {
       user_seq,
       user_name,
@@ -15,21 +14,27 @@ const requestUserData = (userId, userPassword) => {
     .post('/graphql', {
       query: userQuery,
       variables: {
-        "user_id": userId,
-        "user_password": userPassword
-      }
+        user_id: userId,
+        user_password: userPassword,
+      },
     })
     .then(response => {
-      return response.data.data.getUserInfo;
+      const data = response.data.data.getUserInfo;
+
+      if (!data) {
+        alert('error');
+        return;
+      }
+
+      return data;
     })
     .catch(err => {
+      alert('로그인이 실패하였습니다. 잠시 후 재시도 해주세요.');
+      console.dir(err);
       return err;
     });
 };
 
 const clearUserData = () => {};
 
-export {
-  requestUserData,
-  clearUserData
-};
+export { requestUserData, clearUserData };

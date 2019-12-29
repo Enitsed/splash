@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
@@ -13,6 +14,12 @@ export class LoginModal extends Component {
       id: '',
       password: '',
     };
+
+    this.handleOpen.bind(this);
+    this.handleClose.bind(this);
+    this.login.bind(this);
+    this.idInputHandler.bind(this);
+    this.passwordInputHandler.bind(this);
   }
 
   handleOpen() {
@@ -66,18 +73,17 @@ export class LoginModal extends Component {
     const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={() => {
-          return (
-            <Button
-              className="btn_header"
-              size="tiny"
-              onClick={this.handleOpen}
-              text="Login"
-            />
-          );
-        }}
+        trigger={
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.handleOpen()}
+          >
+            Login
+          </Button>
+        }
         open={modalOpen}
-        onClose={this.handleClose}
+        onClose={() => this.handleClose()}
         size="small"
       >
         <Header icon="browser" content="Login Form" />
@@ -89,7 +95,7 @@ export class LoginModal extends Component {
                 <input
                   placeholder="ID"
                   type="text"
-                  onChange={this.idInputHandler}
+                  onChange={e => this.idInputHandler(e)}
                 />
               </Form.Field>
               <Form.Field>
@@ -97,15 +103,16 @@ export class LoginModal extends Component {
                 <input
                   placeholder="Password"
                   type="password"
-                  onChange={this.passwordInputHandler}
+                  onChange={e => this.passwordInputHandler(e)}
                 />
               </Form.Field>
             </Form.Group>
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={this.login} text="Log in" inverted>
+          <Button color="green" onClick={e => this.login(e)} inverted>
             <Icon name="checkmark" />
+            Log in
           </Button>
         </Modal.Actions>
       </Modal>
@@ -126,5 +133,5 @@ LoginModal.defaultProps = {
 };
 
 LoginModal.propTypes = {
-  tryLogin: React.Proptypes.func,
+  tryLogin: PropTypes.func,
 };
