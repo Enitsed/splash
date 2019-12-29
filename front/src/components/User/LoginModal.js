@@ -5,22 +5,27 @@ import { Login } from '../../Redux/Actions';
 import { requestUserData } from '../../services/UserService';
 
 export class LoginModal extends Component {
-  state = {
-    modalOpen: false,
-    id: '',
-    password: '',
-  };
+  constructor(props) {
+    super(props);
 
-  handleOpen = () => {
+    this.state = {
+      modalOpen: false,
+      id: '',
+      password: '',
+    };
+  }
+
+  handleOpen() {
     this.setState({ modalOpen: true });
-  };
+  }
 
-  handleClose = () => {
+  handleClose() {
     this.setState({ modalOpen: false });
-  };
+  }
 
-  login = () => {
-    let { id, password } = this.state;
+  login() {
+    const { id, password } = this.state;
+    const { tryLogin } = this.props;
 
     if (id === '') {
       alert('아이디를 입력해주세요.');
@@ -32,40 +37,46 @@ export class LoginModal extends Component {
       return;
     }
 
-    let user = requestUserData(id, password);
+    const user = requestUserData(id, password);
     if (user !== undefined) {
       user
         .then(userData => {
-          if (!!!userData || userData === undefined) {
+          if (!userData || userData === undefined) {
             alert('회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.');
             return;
           }
 
-          this.props.tryLogin(userData);
+          tryLogin(userData);
         })
         .catch(err => {
           console.log(err);
         });
     }
-  };
+  }
 
-  idInputHandler = e => {
+  idInputHandler(e) {
     this.setState({ id: e.target.value });
-  };
+  }
 
-  passwordInputHandler = e => {
+  passwordInputHandler(e) {
     this.setState({ password: e.target.value });
-  };
+  }
 
   render() {
+    const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={
-          <Button className="btn_header" size="tiny" onClick={this.handleOpen}>
-            Login
-          </Button>
-        }
-        open={this.state.modalOpen}
+        trigger={() => {
+          return (
+            <Button
+              className="btn_header"
+              size="tiny"
+              onClick={this.handleOpen}
+              text="Login"
+            />
+          );
+        }}
+        open={modalOpen}
         onClose={this.handleClose}
         size="small"
       >
@@ -93,8 +104,8 @@ export class LoginModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={this.login} inverted>
-            <Icon name="checkmark" /> Log in
+          <Button color="green" onClick={this.login} text="Log in" inverted>
+            <Icon name="checkmark" />
           </Button>
         </Modal.Actions>
       </Modal>
@@ -109,3 +120,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(null, mapDispatchToProps)(LoginModal);
+
+LoginModal.defaultProps = {
+  tryLogin: undefined,
+};
+
+LoginModal.propTypes = {
+  tryLogin: React.Proptypes.func,
+};
