@@ -1,8 +1,7 @@
-const { GraphQLSchema } = require("graphql");
-const query = require("./query");
-const mutation = require("./mutation");
+const resolvers = require("./resolvers");
+const typeDefs = require("./typeDefs");
 
-module.exports = new GraphQLSchema({
-  query,
-  mutation
-});
+module.exports = {
+  typeDefs,
+  resolvers
+};

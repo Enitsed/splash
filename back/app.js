@@ -3,7 +3,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const Routes = require("./controllers/Main/MainRouter");
 const ejs = require("ejs");
-const path = require("path");
 
 class App {
   /**

@@ -20,9 +20,7 @@ class User extends DAO {
   /**
    * Returns a user by its user_seq
    */
-  static async getByUserSeq(_, {
-    user_seq
-  }) {
+  static async getByUserSeq(_, { user_seq }) {
     return await this.find(user_seq);
   }
 
@@ -44,7 +42,8 @@ class User extends DAO {
    * Creates a new user
    */
   static async createEntry(
-    _, {
+    _,
+    {
       user_name,
       user_id,
       user_password,
@@ -89,7 +88,8 @@ class User extends DAO {
    * Updates a user
    */
   static async updateEntry(
-    _, {
+    _,
+    {
       user_seq,
       user_name,
       user_id,
@@ -131,14 +131,12 @@ class User extends DAO {
   /**
    * Returns a user by its user_id and password
    */
-  static async getUserInfo(_, {
-    user_id,
-    user_password
-  }) {
+  static async getUserInfo(_, { user_id, user_password }) {
     let fields = {
       user_id,
       user_password
     };
+
     let user_seq = await this.findByFields({
       fields
     }).then(result => {

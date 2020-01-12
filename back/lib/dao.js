@@ -5,7 +5,7 @@ class DAO {
    * This property can be overriden when the ID column is differet from 'id'
    */
   static get PRIMARY_KEY() {
-    return "seq";
+    return "id";
   }
 
   /**
@@ -13,10 +13,12 @@ class DAO {
    * @param {Number} id - The entry ID
    */
   static async find(id) {
-    return (await mysql.createQuery({
-      query: `SELECT * FROM ?? WHERE ?? = ? LIMIT 1;`,
-      params: [this.TABLE_NAME, this.PRIMARY_KEY, id]
-    })).shift();
+    return (
+      await mysql.createQuery({
+        query: `SELECT * FROM ?? WHERE ?? = ? LIMIT 1;`,
+        params: [this.TABLE_NAME, this.PRIMARY_KEY, id]
+      })
+    ).shift();
   }
 
   /**

@@ -1,4 +1,5 @@
-const graphql = require("../Graphql/graphql");
+const { ApolloServer } = require("apollo-server-express");
+const schema = require("../../schema/schema");
 
 module.exports = class Routes {
   /**
@@ -9,8 +10,8 @@ module.exports = class Routes {
     //Throws if no instance of express was passed
     if (app == null) throw new Error("You must provide an instance of express");
 
-    //Registers the base GraphQLi base endpoint
-    app.use("/graphql", graphql);
+    //Implementing Apollo Server
+    new ApolloServer(schema).applyMiddleware({ app });
 
     // render React router
     app.get("/", (req, res) => {
