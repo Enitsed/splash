@@ -57,9 +57,10 @@ class User extends DAO {
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
-      await bcrypt.hash(user_password, 10).then(resolve => {
-        user_password = resolve;
-      });
+      user_password = await bcrypt.hashSync(
+        user_password,
+        Number(process.env.SALT_ROUNDS || 10)
+      );
 
       let _result = await this.insert(connection, {
         data: {
@@ -132,28 +133,32 @@ class User extends DAO {
    * Returns a user by its user_id and password
    */
   static async getUserInfo(_, { user_id, user_password }) {
-    let fields = {
-      user_id,
-      user_password
+    const fields = {
+      user_id
     };
 
-    let user_seq = await this.findByFields({
+    const user_data = await this.findByFields({
       fields
     }).then(result => {
-      if (result.length < 1) {
-        throw new Error("user not found");
+      if (!result || result.length < 1) {
+        throw new Error("No user exists");
       }
 
-      if (result.length > 1) {
-        throw new Error("duplicated User Exists");
+      const userData = result.shift();
+
+      let password_check_result = bcrypt.compareSync(
+        user_password,
+        userData.user_password
+      );
+
+      if (!password_check_result) {
+        throw new Error("Password Incorrect");
       }
 
-      return result.shift().user_seq;
+      return userData;
     });
 
-    return await this.getByUserSeq(_, {
-      user_seq
-    });
+    return user_data;
   }
 }
 

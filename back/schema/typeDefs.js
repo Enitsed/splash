@@ -10,6 +10,10 @@ module.exports = gql`
   type Mutation {
     addUser(userSignUpInput: User_Sign_Up_Input!): User
   }
+  """
+  directives
+  """
+  directive @include on FIELD_DEFINITION
 
   """
   common type and enums
@@ -18,6 +22,13 @@ module.exports = gql`
     ADMIN
     MANAGER
     USER
+  }
+
+  enum User_Status {
+    ACTIVE
+    DORMANT
+    INACTIVE
+    DELETED
   }
 
   scalar Date
@@ -40,6 +51,9 @@ module.exports = gql`
     email: String
   }
 
+  """
+  types
+  """
   type User {
     user_seq: ID
     user_name: String
@@ -51,5 +65,13 @@ module.exports = gql`
     email: String
     user_status: String
     create_time: Date
+  }
+
+  type Auth_History {
+    seq: ID
+    login_ip: String
+    login_date: Date
+    login_status: String
+    user_num: Int
   }
 `;
