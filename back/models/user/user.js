@@ -139,25 +139,26 @@ class User extends DAO {
 
     const user_data = await this.findByFields({
       fields
-    }).then(result => {
-      if (!result || result.length < 1) {
-        throw new Error("No user exists");
-      }
+    })
+      .then(result => {
+        if (!result || result.length < 1) {
+          throw new Error("No user exists");
+        }
 
-      const userData = result.shift();
+        const userData = result.shift();
 
-      let password_check_result = bcrypt.compareSync(
-        user_password,
-        userData.user_password
-      );
+        let password_check_result = bcrypt.compareSync(
+          user_password,
+          userData.user_password
+        );
 
-      if (!password_check_result) {
-        throw new Error("Password Incorrect");
-      }
+        if (!password_check_result) {
+          throw new Error("Password Incorrect");
+        }
 
-      return userData;
-    });
-
+        return userData;
+      })
+      .catch(err => console.log(err));
     return user_data;
   }
 }

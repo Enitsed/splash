@@ -1,5 +1,6 @@
 const { ApolloServer } = require("apollo-server-express");
-const schema = require("../../schema/schema");
+const { typeDefs, resolvers } = require("../../schema/schema");
+const User = require("../../models/user/user");
 
 module.exports = class Routes {
   /**
@@ -11,19 +12,54 @@ module.exports = class Routes {
     if (app == null) throw new Error("You must provide an instance of express");
 
     //Implementing Apollo Server
-    new ApolloServer(schema).applyMiddleware({ app });
+    new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: ({ req }) => {}
+    }).applyMiddleware({ app });
 
     // render React router
     app.get("/", (req, res) => {
-      res.render("index");
+      res.render("index.html");
     });
 
-    app.get("/user", function(req, res) {
-      res.send("he");
+    // login mapping
+    app.post("/login", (req, res) => {
+      const { user_id, user_password } = req.body;
+
+      if (!user_id) {
+        return new Error("type user id");
+      }
+
+      if (!user_password) {
+        return new Error("type user password");
+      }
+
+      req.session.user = User.getUserInfo(undefined, {
+        user_id,
+        user_password
+      });
+      console.dir(req.session);
+
+      // res.render("index.html");
+      res.end();
     });
 
-    app.get("/about", function(req, res) {
-      res.render("index");
+    // Access the session as req.session
+    app.get("/test", function(req, res, next) {
+      console.dir(req.session);
+      if (req.session.views) {
+        req.session.views++;
+        res.setHeader("Content-Type", "text/html");
+        res.write("<p>views: " + req.session.views + "</p>");
+        res.write(
+          "<p>expires in: " + req.session.cookie.maxAge / 1000 + "s</p>"
+        );
+        res.end();
+      } else {
+        req.session.views = 1;
+        res.end("welcome to the session demo. refresh!");
+      }
     });
   }
 };
