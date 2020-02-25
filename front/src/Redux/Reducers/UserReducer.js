@@ -14,9 +14,11 @@ const UserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOG_IN':
       state = JSON.parse(JSON.stringify(payload));
+      console.dir(state);
       return state;
     case 'LOG_OUT':
       state = JSON.parse(JSON.stringify(payload));
+      console.dir(state);
       return state;
     default:
       return state;

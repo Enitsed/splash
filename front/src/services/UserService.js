@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const requestUserData = (userId, userPassword) => {
-  const userQuery = `query getUserInfo($user_id: String!, $user_password: String!) {
-    getUserInfo(user_id: $user_id, user_password: $user_password) {
+  const userQuery = `query userLogin($user_id: String!, $user_password: String!) {
       user_seq,
       user_name,
       gender,
       user_status
-    }
   }`;
 
   return axios

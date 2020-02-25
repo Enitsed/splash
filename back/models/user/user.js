@@ -128,39 +128,6 @@ class User extends DAO {
       if (connection != null) connection.release();
     }
   }
-
-  /**
-   * Returns a user by its user_id and password
-   */
-  static async getUserInfo(_, { user_id, user_password }) {
-    const fields = {
-      user_id
-    };
-
-    const user_data = await this.findByFields({
-      fields
-    })
-      .then(result => {
-        if (!result || result.length < 1) {
-          throw new Error("No user exists");
-        }
-
-        const userData = result.shift();
-
-        let password_check_result = bcrypt.compareSync(
-          user_password,
-          userData.user_password
-        );
-
-        if (!password_check_result) {
-          throw new Error("Password Incorrect");
-        }
-
-        return userData;
-      })
-      .catch(err => console.log(err));
-    return user_data;
-  }
 }
 
 module.exports = User;

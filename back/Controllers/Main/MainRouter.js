@@ -1,6 +1,7 @@
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../../schema/schema");
 const User = require("../../models/user/user");
+const AuthService = require("../../services/authService");
 
 module.exports = class Routes {
   /**
@@ -26,16 +27,12 @@ module.exports = class Routes {
     // login mapping
     app.post("/login", (req, res) => {
       const { user_id, user_password } = req.body;
-
-      if (!user_id) {
-        return new Error("type user id");
+      // TODO : later you move the service logic to service
+      if (!AuthService.userValidate(req)) {
+        return new Error("Something went wrong");
       }
 
-      if (!user_password) {
-        return new Error("type user password");
-      }
-
-      req.session.user = User.getUserInfo(undefined, {
+      req.session.user = AuthService.getUserInfo(undefined, {
         user_id,
         user_password
       });
