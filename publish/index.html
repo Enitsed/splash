@@ -1,109 +1,78 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Hello</title>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="/index.css" rel="stylesheet" type="text/css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    />
+  <title>Hello</title>
 
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script type="text/javascript" src="/index.js"></script>
-  </head>
+  <link href="/index.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
 
-  <body>
-    <header>
-      <div class="header">
-        <div class="title">
-          <h1>
-            Wicked Child
-          </h1>
-        </div>
-        <div class="nav">
-          <button class="btn_header" onclick="$('.modal_join').modal('show');">
-            Join
-          </button>
-          <button class="btn_header" onclick="$('.modal_login').modal('show');">
-            Login
-          </button>
-          <button class="btn_header">
-            Find ID / Password
-          </button>
-        </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header">
+      <div class="title_box">
+        <h1 class="title">
+          Lorem Ipsum
+        </h1>
       </div>
-      <div class="menu">
-        <ul>
-          <li role="button"><a href="#">home</a></li>
-          <li><a href="/board.html">board</a></li>
-          <li><a href="#">photo</a></li>
-          <li><a href="#">about</a></li>
-          <li><a href="#">help</a></li>
-        </ul>
-      </div>
-    </header>
-    <div class="container">
-      <section class="contents">
-        <div class="poem-title">
-          <p>아침엔 푸른바다</p>
-          <p>저녁엔 주황바다</p>
-          <p>새벽엔 검은바다</p>
-        </div>
-      </section>
-      <section class="contents"></section>
-    </div>
-    <footer>
-      <div class="footer">
-        <h2 class="footer-title">
-          2019. 08. 31. 계약 종료.
-        </h2>
-        <p class="footer-text">
-          copyright by enitsed.
-        </p>
-      </div>
-    </footer>
-    <div class="ui modal modal_login">
-      <i class="close icon"></i>
-      <div class="header">
-        Login Form
-      </div>
-      <div class="content">
-        <div class="ui big form">
-          <div class="two fields">
-            <div class="field">
-              <label>ID</label>
-              <input placeholder="ID" type="text" />
-            </div>
-            <div class="field">
-              <label>Password</label>
-              <input placeholder="Password" type="password" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="actions">
-        <div class="ui button">Cancel</div>
-        <div class="ui submit button">OK</div>
+      <div class="nav">
+        <button class="btn_header" onclick="$('.modal_join').modal('show');">
+          Join
+        </button>
+        <button class="btn_header" onclick="$('.modal_login').modal('show');">
+          Login
+        </button>
+        <button class="btn_header">
+          Find ID / Password
+        </button>
       </div>
     </div>
-    <div class="ui modal modal_join">
-      <i class="close icon"></i>
-      <div class="header">
-        Join Form
+    <div class="menu">
+      <ul>
+        <li role="button"><a href="#">Home</a></li>
+        <li><a href="/board.html">Board</a></li>
+        <li><a href="#">Album</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+  </header>
+  <div class="container">
+    <section class="contents">
+      <div class="poem-title">
+        <p class="daytime">아침엔 푸른바다</p>
+        <p class="evening">저녁엔 주황바다</p>
+        <p class="midnight">새벽엔 검은바다</p>
       </div>
-      <div class="content">
-        <div class="ui big form">
+    </section>
+  </div>
+  <footer>
+    <div class="footer">
+      <h2 class="footer-title">
+        2019. 08. 31. 계약 종료.
+      </h2>
+      <p class="footer-text">
+        copyright by enitsed.
+      </p>
+    </div>
+  </footer>
+  <div class="ui modal modal_login">
+    <i class="close icon"></i>
+    <div class="header">
+      Login Form
+    </div>
+    <div class="content">
+      <div class="ui big form">
+        <div class="two fields">
           <div class="field">
             <label>ID</label>
             <input placeholder="ID" type="text" />
@@ -112,16 +81,41 @@
             <label>Password</label>
             <input placeholder="Password" type="password" />
           </div>
-          <div class="field">
-            <label>Name</label>
-            <input placeholder="Name" type="text" />
-          </div>
         </div>
       </div>
-      <div class="actions">
-        <div class="ui button">Cancel</div>
-        <div class="ui submit button">OK</div>
+    </div>
+    <div class="actions">
+      <div class="ui button">Cancel</div>
+      <div class="ui submit button">OK</div>
+    </div>
+  </div>
+  <div class="ui modal modal_join">
+    <i class="close icon"></i>
+    <div class="header">
+      Join Form
+    </div>
+    <div class="content">
+      <div class="ui big form">
+        <div class="field">
+          <label>ID</label>
+          <input placeholder="ID" type="text" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input placeholder="Password" type="password" />
+        </div>
+        <div class="field">
+          <label>Name</label>
+          <input placeholder="Name" type="text" />
+        </div>
       </div>
     </div>
-  </body>
+    <div class="actions">
+      <div class="ui button">Cancel</div>
+      <div class="ui submit button">OK</div>
+    </div>
+  </div>
+</body>
+
+  <script type="text/javascript" src="/index.js"></script>
 </html>

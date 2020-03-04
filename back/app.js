@@ -19,6 +19,10 @@ class App {
 
     //Literal object containing the configurations
     this.configs = {
+      get stage() {
+        return process.env.STAGE || "development";
+      },
+
       get port() {
         return process.env.PORT || 3010;
       }
@@ -47,7 +51,10 @@ class App {
         secret: process.env.UNIQUE_KEY || "test",
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true, maxAge: 60000 }
+        cookie: {
+          secure: this.configs.stage === "production",
+          maxAge: 60000
+        }
       })
     );
 
@@ -73,7 +80,7 @@ class App {
       console.log(
         "Express server running project on port " + this.configs.port + "."
       );
-      console.log(`Environment: ${process.env.STAGE || "development"}`);
+      console.log(`Environment: ${this.configs.stage}`);
     });
   }
 }

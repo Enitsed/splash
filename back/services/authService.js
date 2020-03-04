@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user/user");
+const Auth = require("../models/auth/authManage");
+
 const authService = {
   // check user data is wrong or not
-  userValidate: function(req) {
-    const { user_id, user_password } = req.body;
-
+  userValidate: function(user_id, user_password) {
     if (validateId(user_id)) {
       return false;
     }
@@ -18,19 +18,18 @@ const authService = {
   /**
    * Returns a user by its user_id and password
    */
-  getUserInfo: async function(_, { user_id, user_password }) {
-    const fields = {
-      user_id
-    };
-
-    const user_data = await User.findByFields({
-      fields
+  getUserInfo: function(_, { user_id, user_password }) {
+    const login_result = User.findByFields({
+      fields: { user_id }
     })
       .then(result => {
+        if (!this.userValidate(user_id, user_password)) {
+          throw new Error("Invalid Credentials. Please try again.");
+        }
+
         if (!result || result.length < 1) {
           throw new Error("No user exists");
         }
-
         const userData = result.shift();
 
         const password_check_result = bcrypt.compareSync(
@@ -38,14 +37,30 @@ const authService = {
           userData.user_password
         );
 
+        // when failed to login
         if (!password_check_result) {
+          Auth.createEntry(_, {
+            user_num: userData.user_seq,
+            login_ip: _.ip,
+            login_date: new Date(),
+            login_status: "failed"
+          });
           throw new Error("Password Incorrect");
         }
+
+        // when login succesfully
+        Auth.createEntry(_, {
+          user_num: userData.user_seq,
+          login_ip: _.ip,
+          login_date: new Date(),
+          login_status: "success"
+        });
 
         return userData;
       })
       .catch(err => console.log(err));
-    return user_data;
+
+    return login_result;
   }
 };
 

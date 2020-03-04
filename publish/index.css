@@ -19,11 +19,11 @@ header {
     min-height: 5em;
 }
 
-.header .title {
+.header .title_box {
     flex-grow: 3;
 }
 
-.header .title h2 {}
+.header .title_box .title {}
 
 .header .nav {
     flex-grow: 1;
@@ -31,15 +31,19 @@ header {
 }
 
 .header .nav .btn_header {
-    padding: 7px;
-    border-radius: 5px;
-    color: antiquewhite;
     background: var(--main-color);
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 0.1rem 0.1rem;
+    color: antiquewhite;
     cursor: pointer;
+    padding: 7px;
+    margin-right: 2px;
 }
 
 .header .nav .btn_header:hover {
     background-color: antiquewhite;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
     color: var(--main-light-color);
 }
 
@@ -55,9 +59,10 @@ header {
 
 .menu ul li {
     background-color: var(--main-color);
+    box-shadow: 1px 1px 0.1rem 0.1rem;
     margin: 5px;
     padding: 3px;
-    border: 1px solid antiquewhite;
+    border: 0;
     border-radius: 5px;
     list-style: none;
     height: 100%;
@@ -67,6 +72,7 @@ header {
 
 .menu ul li:hover {
     background-color: antiquewhite;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
     color: var(--main-color);
 }
 
@@ -123,7 +129,7 @@ footer {
 /* main.html */
 
 .poem-title {
-    line-height: 400px;
+    line-height: 600px;
     text-align: center;
 }
 
@@ -133,6 +139,7 @@ footer {
     background-position: center;
     line-height: inherit;
     margin: 0;
+    display: none;
 }
 
 .poem-title :nth-child(1) {

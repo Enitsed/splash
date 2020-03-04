@@ -65,6 +65,7 @@ module.exports = gql`
     email: String
     user_status: String
     create_time: Date
+    login_history: Auth_History
   }
 
   type Auth_History {
