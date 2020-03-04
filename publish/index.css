@@ -90,7 +90,6 @@ header {
 
 .container {
     margin: 0% auto;
-    width: 90%;
     min-height: 600px;
 }
 
@@ -99,10 +98,7 @@ header {
     width: 100%;
     min-height: 600px;
     margin: 0;
-    border-left: 0px;
-    border-bottom: 0px;
-    border-right: 0px;
-    border-style: solid;
+    border: 0px;
 }
 
 footer {
@@ -159,14 +155,20 @@ footer {
 
 
 /* board.html */
+.board_container {
+    height: 300px;
+    display: flex;
+    background-color: var(--main-color);
+}
+
 .board_table {
     position: relative;
-    margin: 0px auto;
-    width: 90%;
-    top: 1em;
+    margin: 2rem auto;
+    width: 45%;
     text-align: center;
     color: antiquewhite;
     border-spacing: 5px 5px;
+    box-shadow: 1px 1px 0.1em 0.1em black;
 }
 
 .board_table .board_table_head {
