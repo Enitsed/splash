@@ -1,22 +1,26 @@
-(function() {
-  "use strict";
-  visibleTextOnTime();
+(function () {
+    "use strict";
+    visibleTextOnTime();
 })();
 
 function visibleTextOnTime() {
-    const time = { midnight : 0, daytime : 8, evening : 18};
-    
+    let time = {
+        midnight: 0,
+        daytime: 8,
+        evening: 18
+    };
+
     let nowTime = new Date().getHours();
-    
-    if(nowTime >= time.evening) {
+
+    if (nowTime >= time.evening) {
         // evening
         console.log("evening");
         $('.evening').show();
-    } else if(nowTime >= time.daytime && nowTime < time.evening) {
+    } else if (nowTime >= time.daytime && nowTime < time.evening) {
         // daytime
         console.log("daytime");
         $('.daytime').show();
-    } else if(nowTime >= time.midnight) {
+    } else if (nowTime >= time.midnight) {
         // midnight
         console.log("midnight");
         $('.midnight').show();

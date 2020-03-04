@@ -11,7 +11,7 @@ header {
     min-height: 5em;
 }
 
-.header {
+header > .header {
     display: flex;
     align-items: center;
     text-align: center;
@@ -54,7 +54,7 @@ header {
 
 .menu ul {
     display: flex;
-    justify-content: center;
+/*    justify-content: center;*/
 }
 
 .menu ul li {
@@ -68,6 +68,12 @@ header {
     height: 100%;
     text-align: center;
     min-width: 10%;
+}
+
+.menu ul li.active {
+    background-color: darkorange;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
+    color: var(--main-color);
 }
 
 .menu ul li:hover {
@@ -129,7 +135,7 @@ footer {
     text-align: center;
 }
 
-.poem-title>p {
+.poem-title > p {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -181,4 +187,38 @@ footer {
     background-color: var(--main-color);
 }
 
+/* album.html */
+.album_container {
+    padding: 1em;
+    background-color: var(--main-color);
+}
+
+.album_container .card > .content > p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.album_container .card {
+    animation-name: albumShaking;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* about.html */
+
+
+/* mobile */
 @media screen and (min-width: 1024px) {}
+
+/* animation */
+@keyframes albumShaking {
+    0% {
+        background-color: black;
+    }
+    
+    100% {
+        background-color: aquamarine;
+    }
+}
+

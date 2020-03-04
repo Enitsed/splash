@@ -9,11 +9,9 @@
     <title>Hello</title>
 
     <link href="/index.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script type="text/javascript" src="/index.js"></script>
 </head>
@@ -41,15 +39,15 @@
         <div class="menu">
             <ul>
                 <li role="button"><a href="/index.html">Home</a></li>
-                <li role="button"><a href="/board.html">Board</a></li>
-                <li role="button"><a href="#">Album</a></li>
-                <li role="button"><a href="#">About</a></li>
+                <li role="button" class="active"><a href="/board.html">Board</a></li>
+                <li role="button"><a href="/album.html">Album</a></li>
+                <li role="button"><a href="/about.html">About</a></li>
             </ul>
         </div>
     </header>
     <div class="container">
         <section class="contents">
-           <div class="board_container">
+            <div class="board_container">
                 <table class="board_table">
                     <thead class="board_table_head">
                         <caption></caption>
@@ -73,8 +71,8 @@
                             <td>0</td>
                         </tr>
                     </tbody>
-                    </table>
-                    <table class="board_table">
+                </table>
+                <table class="board_table">
                     <thead class="board_table_head">
                         <caption></caption>
                         <tr class="board_table_row">
@@ -98,57 +96,57 @@
                         </tr>
                     </tbody>
                 </table>
-           </div>
-           <div class="board_container">
-            <table class="board_table">
-                <thead class="board_table_head">
-                    <caption></caption>
-                    <tr class="board_table_row">
-                        <th scope="col" colspan="5">Album</th>
-                    </tr>
-                </thead>
-                <tbody class="board_table_body">
-                    <tr class="board_table_row">
-                        <th scope="row">2</th>
-                        <td><a href="#">안녕하세요</a></td>
-                        <td><a href="#">닉네임</a></td>
-                        <td>1 hour ago</td>
-                        <td>0</td>
-                    </tr>
-                    <tr class="board_table_row">
-                        <th scope="row">1</th>
-                        <td><a href="#">안녕하세요</a></td>
-                        <td><a href="#">닉네임</a></td>
-                        <td>1 hour ago</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="board_table">
-                <thead class="board_table_head">
-                    <caption></caption>
-                    <tr class="board_table_row">
-                        <th scope="col" colspan="5">Notice</th>
-                    </tr>
-                </thead>
-                <tbody class="board_table_body">
-                    <tr class="board_table_row">
-                        <th scope="row">2</th>
-                        <td><a href="#">안녕하세요</a></td>
-                        <td><a href="#">닉네임</a></td>
-                        <td>1 hour ago</td>
-                        <td>0</td>
-                    </tr>
-                    <tr class="board_table_row">
-                        <th scope="row">1</th>
-                        <td><a href="#">안녕하세요</a></td>
-                        <td><a href="#">닉네임</a></td>
-                        <td>1 hour ago</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-           </div>
+            </div>
+            <div class="board_container">
+                <table class="board_table">
+                    <thead class="board_table_head">
+                        <caption></caption>
+                        <tr class="board_table_row">
+                            <th scope="col" colspan="5">Album</th>
+                        </tr>
+                    </thead>
+                    <tbody class="board_table_body">
+                        <tr class="board_table_row">
+                            <th scope="row">2</th>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td><a href="#">닉네임</a></td>
+                            <td>1 hour ago</td>
+                            <td>0</td>
+                        </tr>
+                        <tr class="board_table_row">
+                            <th scope="row">1</th>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td><a href="#">닉네임</a></td>
+                            <td>1 hour ago</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="board_table">
+                    <thead class="board_table_head">
+                        <caption></caption>
+                        <tr class="board_table_row">
+                            <th scope="col" colspan="5">Notice</th>
+                        </tr>
+                    </thead>
+                    <tbody class="board_table_body">
+                        <tr class="board_table_row">
+                            <th scope="row">2</th>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td><a href="#">닉네임</a></td>
+                            <td>1 hour ago</td>
+                            <td>0</td>
+                        </tr>
+                        <tr class="board_table_row">
+                            <th scope="row">1</th>
+                            <td><a href="#">안녕하세요</a></td>
+                            <td><a href="#">닉네임</a></td>
+                            <td>1 hour ago</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
     <footer>
@@ -161,6 +159,4 @@
             </p>
         </div>
     </footer>
-</body>
-
-</html>
+</body></html>
