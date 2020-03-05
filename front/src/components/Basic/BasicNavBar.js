@@ -13,11 +13,12 @@ class NavBar extends Component {
   };
 
   render() {
-    if (this.props.userLogin) {
+    if (this.props.userData.user_name) {
       return (
         <div className="nav">
           <p>
             Welcome!
+            <br />
             {this.props.userData ? this.props.userData.user_name : null}
           </p>
           <BasicButton
@@ -43,7 +44,6 @@ class NavBar extends Component {
 const BasicNavBar = styled(NavBar)``;
 
 const mapStateToProps = ({ UserReducer }) => ({
-  userLogin: UserReducer.userLogin,
   userData: UserReducer.userData,
 });
 
@@ -53,7 +53,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BasicNavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(BasicNavBar);

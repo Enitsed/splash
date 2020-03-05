@@ -48,13 +48,14 @@ export class LoginModal extends Component {
     if (user !== undefined) {
       user
         .then(userData => {
-          if (!userData || userData === undefined) {
+          if (!userData) {
             alert('회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.');
             return;
           }
 
           tryLogin(userData);
         })
+
         .catch(err => {
           console.log(err);
         });
