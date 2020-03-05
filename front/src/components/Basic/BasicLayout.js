@@ -25,13 +25,30 @@ class Layout extends Component {
 }
 
 function testComponent() {
-  return (
-    <div className="poem-title">
-      <p>아침엔 푸른바다</p>
-      <p>저녁엔 주황바다</p>
-      <p>새벽엔 검은바다</p>
-    </div>
-  );
+  return <div className="poem-title">{visibleTextOnTime()}</div>;
+}
+
+function visibleTextOnTime() {
+  const time = {
+    midnight: 0,
+    daytime: 8,
+    evening: 18,
+  };
+
+  const nowTime = new Date().getHours();
+
+  if (nowTime >= time.evening) {
+    // evening
+    return <p className="evening">저녁엔 주황바다</p>;
+  }
+  if (nowTime >= time.daytime && nowTime < time.evening) {
+    // daytime
+    return <p className="daytime">아침엔 푸른바다</p>;
+  }
+  if (nowTime >= time.midnight) {
+    // midnight
+    return <p className="midnight">새벽엔 검은바다</p>;
+  }
 }
 
 function testComponent2() {

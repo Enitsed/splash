@@ -4,9 +4,13 @@ const initialState = {
     user_seq: 0,
     user_name: '',
     gender: '',
-    user_status: 0,
+    user_id: '',
+    address: '',
+    phone_num: '',
+    email: '',
+    user_status: 'inactive',
+    create_time: '',
   },
-  IsLogin: false,
 };
 
 // write reducer here

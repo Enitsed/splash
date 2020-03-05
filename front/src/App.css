@@ -12,11 +12,11 @@ header {
     min-height: 5em;
 }
 
-.header .title {
+.header .title_box {
     flex-grow: 3;
 }
 
-.header .title h2 {}
+.header .title_box .title {}
 
 .header .main_logo {
     margin-left: 10px;
@@ -28,28 +28,57 @@ header {
 }
 
 .header .nav .btn_header {
-    padding: 7px;
-    border-radius: 5px;
-    color: antiquewhite;
     background: var(--main-color);
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 0.1rem 0.1rem;
+    color: antiquewhite;
     cursor: pointer;
+    padding: 7px;
+    margin-right: 2px;
 }
 
 .header .nav .btn_header:hover {
     background-color: antiquewhite;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
     color: var(--main-light-color);
 }
 
 .menu {
     position: relative;
     background-color: var(--main-light-color);
-    /* min-height: 3em; */
+    min-height: 3em;
     top: 100%;
     display: block;
 }
 
+.menu ul {
+    display: flex;
+    /*    justify-content: center;*/
+}
+
+.menu ul li {
+    background-color: var(--main-color);
+    box-shadow: 1px 1px 0.1rem 0.1rem;
+    margin: 5px;
+    padding: 3px;
+    border: 0;
+    border-radius: 5px;
+    list-style: none;
+    height: 100%;
+    text-align: center;
+    min-width: 10%;
+}
+
+.menu ul li.active {
+    background-color: darkorange;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
+    color: var(--main-color);
+}
+
 .menu ul li:hover {
     background-color: antiquewhite;
+    box-shadow: 1px 1px 0.1rem 0.1rem black;
     color: var(--main-color);
 }
 
@@ -65,18 +94,17 @@ header {
     height: 100%;
 }
 
+.container {
+    margin: 0% auto;
+    min-height: 600px;
+}
+
 .contents {
     background-color: var(--main-light-color);
     width: 100%;
     min-height: 600px;
     margin: 0;
-}
-
-.albumWrapper {
-    width: 95%;
-    margin-left: 1.2rem;
-    margin-right: 1.2rem;
-    padding: 1.5rem;
+    border: 0px;
 }
 
 footer {
@@ -103,7 +131,7 @@ footer {
 /* main.html */
 
 .poem-title {
-    line-height: 400px;
+    line-height: 600px;
     text-align: center;
 }
 
@@ -113,6 +141,7 @@ footer {
     background-position: center;
     line-height: inherit;
     margin: 0;
+    display: none;
 }
 
 .poem-title :nth-child(1) {
@@ -132,14 +161,20 @@ footer {
 
 
 /* board.html */
+.board_container {
+    height: 300px;
+    display: flex;
+    background-color: var(--main-color);
+}
+
 .board_table {
     position: relative;
-    margin: 0px auto;
-    width: 90%;
-    top: 1em;
+    margin: 2rem auto;
+    width: 45%;
     text-align: center;
     color: antiquewhite;
     border-spacing: 5px 5px;
+    box-shadow: 1px 1px 0.1em 0.1em black;
 }
 
 .board_table .board_table_head {
@@ -151,6 +186,26 @@ footer {
     width: 100%;
     background-color: var(--main-color);
 }
+
+/* album.html */
+.album_container {
+    padding: 1em;
+    background-color: var(--main-color);
+}
+
+.album_container .card>.content>p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.album_container .card {
+    animation-name: albumShaking;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* about.html */
 
 
 @media screen and (min-width: 1025px) {
@@ -207,5 +262,18 @@ footer {
         text-align: center;
         font-weight: bold;
     }
+}
 
+/* mobile */
+@media screen and (min-width: 1024px) {}
+
+/* animation */
+@keyframes albumShaking {
+    0% {
+        background-color: black;
+    }
+
+    100% {
+        background-color: aquamarine;
+    }
 }
