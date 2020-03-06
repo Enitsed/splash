@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class BasicMenu extends Component {
   render() {
+    const currentPath = this.props.location.pathname;
+
     return (
       <div className={this.props.className}>
         <ul>
-          <li className="active">
+          <li className={currentPath === '/' ? 'active' : ''}>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className={currentPath === '/board' ? 'active' : ''}>
             <Link to="/board">Board</Link>
           </li>
-          <li>
+          <li className={currentPath === '/album' ? 'active' : ''}>
             <Link to="/album">Album</Link>
           </li>
-          <li>
+          <li className={currentPath === '/about' ? 'active' : ''}>
             <Link to="/about">About me</Link>
           </li>
         </ul>
@@ -24,4 +26,4 @@ class BasicMenu extends Component {
   }
 }
 
-export default BasicMenu;
+export default withRouter(BasicMenu);

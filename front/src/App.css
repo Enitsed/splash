@@ -19,23 +19,24 @@ header {
 .header .title_box .title {}
 
 .header .main_logo {
-    margin-left: 10px;
+    margin-left: 5vw;
 }
 
 .header .nav {
+    margin-right: 3vw;
     flex-grow: 1;
     text-align: center;
 }
 
 .header .nav .btn_header {
     background: var(--main-color);
-    border: 0;
+    border: 0 var(--main-color);
     border-radius: 5px;
-    box-shadow: 1px 1px 0.1rem 0.1rem;
+    box-shadow: 1px 1px 0.1rem;
     color: antiquewhite;
     cursor: pointer;
     padding: 7px;
-    margin-right: 2px;
+    margin-right: 10px;
 }
 
 .header .nav .btn_header:hover {
@@ -54,7 +55,7 @@ header {
 
 .menu ul {
     display: flex;
-    /*    justify-content: center;*/
+    /* justify-content: center; */
 }
 
 .menu ul li {
@@ -141,7 +142,6 @@ footer {
     background-position: center;
     line-height: inherit;
     margin: 0;
-    display: none;
 }
 
 .poem-title :nth-child(1) {

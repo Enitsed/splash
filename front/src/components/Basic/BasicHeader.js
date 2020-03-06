@@ -8,15 +8,11 @@ import BasicMenu from './BasicMenu';
 class CustomHeader extends Component {
   constructor(props) {
     super(props);
+    this.state = { active: false };
   }
 
-  state = { active: false };
-
-  toggleActive = () => {
-    this.setState({ active: !this.state.active });
-  };
-
   render() {
+    const { active } = this.state;
     return (
       <header>
         <div className="header">
@@ -24,7 +20,7 @@ class CustomHeader extends Component {
             <Icon
               className="sidebar main_logo"
               size="big"
-              onClick={this.toggleActive}
+              onClick={() => this.setState({ active: !active })}
             />
           </MediaQuery>
           <div className="title_box">

@@ -129,10 +129,6 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(null, mapDispatchToProps)(LoginModal);
 
-LoginModal.defaultProps = {
-  tryLogin: undefined,
-};
-
 LoginModal.propTypes = {
   tryLogin: PropTypes.func,
 };
