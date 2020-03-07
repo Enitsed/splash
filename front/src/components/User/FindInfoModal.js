@@ -3,28 +3,27 @@ import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 export class FindInfoModal extends Component {
-  state = {
-    modalOpen: false,
-  };
-
-  handleOpen = () => {
-    this.setState({ modalOpen: true });
-  };
-
-  handleClose = () => {
-    this.setState({ modalOpen: false });
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: false,
+    };
+  }
 
   render() {
     return (
       <Modal
         trigger={
-          <Button className="btn_header" size="tiny" onClick={this.handleOpen}>
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.setState({ modalOpen: true })}
+          >
             Find ID / Password
           </Button>
         }
         open={this.state.modalOpen}
-        onClose={this.handleClose}
+        onClose={() => this.setState({ modalOpen: false })}
         size="small"
       >
         <Header icon="browser" content="Find ID / Password" />
@@ -43,7 +42,11 @@ export class FindInfoModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={null} inverted>
+          <Button
+            color="green"
+            onClick={() => this.setState({ modalOpen: false })}
+            inverted
+          >
             <Icon name="checkmark" /> Submit
           </Button>
         </Modal.Actions>
@@ -56,7 +59,4 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(FindInfoModal);
+export default connect(null, mapDispatchToProps)(FindInfoModal);

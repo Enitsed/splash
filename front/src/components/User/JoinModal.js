@@ -1,50 +1,71 @@
-import React, { Component } from 'react'
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
+import React, { Component, useState } from 'react';
+import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
+
+function modalOpenButton(e) {
+  // think should change the way to pass this to the function.
+  // we can may use hooks. need to look into it.
+  return (
+    <Button
+      className="btn_header"
+      size="tiny"
+      onClick={() => e.setState({ modalOpen: true })}
+    >
+      Join
+    </Button>
+  );
+}
 
 export default class JoinModal extends Component {
-  state = { modalOpen: false }
-
-  handleOpen = () => this.setState({ modalOpen: true })
-
-  handleClose = () => this.setState({ modalOpen: false })
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: false,
+    };
+  }
 
   render() {
+    const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={<Button
-            className="btn_header"
-            size="tiny"
-            onClick={this.handleOpen}>Join</Button>}
-        open={this.state.modalOpen}
-        onClose={this.handleClose}
-        size='small'
+        trigger={modalOpenButton(this)}
+        open={modalOpen}
+        onClose={() => this.setState({ modalOpen: false })}
+        size="small"
       >
-        <Header icon='browser' content='Join Form' />
+        <Header icon="browser" content="Join Form" />
         <Modal.Content>
-            <Form size="big">
-                <Form.Field>
-                    <label>ID</label>
-                    <input placeholder="ID" type="text" />
-                </Form.Field>
-                <Form.Field>
-                    <label>Password</label>
-                    <input placeholder="Password" type="password" />
-                </Form.Field>
-                <Form.Field>
-                    <label>Name</label>
-                    <input placeholder="Name" type="text" />
-                </Form.Field>
-            </Form>
+          <Form size="big">
+            <Form.Field>
+              <label>ID</label>
+              <input placeholder="ID" type="text" />
+            </Form.Field>
+            <Form.Field>
+              <label>Password</label>
+              <input placeholder="Password" type="password" />
+            </Form.Field>
+            <Form.Field>
+              <label>Name</label>
+              <input placeholder="Name" type="text" />
+            </Form.Field>
+          </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='red' onClick={this.handleClose} inverted>
+          <Button
+            color="red"
+            onClick={() => this.setState({ modalOpen: false })}
+            inverted
+          >
             Cancel
           </Button>
-          <Button color='green' onClick={this.handleClose} inverted>
-            <Icon name='checkmark' /> Submit
+          <Button
+            color="green"
+            onClick={() => this.setState({ modalOpen: false })}
+            inverted
+          >
+            <Icon name="checkmark" /> Submit
           </Button>
         </Modal.Actions>
       </Modal>
-    )
+    );
   }
 }
