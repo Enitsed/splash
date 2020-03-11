@@ -5,6 +5,14 @@ import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
 import { requestUserData } from '../../services/UserService';
 
+function modalOpenButton(e) {
+  return (
+    <Button className="btn_header" size="tiny" onClick={() => e.handleOpen()}>
+      Login
+    </Button>
+  );
+}
+
 export class LoginModal extends Component {
   constructor(props) {
     super(props);
@@ -74,15 +82,7 @@ export class LoginModal extends Component {
     const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={
-          <Button
-            className="btn_header"
-            size="tiny"
-            onClick={() => this.handleOpen()}
-          >
-            Login
-          </Button>
-        }
+        trigger={modalOpenButton}
         open={modalOpen}
         onClose={() => this.handleClose()}
         size="small"
@@ -92,20 +92,28 @@ export class LoginModal extends Component {
           <Form size="big">
             <Form.Group widths="equal">
               <Form.Field>
-                <label>ID</label>
-                <input
-                  placeholder="ID"
-                  type="text"
-                  onChange={e => this.idInputHandler(e)}
-                />
+                <label htmlFor="id_input">
+                  ID
+                  <input
+                    id="id_input"
+                    name="id_input"
+                    placeholder="ID"
+                    type="text"
+                    onChange={e => this.idInputHandler(e)}
+                  />
+                </label>
               </Form.Field>
               <Form.Field>
-                <label>Password</label>
-                <input
-                  placeholder="Password"
-                  type="password"
-                  onChange={e => this.passwordInputHandler(e)}
-                />
+                <label htmlFor="password_input">
+                  Password
+                  <input
+                    id="password_input"
+                    name="password_input"
+                    placeholder="Password"
+                    type="password"
+                    onChange={e => this.passwordInputHandler(e)}
+                  />
+                </label>
               </Form.Field>
             </Form.Group>
           </Form>
@@ -129,6 +137,11 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(null, mapDispatchToProps)(LoginModal);
 
+LoginModal.defaultProps = {
+  tryLogin() {
+    return () => false;
+  },
+};
 LoginModal.propTypes = {
   tryLogin: PropTypes.func,
 };

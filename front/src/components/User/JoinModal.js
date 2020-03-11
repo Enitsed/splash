@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 
 function modalOpenButton(e) {
@@ -23,46 +23,64 @@ export default class JoinModal extends Component {
     };
   }
 
+  closeModal() {
+    this.setState({ modalOpen: false });
+  }
+
   render() {
     const { modalOpen } = this.state;
     return (
       <Modal
         trigger={modalOpenButton(this)}
         open={modalOpen}
-        onClose={() => this.setState({ modalOpen: false })}
+        onClose={() => this.closeModal()}
         size="small"
       >
         <Header icon="browser" content="Join Form" />
         <Modal.Content>
           <Form size="big">
             <Form.Field>
-              <label>ID</label>
-              <input placeholder="ID" type="text" />
+              <label htmlFor="id_input">
+                ID
+                <input
+                  id="id_input"
+                  name="id_input"
+                  placeholder="ID"
+                  type="text"
+                />
+              </label>
             </Form.Field>
             <Form.Field>
-              <label>Password</label>
-              <input placeholder="Password" type="password" />
+              <label htmlFor="password_input">
+                Password
+                <input
+                  id="password_input"
+                  name="password_input"
+                  placeholder="Password"
+                  type="password"
+                />
+              </label>
             </Form.Field>
             <Form.Field>
-              <label>Name</label>
-              <input placeholder="Name" type="text" />
+              <label htmlFor="name_input">
+                Name
+                <input
+                  id="name_input"
+                  name="name_input"
+                  placeholder="Name"
+                  type="text"
+                />
+              </label>
             </Form.Field>
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button
-            color="red"
-            onClick={() => this.setState({ modalOpen: false })}
-            inverted
-          >
+          <Button color="red" onClick={() => this.closeModal()} inverted>
             Cancel
           </Button>
-          <Button
-            color="green"
-            onClick={() => this.setState({ modalOpen: false })}
-            inverted
-          >
-            <Icon name="checkmark" /> Submit
+          <Button color="green" onClick={() => this.closeModal()} inverted>
+            <Icon name="checkmark" />
+            Submit
           </Button>
         </Modal.Actions>
       </Modal>
