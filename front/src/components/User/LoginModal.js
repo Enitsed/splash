@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
 import { requestUserData } from '../../services/UserService';
 
-function modalOpenButton(e) {
+function loginModalOpenButton(e) {
   return (
     <Button className="btn_header" size="tiny" onClick={() => e.handleOpen()}>
       Login
@@ -13,7 +13,7 @@ function modalOpenButton(e) {
   );
 }
 
-export class LoginModal extends Component {
+class LoginModal extends Component {
   constructor(props) {
     super(props);
 
@@ -82,7 +82,7 @@ export class LoginModal extends Component {
     const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={modalOpenButton}
+        trigger={loginModalOpenButton(this)}
         open={modalOpen}
         onClose={() => this.handleClose()}
         size="small"

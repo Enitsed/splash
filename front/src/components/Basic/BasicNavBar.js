@@ -1,47 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import Proptypes from 'prop-types';
 import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
 import FindInfoModal from '../User/FindInfoModal';
 import { Logout } from '../../Redux/Actions';
 
-class NavBar extends Component {
-  clickHandler = () => {
-    return this.props.tryLogout();
-  };
-
+class BasicNavBar extends Component {
   render() {
-    if (this.props.userData.user_name) {
+    const { userData, tryLogout } = this.props;
+
+    if (userData) {
       return (
         <div className="nav">
           <p>
             Welcome!
             <br />
-            {this.props.userData ? this.props.userData.user_name : null}
+            {userData.user_name}
           </p>
           <BasicButton
             className="btn_header"
-            clickHandler={this.clickHandler}
+            clickHandler={() => {
+              tryLogout();
+            }}
             text="Logout"
             size="tiny"
           />
         </div>
       );
-    } else {
-      return (
-        <div className="nav">
-          <LoginModal />
-          <JoinModal />
-          <FindInfoModal />
-        </div>
-      );
     }
+
+    return (
+      <div className="nav">
+        <LoginModal />
+        <JoinModal />
+        <FindInfoModal />
+      </div>
+    );
   }
 }
-
-const BasicNavBar = styled(NavBar)``;
 
 const mapStateToProps = ({ UserReducer }) => ({
   userData: UserReducer.userData,
@@ -51,6 +49,20 @@ const mapDispatchToProps = dispatch => {
   return {
     tryLogout: () => dispatch(Logout()),
   };
+};
+
+BasicNavBar.defaultProps = {
+  userData: { user_name: '' },
+  tryLogout: () => {
+    return false;
+  },
+};
+
+BasicNavBar.propTypes = {
+  userData: Proptypes.shape({
+    user_name: Proptypes.string,
+  }),
+  tryLogout: Proptypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicNavBar);

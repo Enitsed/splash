@@ -28,7 +28,7 @@ class CustomHeader extends Component {
           </div>
           <BasicNavBar />
         </div>
-        <BasicMenu className={this.state.active ? 'menu' : 'menu hidden'} />
+        <BasicMenu className={active ? 'menu' : 'menu hidden'} />
       </header>
     );
   }

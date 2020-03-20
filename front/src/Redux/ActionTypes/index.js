@@ -4,4 +4,4 @@ const UserActionTypes = {
   LOG_OUT: 'LOG_OUT',
 };
 
-export { UserActionTypes };
+export default { UserActionTypes };

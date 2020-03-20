@@ -15,17 +15,16 @@ const initialState = {
 
 // write reducer here
 const UserReducer = (state = initialState, { type, payload }) => {
+  const userState = payload ? JSON.parse(JSON.stringify(payload)) : state;
   switch (type) {
     case 'LOG_IN':
-      this.state = JSON.parse(JSON.stringify(payload));
-      console.dir(this.state);
-      return state;
+      console.dir(userState);
+      return userState;
     case 'LOG_OUT':
-      this.state = JSON.parse(JSON.stringify(payload));
-      console.dir(this.state);
-      return this.state;
+      console.dir(userState);
+      return userState;
     default:
-      return this.state;
+      return userState;
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 
-function modalOpenButton(e) {
+function joinModalOpenButton(e) {
   // think should change the way to pass this to the function.
   // we can may use hooks. need to look into it.
   return (
@@ -31,7 +31,7 @@ export default class JoinModal extends Component {
     const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={modalOpenButton(this)}
+        trigger={joinModalOpenButton(this)}
         open={modalOpen}
         onClose={() => this.closeModal()}
         size="small"

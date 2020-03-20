@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-function modalOpenButton(e) {
+function findInfoModalOpenButton(e) {
   return (
     <Button
       className="btn_header"
@@ -13,7 +13,7 @@ function modalOpenButton(e) {
     </Button>
   );
 }
-export class FindInfoModal extends Component {
+class FindInfoModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,7 @@ export class FindInfoModal extends Component {
     const { modalOpen } = this.state;
     return (
       <Modal
-        trigger={modalOpenButton(this)}
+        trigger={findInfoModalOpenButton(this)}
         open={modalOpen}
         onClose={() => this.closeModal()}
         size="small"
