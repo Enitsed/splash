@@ -40,7 +40,7 @@ class LoginModal extends Component {
 
   login() {
     const { id, password } = this.state;
-    const { tryLogin } = this.props;
+    const { loginComplete } = this.props;
 
     if (id === '') {
       alert('아이디를 입력해주세요.');
@@ -61,7 +61,7 @@ class LoginModal extends Component {
             return;
           }
 
-          tryLogin(userData);
+          loginComplete(userData);
         })
 
         .catch(err => {
@@ -131,17 +131,17 @@ class LoginModal extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    tryLogin: userData => dispatch(Login(userData)),
+    loginComplete: userData => dispatch(Login(userData)),
   };
 };
 
 export default connect(null, mapDispatchToProps)(LoginModal);
 
 LoginModal.defaultProps = {
-  tryLogin() {
+  loginComplete() {
     return () => false;
   },
 };
 LoginModal.propTypes = {
-  tryLogin: PropTypes.func,
+  loginComplete: PropTypes.func,
 };
