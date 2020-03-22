@@ -8,10 +8,10 @@ const Login = payload => ({
   },
 });
 
-const Logout = () => ({
+const Logout = payload => ({
   type: ActionTypes.UserActionTypes.LOG_OUT,
   payload: {
-    userData: null,
+    userData: payload,
   },
 });
 

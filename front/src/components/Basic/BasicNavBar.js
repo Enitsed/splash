@@ -10,19 +10,25 @@ import { Logout } from '../../Redux/Actions';
 class BasicNavBar extends Component {
   render() {
     const { userData, tryLogout } = this.props;
+    const userDataCookie = JSON.parse(localStorage.getItem('userData'));
 
-    if (userData.user_status === 'active') {
+    if (userData.user_name !== '' || userDataCookie) {
       return (
         <div className="nav">
           <p>
             Welcome!
             <br />
-            {userData.user_name}
+            {userData.user_name !== ''
+              ? userData.user_name
+              : userDataCookie.user_name}
           </p>
           <BasicButton
             className="btn_header"
             clickHandler={() => {
               tryLogout();
+              if (localStorage.getItem('userData')) {
+                localStorage.removeItem('userData');
+              }
             }}
             text="Logout"
             size="tiny"
@@ -53,9 +59,7 @@ const mapDispatchToProps = dispatch => {
 
 BasicNavBar.defaultProps = {
   userData: { user_name: '' },
-  tryLogout: () => {
-    return false;
-  },
+  tryLogout: () => {},
 };
 
 BasicNavBar.propTypes = {

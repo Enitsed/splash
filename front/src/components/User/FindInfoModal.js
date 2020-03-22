@@ -75,7 +75,6 @@ class FindInfoModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  console.dir(dispatch);
   return {};
 };
 

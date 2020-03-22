@@ -61,6 +61,7 @@ class LoginModal extends Component {
             return;
           }
 
+          localStorage.setItem('userData', JSON.stringify(userData));
           loginComplete(userData);
         })
 
