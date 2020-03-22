@@ -36,10 +36,12 @@ const requestUserData = (userId, userPassword) => {
         return;
       }
 
+      // eslint-disable-next-line consistent-return
       return data;
     })
     .catch(err => {
       console.error(err);
+      // eslint-disable-next-line no-alert
       alert('로그인이 실패하였습니다. 잠시 후 재시도 해주세요.');
       return err;
     });

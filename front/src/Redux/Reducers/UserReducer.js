@@ -15,14 +15,13 @@ const initialState = {
 
 // write reducer here
 const UserReducer = (state = initialState, { type, payload }) => {
-  let userState;
+  let userState = {};
   switch (type) {
     case 'LOG_IN':
       userState = JSON.parse(JSON.stringify(payload));
-      localStorage.setItem('userData', userState);
       return userState;
     case 'LOG_OUT':
-      return state;
+      return userState;
     default:
       return state;
   }
