@@ -4,7 +4,7 @@ header {
     min-height: 5em;
 }
 
-.header {
+.basic_header {
     display: flex;
     align-items: center;
     text-align: center;
@@ -12,23 +12,23 @@ header {
     min-height: 5em;
 }
 
-.header .title_box {
+.basic_header .title_box {
     flex-grow: 3;
 }
 
-.header .title_box .title {}
+.basic_header .title_box .title {}
 
-.header .main_logo {
+.basic_header .main_logo {
     margin-left: 5vw;
 }
 
-.header .nav {
+.basic_header .nav {
     margin-right: 3vw;
     flex-grow: 1;
     text-align: center;
 }
 
-.header .nav .btn_header {
+.basic_header .nav .btn_header {
     background: var(--main-color);
     border: 0 var(--main-color);
     border-radius: 5px;
@@ -39,7 +39,7 @@ header {
     margin-right: 10px;
 }
 
-.header .nav .btn_header:hover {
+.basic_header .nav .btn_header:hover {
     background-color: antiquewhite;
     box-shadow: 1px 1px 0.1rem 0.1rem black;
     color: var(--main-light-color);
@@ -230,20 +230,20 @@ footer {
 
 @media screen and (max-width: 1024px) {
 
-    .header .nav {
+    .basic_header .nav {
         display: flex;
         flex-direction: column;
     }
 
-    .header .nav button:first-of-type {
+    .basic_header .nav button:first-of-type {
         margin-top: 10px;
     }
 
-    .header .nav button {
+    .basic_header .nav button {
         margin: 5px;
     }
 
-    .header .nav button:last-of-type {
+    .basic_header .nav button:last-of-type {
         margin-bottom: 10px;
     }
 
