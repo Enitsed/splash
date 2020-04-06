@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 import MediaQuery from 'react-responsive';
 import BasicNavBar from './BasicNavBar';
 import BasicMenu from './BasicMenu';
 
-class CustomHeader extends Component {
+class BasicHeader extends Component {
   constructor(props) {
     super(props);
     this.state = { active: false };
@@ -15,7 +14,7 @@ class CustomHeader extends Component {
     const { active } = this.state;
     return (
       <header>
-        <div className="header">
+        <div className="basic_header">
           <MediaQuery maxWidth={1024}>
             <Icon
               className="sidebar main_logo"
@@ -33,7 +32,5 @@ class CustomHeader extends Component {
     );
   }
 }
-
-const BasicHeader = styled(CustomHeader)``;
 
 export default BasicHeader;

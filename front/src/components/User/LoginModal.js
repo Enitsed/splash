@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
+import {
+  Button,
+  Header,
+  Icon,
+  Modal,
+  Form,
+  Input,
+  Message,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Login } from '../../Redux/Actions';
 import { requestUserData } from '../../services/UserService';
-
-function loginModalOpenButton(e) {
-  return (
-    <Button className="btn_header" size="tiny" onClick={() => e.handleOpen()}>
-      Login
-    </Button>
-  );
-}
 
 class LoginModal extends Component {
   constructor(props) {
@@ -20,22 +20,12 @@ class LoginModal extends Component {
     this.state = {
       modalOpen: false,
       id: '',
+      idError: false,
       password: '',
+      passwordError: false,
+      errorMsg: '',
     };
-
-    this.handleOpen.bind(this);
-    this.handleClose.bind(this);
     this.login.bind(this);
-    this.idInputHandler.bind(this);
-    this.passwordInputHandler.bind(this);
-  }
-
-  handleOpen() {
-    this.setState({ modalOpen: true });
-  }
-
-  handleClose() {
-    this.setState({ modalOpen: false });
   }
 
   login() {
@@ -43,12 +33,15 @@ class LoginModal extends Component {
     const { loginComplete } = this.props;
 
     if (id === '') {
-      alert('아이디를 입력해주세요.');
+      this.setState({ idError: true, errorMsg: '아이디를 다시 입력하세요.' });
       return;
     }
 
     if (password === '') {
-      alert('비밀번호를 입력해주세요.');
+      this.setState({
+        passwordError: true,
+        errorMsg: '패스워드를 다시 입력하세요.',
+      });
       return;
     }
 
@@ -61,7 +54,6 @@ class LoginModal extends Component {
             return;
           }
 
-          localStorage.setItem('userData', JSON.stringify(userData));
           loginComplete(userData);
         })
 
@@ -71,52 +63,53 @@ class LoginModal extends Component {
     }
   }
 
-  idInputHandler(e) {
-    this.setState({ id: e.target.value });
-  }
-
-  passwordInputHandler(e) {
-    this.setState({ password: e.target.value });
-  }
-
   render() {
-    const { modalOpen } = this.state;
+    const { modalOpen, idError, passwordError, errorMsg } = this.state;
     return (
       <Modal
-        trigger={loginModalOpenButton(this)}
+        trigger={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.setState({ modalOpen: true })}
+          >
+            Login
+          </Button>
+        }
         open={modalOpen}
-        onClose={() => this.handleClose()}
+        onClose={() => this.setState({ modalOpen: false })}
         size="small"
       >
         <Header icon="browser" content="Login Form" />
         <Modal.Content>
-          <Form size="big">
+          <Form size="big" error={idError || passwordError}>
             <Form.Group widths="equal">
-              <Form.Field>
-                <label htmlFor="id_input">
-                  ID
-                  <input
-                    id="id_input"
-                    name="id_input"
-                    placeholder="ID"
-                    type="text"
-                    onChange={e => this.idInputHandler(e)}
-                  />
-                </label>
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="password_input">
-                  Password
-                  <input
-                    id="password_input"
-                    name="password_input"
-                    placeholder="Password"
-                    type="password"
-                    onChange={e => this.passwordInputHandler(e)}
-                  />
-                </label>
-              </Form.Field>
+              <Form.Field
+                id="form-input-control-error-id"
+                label="ID"
+                placeholder="ID"
+                control={Input}
+                error={idError}
+                onChange={e =>
+                  this.setState({ id: e.target.value, idError: false })
+                }
+              />
+              <Form.Field
+                label="Password"
+                placeholder="Password"
+                type="password"
+                control={Input}
+                error={passwordError}
+                onChange={e =>
+                  this.setState({
+                    password: e.target.value,
+                    passwordError: false,
+                  })
+                }
+              />
             </Form.Group>
+            <Message error header="Error" content={errorMsg} />
           </Form>
         </Modal.Content>
         <Modal.Actions>
