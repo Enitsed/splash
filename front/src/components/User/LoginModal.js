@@ -23,6 +23,7 @@ class LoginModal extends Component {
       idError: false,
       password: '',
       passwordError: false,
+      accountError: false,
       errorMsg: '',
     };
     this.login.bind(this);
@@ -48,23 +49,33 @@ class LoginModal extends Component {
     const user = requestUserData(id, password);
     if (user !== undefined) {
       user
-        .then(userData => {
+        .then((userData) => {
           if (!userData) {
-            alert('회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.');
+            this.setState({
+              accountError: true,
+              errorMsg:
+                '회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.',
+            });
             return;
           }
 
           loginComplete(userData);
         })
 
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          console.debug(err);
         });
     }
   }
 
   render() {
-    const { modalOpen, idError, passwordError, errorMsg } = this.state;
+    const {
+      modalOpen,
+      idError,
+      passwordError,
+      accountError,
+      errorMsg,
+    } = this.state;
     return (
       <Modal
         trigger={
@@ -83,16 +94,20 @@ class LoginModal extends Component {
       >
         <Header icon="browser" content="Login Form" />
         <Modal.Content>
-          <Form size="big" error={idError || passwordError}>
+          <Form size="big" error={idError || passwordError || accountError}>
             <Form.Group widths="equal">
               <Form.Field
                 id="form-input-control-error-id"
                 label="ID"
                 placeholder="ID"
                 control={Input}
-                error={idError}
-                onChange={e =>
-                  this.setState({ id: e.target.value, idError: false })
+                error={idError || accountError}
+                onChange={(e) =>
+                  this.setState({
+                    id: e.target.value,
+                    idError: false,
+                    accountError: false,
+                  })
                 }
               />
               <Form.Field
@@ -100,11 +115,12 @@ class LoginModal extends Component {
                 placeholder="Password"
                 type="password"
                 control={Input}
-                error={passwordError}
-                onChange={e =>
+                error={passwordError || accountError}
+                onChange={(e) =>
                   this.setState({
                     password: e.target.value,
                     passwordError: false,
+                    accountError: false,
                   })
                 }
               />
@@ -113,7 +129,7 @@ class LoginModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={e => this.login(e)} inverted>
+          <Button color="green" onClick={(e) => this.login(e)} inverted>
             <Icon name="checkmark" />
             Log in
           </Button>
@@ -123,9 +139,9 @@ class LoginModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    loginComplete: userData => dispatch(Login(userData)),
+    loginComplete: (userData) => dispatch(Login(userData)),
   };
 };
 
