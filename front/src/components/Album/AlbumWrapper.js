@@ -30,7 +30,7 @@ class CustomWrapper extends Component {
 
   render() {
     return (
-      <div className="albumWrapper">
+      <div className="album_container">
         <Card.Group
           itemsPerRow={this.state.showCardCnt}
           className={this.props.className}

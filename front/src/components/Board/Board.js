@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Board extends Component {
   render() {
     return (
-      <div>
+      <div className="board_container">
         <table className="board_table">
           <caption>Freeboard</caption>
           <thead className="board_table_head">

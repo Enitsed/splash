@@ -228,6 +228,7 @@ footer {
     }
 }
 
+/* mobile */
 @media screen and (max-width: 1024px) {
 
     .basic_header .nav {
@@ -263,9 +264,6 @@ footer {
         font-weight: bold;
     }
 }
-
-/* mobile */
-@media screen and (min-width: 1024px) {}
 
 /* animation */
 @keyframes albumShaking {

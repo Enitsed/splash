@@ -19,7 +19,9 @@ class BasicHeader extends Component {
             <Icon
               className="sidebar main_logo"
               size="big"
-              onClick={() => this.setState({ active: !active })}
+              onClick={() => {
+                this.setState({ active: !active });
+              }}
             />
           </MediaQuery>
           <div className="title_box">
@@ -27,7 +29,7 @@ class BasicHeader extends Component {
           </div>
           <BasicNavBar />
         </div>
-        <BasicMenu className={active ? 'menu' : 'menu hidden'} />
+        <BasicMenu active={active} />
       </header>
     );
   }
