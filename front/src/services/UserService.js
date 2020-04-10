@@ -28,18 +28,18 @@ const requestUserData = (userId, userPassword) => {
         user_password: userPassword,
       },
     })
-    .then(response => {
-      const data = response.data.data.userLogin;
+    .then((response) => {
+      const { data, errors } = response.data;
 
-      if (!data) {
+      if (errors && errors.shift()) {
         console.error('no data availiable');
         return;
       }
 
       // eslint-disable-next-line consistent-return
-      return data;
+      return data.userLogin;
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       // eslint-disable-next-line no-alert
       alert('로그인이 실패하였습니다. 잠시 후 재시도 해주세요.');
