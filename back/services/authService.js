@@ -15,6 +15,32 @@ const authService = {
 
     return true;
   },
+  signUpUserInfo: function (
+    _,
+    {
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+    }
+  ) {
+    const sign_up_result = User.createEntry(_, {
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+      create_time: new Date(),
+    });
+    return sign_up_result;
+  },
   /**
    * Returns a user by its user_id and password
    */
