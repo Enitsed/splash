@@ -34,7 +34,7 @@ class User extends DAO {
 
     // Find matching users
     return this.findByFields({
-      fields
+      fields,
     });
   }
 
@@ -52,7 +52,7 @@ class User extends DAO {
       phone_num,
       email,
       user_status,
-      create_time
+      create_time,
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
@@ -72,12 +72,12 @@ class User extends DAO {
           phone_num,
           email,
           user_status,
-          create_time
-        }
+          create_time,
+        },
       });
 
       return this.getByUserSeq(_, {
-        user_seq: _result.insertId
+        user_seq: _result.insertId,
       });
     } finally {
       // Releases the connection
@@ -100,7 +100,7 @@ class User extends DAO {
       phone_num,
       email,
       user_status,
-      create_time
+      create_time,
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
@@ -116,12 +116,12 @@ class User extends DAO {
           phone_num,
           email,
           user_status,
-          create_time
-        }
+          create_time,
+        },
       });
 
       return this.getByUserSeq(_, {
-        user_seq
+        user_seq,
       });
     } finally {
       // Releases the connection

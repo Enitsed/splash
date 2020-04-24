@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user/user");
 const Auth = require("../models/auth/authManage");
+const Constants = require("../models/common/Constants");
 
 const authService = {
   // check user data is wrong or not
@@ -15,20 +16,22 @@ const authService = {
 
     return true;
   },
-  signUpUserInfo: function (
+  // sign up service
+  signUpUserInfo: async function (
     _,
-    {
-      user_name,
-      user_id,
-      user_password,
-      gender,
-      address,
-      phone_num,
-      email,
-      user_status,
-    }
+    { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
-    const sign_up_result = User.createEntry(_, {
+    await User.findMatching(_, { user_id })
+      .then((res) => {
+        if (res.shift() || res.length > 0) {
+          throw new Error("user id already exists");
+        }
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+
+    const sign_up_result = await User.createEntry(_, {
       user_name,
       user_id,
       user_password,
@@ -36,7 +39,7 @@ const authService = {
       address,
       phone_num,
       email,
-      user_status,
+      user_status: Constants.USER_STATUS.ACTIVE,
       create_time: new Date(),
     });
     return sign_up_result;
@@ -44,7 +47,15 @@ const authService = {
   /**
    * Returns a user by its user_id and password
    */
-  getUserInfo: function (_, { user_id, user_password }) {
+  getUserInfo: function (_, { user_id, user_password }, context) {
+    if (validateId(user_id)) {
+      return { login_history: { login_status: "type user id" } };
+    }
+
+    if (validatePassword(user_password)) {
+      return { login_history: { login_status: "type user password" } };
+    }
+
     const login_result = User.findByFields({
       fields: { user_id },
     })
@@ -90,10 +101,16 @@ const authService = {
   },
 };
 
-validateId = function (id) {
+const validateId = function (id) {
+  if (!id) {
+    return true;
+  }
   return false;
 };
-validatePassword = function (password) {
+const validatePassword = function (password) {
+  if (!password) {
+    return true;
+  }
   return false;
 };
 
