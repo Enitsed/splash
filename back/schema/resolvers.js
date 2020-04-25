@@ -1,4 +1,3 @@
-const Constants = require("../models/common/Constants");
 const User = require("../models/user/user");
 const AuthService = require("../services/authService");
 const TimeStamp = require("../models/common/GraphQLTimestamp");
