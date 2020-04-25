@@ -1,6 +1,5 @@
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../../schema/schema");
-const User = require("../../models/user/user");
 const AuthService = require("../../services/authService");
 
 module.exports = class Routes {
@@ -21,7 +20,7 @@ module.exports = class Routes {
       context: ({ req }) => {
         rootValue.ip = req.ip;
       },
-      rootValue: rootValue
+      rootValue: rootValue,
     }).applyMiddleware({ app });
 
     // render React router
@@ -30,17 +29,21 @@ module.exports = class Routes {
     });
 
     // login mapping
-    app.post("/login", (req, res) => {
+    app.post("/login", async (req, res) => {
       const { user_id, user_password } = req.body;
+      console.dir(req.body);
 
-      req.session.user = AuthService.getUserInfo(
+      await AuthService.getUserInfo(
         { ip: req.ip },
         {
           user_id,
-          user_password
+          user_password,
         }
-      );
+      )
+        .then((userData) => (req.session.user = userData))
+        .catch((err) => console.error(err));
 
+      console.dir(req.session);
       res.redirect("/");
     });
   }
