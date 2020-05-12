@@ -3,8 +3,12 @@ const constants = {
     ACTIVE: "active",
     DORMANT: "dormant",
     INACTIVE: "inactive",
-    DELETED: "deleted"
-  }
+    DELETED: "deleted",
+  },
+  SIGNUP_RESULT: {
+    SUCCESS: "success",
+    FAIL: "fail",
+  },
 };
 
 module.exports = constants;

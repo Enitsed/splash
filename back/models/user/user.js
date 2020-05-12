@@ -53,6 +53,7 @@ class User extends DAO {
       email,
       user_status,
       create_time,
+      signup_result,
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
@@ -73,6 +74,7 @@ class User extends DAO {
           email,
           user_status,
           create_time,
+          signup_result,
         },
       });
 
