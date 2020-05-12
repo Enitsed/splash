@@ -6,11 +6,17 @@ const Constants = require("../models/common/Constants");
 const authService = {
   // check user data is wrong or not
   userValidate: function (user_id, user_password) {
-    if (validateId(user_id)) {
+    if (!checkIfEmpty([user_id, user_password])) {
       return false;
     }
 
-    if (validatePassword(user_password)) {
+    if (!validateId(user_id)) {
+      // TODO : 정규식표현가추가
+      return false;
+    }
+
+    if (!validatePassword(user_password)) {
+      // TODO : 정규식표현가추가
       return false;
     }
 
@@ -21,6 +27,21 @@ const authService = {
     _,
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
+    if (
+      !checkIfEmpty([
+        user_name,
+        user_id,
+        user_password,
+        gender,
+        address,
+        phone_num,
+        email,
+      ])
+    ) {
+      return {
+        signup_result: "necessary input field is required",
+      };
+    }
     await User.findMatching(_, { user_id })
       .then((res) => {
         if (res.shift() || res.length > 0) {
@@ -41,6 +62,7 @@ const authService = {
       email,
       user_status: Constants.USER_STATUS.ACTIVE,
       create_time: new Date(),
+      signup_result: Constants.SIGNUP_RESULT.SUCCESS,
     });
     return sign_up_result;
   },
@@ -48,11 +70,11 @@ const authService = {
    * Returns a user by its user_id and password
    */
   getUserInfo: function (_, { user_id, user_password }, context) {
-    if (validateId(user_id)) {
+    if (!validateId(user_id)) {
       return { login_history: { login_status: "type user id" } };
     }
 
-    if (validatePassword(user_password)) {
+    if (!validatePassword(user_password)) {
       return { login_history: { login_status: "type user password" } };
     }
 
@@ -103,15 +125,24 @@ const authService = {
 
 const validateId = function (id) {
   if (!id) {
-    return true;
+    return false;
   }
-  return false;
+  return true;
 };
 const validatePassword = function (password) {
   if (!password) {
-    return true;
+    return false;
   }
-  return false;
+  return true;
+};
+const checkIfEmpty = (...params) => {
+  params.forEach((element) => {
+    if (!element) {
+      console.log(element + "is empty");
+      return false;
+    }
+    return true;
+  });
 };
 
 module.exports = authService;
