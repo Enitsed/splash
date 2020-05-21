@@ -49,16 +49,16 @@ class LoginModal extends Component {
     const user = requestUserData(id, password);
     if (user !== undefined) {
       user
-        .then((userData) => {
-          if (!userData || userData.isAxiosError) {
+        .then((data) => {
+          if (!data) {
             this.setState({
               accountError: true,
               errorMsg:
                 '회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.',
             });
-          } else {
-            loginComplete(userData);
           }
+
+          loginComplete(data);
         })
         .catch((err) => {
           console.debug(err);
