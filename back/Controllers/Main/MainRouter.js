@@ -18,6 +18,7 @@ module.exports = class Routes {
       typeDefs,
       resolvers,
       context: ({ req }) => {
+        console.dir(req);
         rootValue.ip = req.ip;
       },
       rootValue: rootValue,
@@ -25,26 +26,32 @@ module.exports = class Routes {
 
     // render React router
     app.get("/", (req, res) => {
-      res.render("index.html");
+      res.render("index.html", { userData: req.session.user });
+    });
+
+    app.get("/check", (req, res) => {
+      console.dir(req.session.user);
+      res.render("index.html", { userData: req.session.user });
     });
 
     // login mapping
     app.post("/login", async (req, res) => {
-      const { user_id, user_password } = req.body;
-      console.dir(req.body);
+      if (req.session.user) {
+        res.redirect("/check");
+        return;
+      }
 
-      await AuthService.getUserInfo(
+      const { user_id, user_password } = req.body.variables;
+
+      req.session.user = await AuthService.getUserInfo(
         { ip: req.ip },
         {
           user_id,
           user_password,
         }
-      )
-        .then((userData) => (req.session.user = userData))
-        .catch((err) => console.error(err));
+      );
 
-      console.dir(req.session);
-      res.redirect("/");
+      res.json(req.session.user);
     });
   }
 };

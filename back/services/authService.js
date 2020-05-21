@@ -6,17 +6,17 @@ const Constants = require("../models/common/Constants");
 const authService = {
   // check user data is wrong or not
   userValidate: function (user_id, user_password) {
-    if (!checkIfEmpty([user_id, user_password])) {
+    if (checkIfEmpty([user_id, user_password])) {
       return false;
     }
 
     if (!validateId(user_id)) {
-      // TODO : 정규식표현가추가
+      // TODO : 정규식표현추가
       return false;
     }
 
     if (!validatePassword(user_password)) {
-      // TODO : 정규식표현가추가
+      // TODO : 정규식표현추가
       return false;
     }
 
@@ -28,7 +28,7 @@ const authService = {
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
     if (
-      !checkIfEmpty([
+      checkIfEmpty([
         user_name,
         user_id,
         user_password,
@@ -135,14 +135,13 @@ const validatePassword = function (password) {
   }
   return true;
 };
-const checkIfEmpty = (...params) => {
-  params.forEach((element) => {
-    if (!element) {
-      console.log(element + "is empty");
-      return false;
+const checkIfEmpty = (params) => {
+  for (const param of params) {
+    if (!param) {
+      return true;
     }
-    return true;
-  });
+  }
+  return false;
 };
 
 module.exports = authService;
