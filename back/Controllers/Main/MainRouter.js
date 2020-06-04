@@ -1,6 +1,7 @@
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../../schema/schema");
 const AuthService = require("../../services/authService");
+const jwt = require("jsonwebtoken");
 
 module.exports = class Routes {
   /**
@@ -18,8 +19,18 @@ module.exports = class Routes {
       typeDefs,
       resolvers,
       context: ({ req }) => {
-        console.dir(req);
         rootValue.ip = req.ip;
+
+        // const token = req.session.authorization || "";
+        const tempToken =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfc2VxIjo5NSwidXNlcl9uYW1lIjoianVuZSIsInVzZXJfaWQiOiIzMyIsInVzZXJfcGFzc3dvcmQiOiIkMmIkMTAkaUZPbFN2cEV5VVlxdHZVYS9uOUJLdVhCQldxallMRHdsNFRPQ3c5UUlzZzIuT3EvVVd4NWUiLCJnZW5kZXIiOiIiLCJhZGRyZXNzIjoiYWEiLCJwaG9uZV9udW0iOiIwMTAtMjEyMS0zMzExIiwiZW1haWwiOiJkbGRAbmF2ZXIuY29tIiwidXNlcl9zdGF0dXMiOiJhY3RpdmUiLCJjcmVhdGVfdGltZSI6IjIwMjAtMDUtMTVUMDk6NDQ6MDAuMDAwWiIsInNpZ251cF9yZXN1bHQiOiJzdWNjZXNzIn0sImlhdCI6MTU5MTI3MDYyMywiZXhwIjoxNTkxMjc0MjIzLCJpc3MiOiJzcGxhc2guY29tIiwic3ViIjoidXNlckRhdGEifQ.bT-FIAsBMFpZbhU5BuTf1J5K5zrwqsPvugcjmkYyicQ";
+
+        // if (!tempToken || !req.session.user) {
+        //   throw new Error("Not Logged In");
+        // }
+
+        const token = jwt.verify(tempToken, app.get("jwt-secret"));
+        return { user: token.user };
       },
       rootValue: rootValue,
     }).applyMiddleware({ app });
@@ -31,7 +42,7 @@ module.exports = class Routes {
 
     app.get("/check", (req, res) => {
       console.dir(req.session.user);
-      res.render("index.html", { userData: req.session.user });
+      res.redirect("/");
     });
 
     // login mapping
@@ -43,13 +54,25 @@ module.exports = class Routes {
 
       const { user_id, user_password } = req.body.variables;
 
-      req.session.user = await AuthService.getUserInfo(
+      AuthService.getUserInfo(
         { ip: req.ip },
         {
           user_id,
           user_password,
         }
-      );
+      ).then((data) => {
+        const encodedUserData = jwt.sign(
+          { user: { ...data } },
+          req.app.get("jwt-secret"),
+          {
+            expiresIn: "1h",
+            issuer: "splash.com",
+            subject: "userData",
+          }
+        );
+        req.session.user = encodedUserData;
+        console.log(encodedUserData);
+      });
 
       res.json(req.session.user);
     });

@@ -9,6 +9,10 @@ const constants = {
     SUCCESS: "success",
     FAIL: "fail",
   },
+  LOGIN_RESULT: {
+    SUCCESS: "success",
+    FAIL: "fail",
+  },
 };
 
 module.exports = constants;

@@ -69,13 +69,23 @@ const authService = {
   /**
    * Returns a user by its user_id and password
    */
-  getUserInfo: function (_, { user_id, user_password }, context) {
+  getUserInfo: function (_, { user_id, user_password }) {
     if (!validateId(user_id)) {
-      return { login_history: { login_status: "type user id" } };
+      return {
+        login_history: {
+          login_status: Constants.LOGIN_RESULT.FAIL,
+          msg: "type user id",
+        },
+      };
     }
 
     if (!validatePassword(user_password)) {
-      return { login_history: { login_status: "type user password" } };
+      return {
+        login_history: {
+          login_status: Constants.LOGIN_RESULT.FAIL,
+          msg: "type user password",
+        },
+      };
     }
 
     const login_result = User.findByFields({
@@ -83,11 +93,11 @@ const authService = {
     })
       .then((result) => {
         if (!this.userValidate(user_id, user_password)) {
-          return new Error("Invalid Credentials. Please try again.");
+          throw new Error("Invalid Credentials. Please try again.");
         }
 
         if (!result || result.length < 1) {
-          return new Error("No user exists");
+          throw new Error("No user exists");
         }
         const userData = result.shift();
 
@@ -102,9 +112,9 @@ const authService = {
             user_num: userData.user_seq,
             login_ip: _.ip,
             login_date: new Date(),
-            login_status: "failed",
+            login_status: Constants.LOGIN_RESULT.FAIL,
           });
-          return new Error("Password Incorrect");
+          throw new Error("Password Incorrect");
         }
 
         // when login succesfully
@@ -112,9 +122,10 @@ const authService = {
           user_num: userData.user_seq,
           login_ip: _.ip,
           login_date: new Date(),
-          login_status: "success",
+          login_status: Constants.LOGIN_RESULT.SUCCESS,
         });
 
+        // return userData
         return userData;
       })
       .catch((err) => console.log(err));
