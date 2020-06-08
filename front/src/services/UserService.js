@@ -75,9 +75,50 @@ const requestUserData = (userId, userPassword) => {
     });
 };
 
+// signUp user Info
+const requestSignUp = (
+  userName,
+  userId,
+  userPassword,
+  gender,
+  address,
+  phoneNum,
+  email,
+) => {
+  return axios
+    .post('/signUp', {
+      variables: {
+        user_name: userName,
+        user_id: userId,
+        user_password: userPassword,
+        gender,
+        address,
+        phone_num: phoneNum,
+        email,
+      },
+    })
+    .then((response) => {
+      const userData = response.data;
+
+      if (!userData) {
+        console.error('no data availiable');
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return userData;
+    })
+    .catch((err) => {
+      console.error(err);
+      // eslint-disable-next-line no-alert
+      alert('회원가입이 실패하였습니다. 잠시 후 재시도 해주세요.');
+      return err;
+    });
+};
+
 // session kill necessary
 const clearUserData = () => {
   //
 };
 
-export { requestUserData, clearUserData };
+export { requestUserData, clearUserData, requestSignUp };
