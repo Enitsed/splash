@@ -19,7 +19,7 @@ const UserReducer = (state = initialState, { type, payload }) => {
     case 'LOG_IN':
       return JSON.parse(JSON.stringify(payload));
     case 'LOG_OUT':
-      return JSON.parse(JSON.stringify(payload));
+      return initialState;
     default:
       return state;
   }

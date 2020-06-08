@@ -5,33 +5,42 @@ import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
 import FindInfoModal from '../User/FindInfoModal';
-import { Logout } from '../../Redux/Actions';
+import { Logout, Login } from '../../Redux/Actions';
+import { cookieRequestUserData } from '../../services/UserService';
 
 class BasicNavBar extends Component {
+  componentWillMount() {
+    const { tryLogin } = this.props;
+    cookieRequestUserData()
+      .then((data) => {
+        console.dir(data);
+        if (data) {
+          tryLogin(data);
+        }
+      })
+      .catch((err) => console.error(err));
+  }
+
   render() {
     const { userData, tryLogout } = this.props;
 
-    if (userData.user_status !== 'inactive') {
-      return (
-        <div className="nav">
-          <p>
-            Welcome!
-            <br />
-            {userData.user_name}
-          </p>
-          <BasicButton
-            className="btn_header"
-            clickHandler={() => {
-              tryLogout({});
-            }}
-            text="Logout"
-            size="tiny"
-          />
-        </div>
-      );
-    }
-
-    return (
+    return userData.user_status !== 'inactive' ? (
+      <div className="nav">
+        <p>
+          Welcome!
+          <br />
+          {userData.user_name}
+        </p>
+        <BasicButton
+          className="btn_header"
+          clickHandler={() => {
+            tryLogout();
+          }}
+          text="Logout"
+          size="tiny"
+        />
+      </div>
+    ) : (
       <div className="nav">
         <LoginModal />
         <JoinModal />
@@ -45,14 +54,16 @@ const mapStateToProps = ({ UserReducer }) => ({
   userData: UserReducer.userData,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
+    tryLogin: (userData) => dispatch(Login(userData)),
     tryLogout: () => dispatch(Logout()),
   };
 };
 
 BasicNavBar.defaultProps = {
   userData: { user_name: '', user_status: 'inactive' },
+  tryLogin: () => {},
   tryLogout: () => {},
 };
 
@@ -61,6 +72,7 @@ BasicNavBar.propTypes = {
     user_name: Proptypes.string,
     user_status: Proptypes.string,
   }),
+  tryLogin: Proptypes.func,
   tryLogout: Proptypes.func,
 };
 

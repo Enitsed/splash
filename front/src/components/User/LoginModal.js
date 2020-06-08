@@ -58,6 +58,11 @@ class LoginModal extends Component {
             });
           }
 
+          if (typeof data !== 'object') {
+            console.error('errrorrr');
+            return;
+          }
+
           loginComplete(data);
         })
         .catch((err) => {

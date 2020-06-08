@@ -77,6 +77,17 @@ export default class JoinModal extends Component {
               errorMsg:
                 '회원님의 회원가입 정보가 잘못되었습니다. 다시 입력 해주세요.',
             });
+          } else {
+            this.setState({
+              modalOpen: false,
+              userName: '',
+              id: '',
+              password: '',
+              gender: 'M',
+              address: '',
+              phoneNum: '',
+              email: '',
+            });
           }
         })
         .catch((err) => {
@@ -136,9 +147,9 @@ export default class JoinModal extends Component {
               placeholder="ID"
               control={Input}
               error={idError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  id: e.target.value,
+                  id: value,
                   idError: false,
                   accountError: false,
                 })
@@ -150,9 +161,9 @@ export default class JoinModal extends Component {
               type="password"
               control={Input}
               error={passwordError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  password: e.target.value,
+                  password: value,
                   passwordError: false,
                   accountError: false,
                 })
@@ -163,9 +174,9 @@ export default class JoinModal extends Component {
               placeholder="User Name"
               control={Input}
               error={userNameError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  userName: e.target.value,
+                  userName: value,
                   userNameError: false,
                   accountError: false,
                 })
@@ -207,9 +218,9 @@ export default class JoinModal extends Component {
               placeholder="Address"
               control={Input}
               error={addressError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  address: e.target.value,
+                  address: value,
                   addressError: false,
                   accountError: false,
                 })
@@ -220,9 +231,9 @@ export default class JoinModal extends Component {
               placeholder="Phone Number"
               control={Input}
               error={phoneNumError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  phoneNum: e.target.value,
+                  phoneNum: value,
                   phoneNumError: false,
                   accountError: false,
                 })
@@ -233,9 +244,9 @@ export default class JoinModal extends Component {
               placeholder="Email"
               control={Input}
               error={emailError || accountError}
-              onChange={(e) =>
+              onChange={(e, { value }) =>
                 this.setState({
-                  email: e.target.value,
+                  email: value,
                   emailError: false,
                   accountError: false,
                 })

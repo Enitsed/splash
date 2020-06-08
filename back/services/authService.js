@@ -49,7 +49,7 @@ const authService = {
         }
       })
       .catch((err) => {
-        throw new Error(err);
+        console.error(err);
       });
 
     const sign_up_result = await User.createEntry(_, {
@@ -69,7 +69,7 @@ const authService = {
   /**
    * Returns a user by its user_id and password
    */
-  getUserInfo: function (_, { user_id, user_password }) {
+  getUserInfo: async function (_, { user_id, user_password }) {
     if (!validateId(user_id)) {
       return {
         login_history: {
@@ -88,7 +88,7 @@ const authService = {
       };
     }
 
-    const login_result = User.findByFields({
+    const login_result = await User.findByFields({
       fields: { user_id },
     })
       .then((result) => {
