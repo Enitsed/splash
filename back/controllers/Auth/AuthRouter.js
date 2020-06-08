@@ -92,5 +92,13 @@ module.exports = class AuthRouter {
 
       return res.redirect("/");
     });
+
+    // cookie login mapping
+    app.post("/logout", async (req, res) => {
+      req.session.user = null;
+      res.cookie("user", null, { maxAge: 10 });
+
+      return res.redirect("/");
+    });
   }
 };

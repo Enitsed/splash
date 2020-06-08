@@ -6,14 +6,16 @@ import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
 import FindInfoModal from '../User/FindInfoModal';
 import { Logout, Login } from '../../Redux/Actions';
-import { cookieRequestUserData } from '../../services/UserService';
+import {
+  cookieRequestUserData,
+  clearUserData,
+} from '../../services/UserService';
 
 class BasicNavBar extends Component {
   componentWillMount() {
     const { tryLogin } = this.props;
     cookieRequestUserData()
       .then((data) => {
-        console.dir(data);
         if (data) {
           tryLogin(data);
         }
@@ -34,7 +36,11 @@ class BasicNavBar extends Component {
         <BasicButton
           className="btn_header"
           clickHandler={() => {
-            tryLogout();
+            clearUserData()
+              .then(() => {
+                tryLogout();
+              })
+              .catch((err) => console.error(err));
           }}
           text="Logout"
           size="tiny"
