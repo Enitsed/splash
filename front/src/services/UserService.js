@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 // request user Info
 // const requestUserData = (userId, userPassword) => {
@@ -47,7 +48,42 @@ import axios from 'axios';
 //     });
 // };
 
-// request user Info
+// request user Info with cookie
+const cookieRequestUserData = () => {
+  const cookie = new Cookies().get('user');
+
+  if (!cookie) {
+    return new Promise(
+      () => {},
+      () => {},
+    );
+  }
+
+  return axios
+    .post('/cookieLogin', {
+      variables: {},
+    })
+    .then((response) => {
+      const userData = response.data;
+      console.dir(userData);
+
+      if (!userData) {
+        console.error('no data availiable');
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return userData;
+    })
+    .catch((err) => {
+      console.error(err);
+      // eslint-disable-next-line no-alert
+      alert('로그인이 실패하였습니다. 잠시 후 재시도 해주세요.');
+      return err;
+    });
+};
+
+// request user Info with input
 const requestUserData = (userId, userPassword) => {
   return axios
     .post('/login', {
@@ -63,6 +99,8 @@ const requestUserData = (userId, userPassword) => {
         console.error('no data availiable');
         return;
       }
+
+      new Cookies().set('user', userData, { path: '/' });
 
       // eslint-disable-next-line consistent-return
       return userData;
@@ -99,6 +137,7 @@ const requestSignUp = (
     })
     .then((response) => {
       const userData = response.data;
+      console.dir(userData);
 
       if (!userData) {
         console.error('no data availiable');
@@ -121,4 +160,4 @@ const clearUserData = () => {
   //
 };
 
-export { requestUserData, clearUserData, requestSignUp };
+export { cookieRequestUserData, requestUserData, clearUserData, requestSignUp };

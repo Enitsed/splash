@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Proptypes from 'prop-types';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import BasicHeader from './BasicHeader';
@@ -9,8 +10,9 @@ import Board from '../Board/Board';
 
 class Layout extends Component {
   render() {
+    const { className } = this.props;
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <BasicHeader />
         <BasicContainer>
           <Route path="/" exact component={testComponent} />
@@ -25,10 +27,14 @@ class Layout extends Component {
 }
 
 function testComponent() {
-  return <div className="poem-title">{visibleTextOnTime()}</div>;
+  return (
+    <div className="poem-title">
+      <VisibleTextOnTime />
+    </div>
+  );
 }
 
-function visibleTextOnTime() {
+const VisibleTextOnTime = () => {
   const time = {
     midnight: 0,
     daytime: 8,
@@ -49,7 +55,8 @@ function visibleTextOnTime() {
     // midnight
     return <p className="midnight">새벽엔 검은바다</p>;
   }
-}
+  return <p>default</p>;
+};
 
 function testComponent2() {
   return (
@@ -58,6 +65,14 @@ function testComponent2() {
     </div>
   );
 }
+
+Layout.defaultProps = {
+  className: '',
+};
+
+Layout.propTypes = {
+  className: Proptypes.string,
+};
 
 const BasicLayout = styled(Layout)`
   min-height: 50vh;

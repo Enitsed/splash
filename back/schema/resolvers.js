@@ -8,18 +8,18 @@ const resolvers = {
       if (!context.user || !context.user.isAdmin) {
         throw new Error("admin only");
       }
-      return User.getByUserSeq(_, { user_seq }, context.user);
+      return User.getByUserSeq(_, { user_seq });
     },
 
     users(_, fields, context) {
       if (!context.user || !context.user.isAdmin) {
         throw new Error("admin only");
       }
-      return User.findMatching(_, fields, context.user);
+      return User.findMatching(_, fields);
     },
 
     userLogin(_, { userLoginInput }, context) {
-      return AuthService.getUserInfo(_, userLoginInput).userData;
+      return AuthService.getUserInfo(_, userLoginInput);
     },
   },
   Mutation: {

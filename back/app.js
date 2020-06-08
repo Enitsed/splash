@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const Routes = require("./controllers/Main/MainRouter");
@@ -42,6 +43,9 @@ class App {
   applyMiddleware() {
     //Allows the server to parse json
     this.expressApp.use(bodyParser.json());
+	
+	//Allows the server to  parse cookie
+	this.expressApp.use(cookieParser());
 
     //Allows the server to parse application/x-www-form-urlencoded
     this.expressApp.use(bodyParser.urlencoded({ extended: false }));
