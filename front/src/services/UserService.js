@@ -52,7 +52,7 @@ import Cookies from 'universal-cookie';
 const cookieRequestUserData = () => {
   const cookie = new Cookies().get('user');
 
-  if (!cookie) {
+  if (!cookie || cookie === '') {
     return new Promise(
       () => {},
       () => {},
@@ -100,7 +100,7 @@ const requestUserData = (userId, userPassword) => {
         return;
       }
 
-      new Cookies().set('user', userData, { path: '/' });
+      // new Cookies().set('user', userData, { path: '/' });
 
       // eslint-disable-next-line consistent-return
       return userData;
@@ -157,7 +157,11 @@ const requestSignUp = (
 
 // session kill necessary
 const clearUserData = () => {
-  //
+  new Cookies().set('user', '');
+  return axios
+    .post('/logout', {})
+    .then(() => {})
+    .catch((err) => console.error(err));
 };
 
 export { cookieRequestUserData, requestUserData, clearUserData, requestSignUp };
