@@ -21,16 +21,19 @@ module.exports = class Routes {
       context: ({ req }) => {
         rootValue.ip = req.ip;
 
-        // const token = req.session.authorization || "";
-        const tempToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfc2VxIjoxMDgsInVzZXJfbmFtZSI6IjEiLCJ1c2VyX2lkIjoidGVzdDEyMyIsInVzZXJfcGFzc3dvcmQiOiIkMmIkMTAkY2JCN2RXbzdTTXMubFMyc3didXl4ZXAwaTd3NGw2dFVLYVRBWXFoaVBTd2VRZUZzN3RnemEiLCJnZW5kZXIiOiJGIiwiYWRkcmVzcyI6IjEiLCJwaG9uZV9udW0iOiIxIiwiZW1haWwiOiIxIiwidXNlcl9zdGF0dXMiOiJhY3RpdmUiLCJjcmVhdGVfdGltZSI6IjIwMjAtMDYtMDVUMDI6NTg6MDAuMDAwWiIsInNpZ251cF9yZXN1bHQiOiJzdWNjZXNzIn0sImlhdCI6MTU5MTMyNTg4MCwiZXhwIjoxNTkxMzI5NDgwLCJpc3MiOiJzcGxhc2guY29tIiwic3ViIjoidXNlckRhdGEifQ.OaGdRY9xuWLSCd9SfmVQcyOH0psurLvL72f4gm25Mbw";
+        const token = req.cookies.user || "";
 
-        // if (!tempToken || !req.session.user) {
-        //   throw new Error("Not Logged In");
-        // }
+        if (!token || !req.cookies.user) {
+          throw new Error("Not Logged In");
+        }
 
-        const token = jwt.verify(tempToken, app.get("jwt-secret"));
-        return { user: token.user };
+        const userJwt = jwt.verify(token, app.get("jwt-secret"));
+
+        if (req.session.user.user_password !== userJwt.user.user_password) {
+          throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
+        }
+
+        return { user: req.session.user };
       },
       rootValue: rootValue,
     }).applyMiddleware({ app });

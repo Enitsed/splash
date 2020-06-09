@@ -13,6 +13,14 @@ const constants = {
     SUCCESS: "success",
     FAIL: "fail",
   },
+  COOKIE: {
+    _MAX_AGE: 10800,
+  },
+  JWT_TOKEN: {
+    _EXPIRES_TIME: "30m",
+    _ISSUER: "splash.com",
+    _SUBJECT: "splash",
+  },
 };
 
 module.exports = constants;

@@ -106,24 +106,22 @@ const authService = {
           userData.user_password
         );
 
-        // when failed to login
-        if (!password_check_result) {
-          Auth.createEntry(_, {
-            user_num: userData.user_seq,
-            login_ip: _.ip,
-            login_date: new Date(),
-            login_status: Constants.LOGIN_RESULT.FAIL,
-          });
-          throw new Error("Password Incorrect");
-        }
-
-        // when login succesfully
+        // Connect Logs
         Auth.createEntry(_, {
           user_num: userData.user_seq,
           login_ip: _.ip,
           login_date: new Date(),
-          login_status: Constants.LOGIN_RESULT.SUCCESS,
+          login_status: password_check_result
+            ? Constants.LOGIN_RESULT.SUCCESS
+            : Constants.LOGIN_RESULT.FAIL,
         });
+
+        // when failed to login
+        if (!password_check_result) {
+          throw new Error("Password Incorrect");
+        }
+
+        // TODO: Look up user if the user exists in Admin Table.
 
         // return userData
         return userData;
