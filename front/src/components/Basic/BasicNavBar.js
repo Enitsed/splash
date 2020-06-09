@@ -27,7 +27,7 @@ class BasicNavBar extends Component {
   render() {
     const { userData, tryLogout } = this.props;
 
-    return userData.user_status !== 'inactive' ? (
+    return userData.user_status === 'active' ? (
       <div className="nav">
         <p>
           Welcome!
