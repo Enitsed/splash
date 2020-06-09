@@ -148,8 +148,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginModal);
-
 LoginModal.defaultProps = {
   loginComplete() {
     return () => false;
@@ -158,3 +156,5 @@ LoginModal.defaultProps = {
 LoginModal.propTypes = {
   loginComplete: PropTypes.func,
 };
+
+export default connect(null, mapDispatchToProps)(LoginModal);

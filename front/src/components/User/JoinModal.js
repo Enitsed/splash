@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import {
   Button,
   Header,
@@ -9,9 +10,12 @@ import {
   Message,
   Radio,
 } from 'semantic-ui-react';
+
+import { connect } from 'react-redux';
+import { Login } from '../../Redux/Actions';
 import { requestSignUp } from '../../services/UserService';
 
-export default class JoinModal extends Component {
+class JoinModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,6 +49,7 @@ export default class JoinModal extends Component {
       phoneNum,
       email,
     } = this.state;
+    const { loginComplete } = this.props;
 
     if (id === '') {
       this.setState({ idError: true, errorMsg: '아이디를 다시 입력하세요.' });
@@ -78,6 +83,7 @@ export default class JoinModal extends Component {
                 '회원님의 회원가입 정보가 잘못되었습니다. 다시 입력 해주세요.',
             });
           } else {
+            // reset input
             this.setState({
               modalOpen: false,
               userName: '',
@@ -88,6 +94,8 @@ export default class JoinModal extends Component {
               phoneNum: '',
               email: '',
             });
+
+            loginComplete(data);
           }
         })
         .catch((err) => {
@@ -268,3 +276,21 @@ export default class JoinModal extends Component {
     );
   }
 }
+
+JoinModal.defaultProps = {
+  loginComplete() {
+    return false;
+  },
+};
+
+JoinModal.propTypes = {
+  loginComplete: propTypes.func,
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginComplete: (userData) => dispatch(Login(userData)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(JoinModal);

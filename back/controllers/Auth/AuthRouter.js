@@ -6,9 +6,8 @@ module.exports = class AuthRouter {
   constructor(app) {
     // signUp mapping
     app.post("/signUp", async (req, res) => {
-      if (req.session.user) {
-        console.dir(req.cookies.user);
-        return res.json(req.session.user);
+      if (req.session.user && req.cookies.user) {
+        return res.redirect("/cookieLogin");
       }
 
       const {
