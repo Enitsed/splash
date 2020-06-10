@@ -156,10 +156,35 @@ const testQuery = () => {
     });
 };
 
+const findIdInfo = (email) => {
+  return axios
+    .post('/findId', {
+      variables: { email },
+    })
+    .then((response) => {
+      const userData = response.data;
+
+      if (!userData) {
+        console.error('no data availiable');
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return userData;
+    })
+    .catch((err) => {
+      console.error(err);
+      // eslint-disable-next-line no-alert
+      alert('아이디 찾기에 실패하였습니다. 잠시 후 재시도 해주세요.');
+      return err;
+    });
+};
+
 export {
   cookieRequestUserData,
   requestUserData,
   clearUserData,
   requestSignUp,
   testQuery,
+  findIdInfo,
 };

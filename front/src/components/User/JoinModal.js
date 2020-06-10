@@ -76,11 +76,11 @@ class JoinModal extends Component {
     if (user !== undefined) {
       user
         .then((data) => {
-          if (!data) {
+          console.dir(data);
+          if (!data || data.error) {
             this.setState({
               accountError: true,
-              errorMsg:
-                '회원님의 회원가입 정보가 잘못되었습니다. 다시 입력 해주세요.',
+              errorMsg: data.error,
             });
           } else {
             // reset input
@@ -264,10 +264,14 @@ class JoinModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="red" onClick={() => this.closeModal()} inverted>
+          <Button
+            color="red"
+            onClick={() => this.setState({ modalOpen: false })}
+            inverted
+          >
             Cancel
           </Button>
-          <Button color="green" onClick={(e) => this.signUp(e)} inverted>
+          <Button color="green" onClick={() => this.signUp()} inverted>
             <Icon name="checkmark" />
             Submit
           </Button>
