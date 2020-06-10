@@ -20,35 +20,57 @@ module.exports = class AuthRouter {
         email,
       } = req.body.variables;
 
-      await AuthService.signUpUserInfo(
-        { ip: req.ip },
-        {
-          user_name,
-          user_id,
-          user_password,
-          gender,
-          address,
-          phone_num,
-          email,
-        }
-      )
-        .then((data) => {
-          const encodedUserData = jwt.sign(
-            { user: { ...data } },
-            req.app.get("jwt-secret"),
-            {
-              expiresIn: Constants.JWT_TOKEN._EXPIRES_TIME,
-              issuer: Constants.JWT_TOKEN._ISSUER,
-              subject: Constants.JWT_TOKEN._SUBJECT,
-            }
-          );
+      if (!user_name || !user_id || !user_password || !gender || !email) {
+        return res.json({ error: "필수 입력란을 기입해주세요." });
+      }
 
-          req.session.user = data;
-          return res
-            .cookie("user", encodedUserData, {
-              maxAge: Constants.COOKIE._MAX_AGE,
+      // 회원 가입전 해당 이메일로 가입 여부 조회
+      await AuthService.findId({ ip: req.ip }, { email })
+        .then((data) => {
+          if (data) {
+            return res.json({ error: "이미 등록된 이메일입니다." });
+          }
+
+          // 회원가입 처리
+          AuthService.signUpUserInfo(
+            { ip: req.ip },
+            {
+              user_name,
+              user_id,
+              user_password,
+              gender,
+              address,
+              phone_num,
+              email,
+            }
+          )
+            .then((data) => {
+              console.log(data);
+              if (!data || data.error) {
+                return res.json(data);
+              } else {
+                req.session.user = data;
+
+                const encodedUserData = jwt.sign(
+                  { user: { ...req.session.user } },
+                  req.app.get("jwt-secret"),
+                  {
+                    expiresIn: Constants.JWT_TOKEN._EXPIRES_TIME,
+                    issuer: Constants.JWT_TOKEN._ISSUER,
+                    subject: Constants.JWT_TOKEN._SUBJECT,
+                  }
+                );
+
+                return res
+                  .cookie("user", encodedUserData, {
+                    maxAge: Constants.COOKIE._MAX_AGE,
+                  })
+                  .json(req.session.user);
+              }
             })
-            .json(req.session.user);
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -103,6 +125,28 @@ module.exports = class AuthRouter {
         return res.json(req.session.user);
       }
 
+      return res.redirect("/");
+    });
+
+    // find Id mapping
+    app.post("/findId", (req, res) => {
+      const { email } = req.body.variables;
+
+      AuthService.findId({ ip: req.ip }, { email })
+        .then((data) => {
+          if (!data) {
+            return res.json({ error: "해당 유저가 존재하지 않습니다." });
+          } else {
+            return res.json(data.user_id);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+
+    // find Password mapping
+    app.post("/findPassword", (req, res) => {
       return res.redirect("/");
     });
 

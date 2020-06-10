@@ -26,6 +26,7 @@ class LoginModal extends Component {
       accountError: false,
       errorMsg: '',
     };
+
     this.login.bind(this);
   }
 
@@ -100,14 +101,13 @@ class LoginModal extends Component {
           <Form size="big" error={idError || passwordError || accountError}>
             <Form.Group widths="equal">
               <Form.Field
-                id="form-input-control-error-id"
                 label="ID"
                 placeholder="ID"
                 control={Input}
                 error={idError || accountError}
-                onChange={(e) =>
+                onChange={(e, { value }) =>
                   this.setState({
-                    id: e.target.value,
+                    id: value,
                     idError: false,
                     accountError: false,
                   })
@@ -119,9 +119,9 @@ class LoginModal extends Component {
                 type="password"
                 control={Input}
                 error={passwordError || accountError}
-                onChange={(e) =>
+                onChange={(e, { value }) =>
                   this.setState({
-                    password: e.target.value,
+                    password: value,
                     passwordError: false,
                     accountError: false,
                   })
@@ -132,7 +132,7 @@ class LoginModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={(e) => this.login(e)} inverted>
+          <Button color="green" onClick={() => this.login()} inverted>
             <Icon name="checkmark" />
             Log in
           </Button>

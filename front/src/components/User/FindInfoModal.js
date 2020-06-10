@@ -1,70 +1,108 @@
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
-import { connect } from 'react-redux';
+import {
+  Button,
+  Header,
+  Icon,
+  Modal,
+  Form,
+  Message,
+  Input,
+} from 'semantic-ui-react';
+import { findIdInfo } from '../../services/UserService';
 
-function findInfoModalOpenButton(e) {
-  return (
-    <Button
-      className="btn_header"
-      size="tiny"
-      onClick={() => e.setState({ modalOpen: true })}
-    >
-      Find ID / Password
-    </Button>
-  );
-}
 class FindInfoModal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       modalOpen: false,
+      email: '',
+      emailError: false,
+      emailResult: null,
+      emailSuccess: false,
+      errorMsg: 'Email 입력 오류',
     };
+
+    this.findId.bind(this);
   }
 
-  closeModal() {
-    this.setState({ modalOpen: false });
+  findId() {
+    const { email } = this.state;
+
+    if (email === '') {
+      this.setState({ emailError: true });
+      return;
+    }
+
+    findIdInfo(email)
+      .then((data) => {
+        if (data && data.error) {
+          this.setState({
+            emailError: true,
+            errorMsg: data.error,
+          });
+          return;
+        }
+
+        this.setState({
+          emailSuccess: true,
+          emailResult: `회원님의 아이디는 ${data}입니다.`,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   render() {
-    const { modalOpen } = this.state;
+    const {
+      modalOpen,
+      emailError,
+      errorMsg,
+      emailSuccess,
+      emailResult,
+    } = this.state;
     return (
       <Modal
-        trigger={findInfoModalOpenButton(this)}
+        trigger={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.setState({ modalOpen: true })}
+          >
+            Find ID / Password
+          </Button>
+        }
         open={modalOpen}
-        onClose={() => this.closeModal()}
+        onClose={() => this.setState({ modalOpen: false })}
         size="small"
       >
         <Header icon="browser" content="Find ID / Password" />
         <Modal.Content>
-          <Form size="big">
+          <Form size="big" error={emailError} success={emailSuccess}>
             <Form.Group widths="equal">
-              <Form.Field>
-                <label htmlFor="id_input">
-                  ID
-                  <input
-                    id="id_input"
-                    name="id_input"
-                    placeholder="ID"
-                    type="text"
-                  />
-                </label>
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="password_input">
-                  Password
-                  <input
-                    id="password_input"
-                    name="password_input"
-                    placeholder="Password"
-                    type="password"
-                  />
-                </label>
-              </Form.Field>
+              <Form.Field
+                label="Email"
+                placeholder="Email"
+                type="email"
+                control={Input}
+                error={emailError}
+                onChange={(e, { value }) => {
+                  this.setState({
+                    email: value,
+                    emailError: false,
+                    emailSuccess: false,
+                  });
+                }}
+              />
             </Form.Group>
+            <Message error header="Error" content={errorMsg} />
+            <Message success header="Success" content={emailResult} />
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={() => this.closeModal()} inverted>
+          <Button color="green" onClick={() => this.findId()} inverted>
             <Icon name="checkmark" />
             Submit
           </Button>
@@ -74,8 +112,4 @@ class FindInfoModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(null, mapDispatchToProps)(FindInfoModal);
+export default FindInfoModal;

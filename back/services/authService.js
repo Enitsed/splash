@@ -27,44 +27,35 @@ const authService = {
     _,
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
-    if (
-      checkIfEmpty([
-        user_name,
-        user_id,
-        user_password,
-        gender,
-        address,
-        phone_num,
-        email,
-      ])
-    ) {
+    if (checkIfEmpty([user_name, user_id, user_password, gender, email])) {
       return {
-        signup_result: "necessary input field is required",
+        error: "필수 입력값을 입력해주세요.",
       };
     }
-    await User.findMatching(_, { user_id })
+
+    return await User.findMatching(_, { user_id })
       .then((res) => {
-        if (res.shift() || res.length > 0) {
-          throw new Error("user id already exists");
+        if (res.shift() && res.length > 0) {
+          return { error: "해당 아이디는 사용중입니다." };
+        } else {
+          const sign_up_result = User.createEntry(_, {
+            user_name,
+            user_id,
+            user_password,
+            gender,
+            address,
+            phone_num,
+            email,
+            user_status: Constants.USER_STATUS.ACTIVE,
+            create_time: new Date(),
+            signup_result: Constants.SIGNUP_RESULT.SUCCESS,
+          });
+          return sign_up_result;
         }
       })
       .catch((err) => {
         console.error(err);
       });
-
-    const sign_up_result = await User.createEntry(_, {
-      user_name,
-      user_id,
-      user_password,
-      gender,
-      address,
-      phone_num,
-      email,
-      user_status: Constants.USER_STATUS.ACTIVE,
-      create_time: new Date(),
-      signup_result: Constants.SIGNUP_RESULT.SUCCESS,
-    });
-    return sign_up_result;
   },
   /**
    * Returns a user by its user_id and password
@@ -92,10 +83,6 @@ const authService = {
       fields: { user_id },
     })
       .then((result) => {
-        if (!this.userValidate(user_id, user_password)) {
-          throw new Error("Invalid Credentials. Please try again.");
-        }
-
         if (!result || result.length < 1) {
           throw new Error("No user exists");
         }
@@ -129,6 +116,18 @@ const authService = {
       .catch((err) => console.log(err));
 
     return login_result;
+  },
+  findId: function (_, { email }) {
+    const findIdResult = User.findByFields({ fields: { email } })
+      .then((data) => {
+        if (!data) {
+          throw new Error("해당 데이터가 존재하지 않습니다.");
+        }
+        return data.shift();
+      })
+      .catch((err) => console.error(err));
+
+    return findIdResult;
   },
 };
 
