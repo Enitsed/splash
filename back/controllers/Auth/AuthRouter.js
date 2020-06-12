@@ -1,6 +1,7 @@
 const AuthService = require("../../services/authService");
 const jwt = require("jsonwebtoken");
 const Constants = require("../../models/common/Constants");
+const ErrorResult = require("../../models/common/ErrorResult");
 
 module.exports = class AuthRouter {
   constructor(app) {
@@ -21,14 +22,14 @@ module.exports = class AuthRouter {
       } = req.body.variables;
 
       if (!user_name || !user_id || !user_password || !gender || !email) {
-        return res.json({ error: "필수 입력란을 기입해주세요." });
+        return res.json(new ErrorResult(501, "필수 입력란을 기입해주세요."));
       }
 
       // 회원 가입전 해당 이메일로 가입 여부 조회
       await AuthService.findId({ ip: req.ip }, { email })
         .then((data) => {
           if (data) {
-            return res.json({ error: "이미 등록된 이메일입니다." });
+            return res.json(new ErrorResult(501, "이미 등록된 이메일입니다."));
           }
 
           // 회원가입 처리
@@ -45,7 +46,6 @@ module.exports = class AuthRouter {
             }
           )
             .then((data) => {
-              console.log(data);
               if (!data || data.error) {
                 return res.json(data);
               } else {
@@ -135,7 +135,9 @@ module.exports = class AuthRouter {
       AuthService.findId({ ip: req.ip }, { email })
         .then((data) => {
           if (!data) {
-            return res.json({ error: "해당 유저가 존재하지 않습니다." });
+            return res.json(
+              new ErrorResult(501, "해당 유저가 존재하지 않습니다.")
+            );
           } else {
             return res.json(data.user_id);
           }

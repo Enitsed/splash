@@ -36,18 +36,22 @@ class FindInfoModal extends Component {
 
     findIdInfo(email)
       .then((data) => {
-        if (data && data.error) {
+        if (!data) {
+          this.setState({
+            emailError: true,
+            errorMsg: '입력하신 정보에 일치하는 회원이 없습니다.',
+          });
+        } else if (data.errorMsg) {
           this.setState({
             emailError: true,
             errorMsg: data.error,
           });
-          return;
+        } else {
+          this.setState({
+            emailSuccess: true,
+            emailResult: `회원님의 아이디는 ${data}입니다.`,
+          });
         }
-
-        this.setState({
-          emailSuccess: true,
-          emailResult: `회원님의 아이디는 ${data}입니다.`,
-        });
       })
       .catch((err) => {
         console.error(err);
