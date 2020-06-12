@@ -57,14 +57,19 @@ class LoginModal extends Component {
               errorMsg:
                 '회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.',
             });
-          }
+          } else if (data.errorMsg) {
+            this.setState({
+              accountError: true,
+              errorMsg: data.errorMsg,
+            });
+          } else {
+            this.setState({
+              id: '',
+              password: '',
+            });
 
-          if (typeof data !== 'object') {
-            console.error('errrorrr');
-            return;
+            loginComplete(data);
           }
-
-          loginComplete(data);
         })
         .catch((err) => {
           console.debug(err);

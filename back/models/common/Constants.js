@@ -1,4 +1,4 @@
-const constants = {
+const Constants = {
   USER_STATUS: {
     ACTIVE: "active",
     DORMANT: "dormant",
@@ -14,13 +14,21 @@ const constants = {
     FAIL: "fail",
   },
   COOKIE: {
-    _MAX_AGE: 10800,
+    _MAX_AGE: 1800,
   },
   JWT_TOKEN: {
     _EXPIRES_TIME: "30m",
     _ISSUER: "splash.com",
     _SUBJECT: "splash",
   },
+  ERROR_CODE: {
+    _NOT_AUTHORIZED: "500",
+    _DENIAL_OF_SERVICES: "501",
+  },
+  ERROR_MESSAGE: {
+    _NOT_AUTHORIZED: "인증 필요",
+    _DENIAL_OF_SERVICES: "응답 거부",
+  },
 };
 
-module.exports = constants;
+module.exports = Constants;

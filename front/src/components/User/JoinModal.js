@@ -76,11 +76,16 @@ class JoinModal extends Component {
     if (user !== undefined) {
       user
         .then((data) => {
-          console.dir(data);
-          if (!data || data.error) {
+          if (!data) {
             this.setState({
               accountError: true,
-              errorMsg: data.error,
+              errorMsg:
+                '회원 가입 처리 중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
+            });
+          } else if (data.errorMsg) {
+            this.setState({
+              accountError: true,
+              errorMsg: data.errorMsg,
             });
           } else {
             // reset input
