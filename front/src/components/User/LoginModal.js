@@ -48,7 +48,8 @@ class LoginModal extends Component {
     }
 
     const user = requestUserData(id, password);
-    if (user !== undefined) {
+
+    if (user) {
       user
         .then((data) => {
           if (!data) {

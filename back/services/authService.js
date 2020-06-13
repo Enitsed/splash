@@ -113,7 +113,9 @@ const authService = {
         // return userData
         return userData;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
 
     return login_result;
   },
