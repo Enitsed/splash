@@ -43,9 +43,9 @@ class App {
   applyMiddleware() {
     //Allows the server to parse json
     this.expressApp.use(bodyParser.json());
-	
-	//Allows the server to  parse cookie
-	this.expressApp.use(cookieParser());
+
+    //Allows the server to  parse cookie
+    this.expressApp.use(cookieParser());
 
     //Allows the server to parse application/x-www-form-urlencoded
     this.expressApp.use(bodyParser.urlencoded({ extended: false }));
@@ -64,7 +64,7 @@ class App {
         saveUninitialized: true,
         cookie: {
           secure: this.configs.stage === "production",
-          maxAge: 60000,
+          maxAge: 1000 * 60 * 30, // 30분
         },
       })
     );

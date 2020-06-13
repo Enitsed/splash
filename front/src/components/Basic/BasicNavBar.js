@@ -15,19 +15,19 @@ class BasicNavBar extends Component {
   constructor(props) {
     super();
     const { tryLogin } = props;
-    cookieRequestUserData()
-      .then((data) => {
-        if (data) {
-          tryLogin(data);
-        }
-      })
-      .catch((err) => console.error(err));
+
+    const loggedUserData = cookieRequestUserData();
+    if (loggedUserData) {
+      loggedUserData.then((userData) => {
+        tryLogin(userData);
+      });
+    }
   }
 
   render() {
     const { userData, tryLogout } = this.props;
 
-    return userData.user_status === 'active' ? (
+    return userData && userData.user_status === 'active' ? (
       <div className="nav">
         <p>
           Welcome!

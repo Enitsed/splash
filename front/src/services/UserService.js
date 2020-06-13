@@ -4,28 +4,17 @@ import Cookies from 'universal-cookie';
 // request user Info with cookie
 const cookieRequestUserData = () => {
   const cookie = new Cookies().get('user');
-
   if (!cookie || cookie === '') {
-    return new Promise(
-      () => {},
-      () => {},
-    );
+    return null;
   }
 
   return axios
-    .post('/cookieLogin', {
-      variables: {},
-    })
+    .post('/cookieLogin')
     .then((response) => {
-      const userData = response.data;
-
-      if (!userData) {
-        console.error('no data availiable');
-        return;
-      }
+      const { data } = response;
 
       // eslint-disable-next-line consistent-return
-      return userData;
+      return data;
     })
     .catch((err) => {
       console.error(err);
@@ -45,15 +34,10 @@ const requestUserData = (userId, userPassword) => {
       },
     })
     .then((response) => {
-      const userData = response.data;
-
-      if (!userData) {
-        console.error('no data availiable');
-        return;
-      }
+      const { data } = response;
 
       // eslint-disable-next-line consistent-return
-      return userData;
+      return data;
     })
     .catch((err) => {
       console.error(err);
