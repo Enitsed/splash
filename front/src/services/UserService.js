@@ -90,10 +90,9 @@ const requestSignUp = (
 
 // session kill necessary
 const clearUserData = () => {
-  new Cookies().set('user', '');
   return axios
-    .post('/logout', {})
-    .then(() => {})
+    .post('/logout')
+    .then(() => alert('로그아웃 되었습니다.'))
     .catch((err) => console.error(err));
 };
 

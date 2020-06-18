@@ -161,9 +161,8 @@ module.exports = class AuthRouter {
 
     // expire session cookie
     app.post("/logout", (req, res) => {
-      req.session.user = null;
-      res.cookie("user", null, Constants.COOKIE_OPTION);
-
+      req.session.destroy();
+      res.clearCookie("user");
       return res.redirect("/");
     });
   }
