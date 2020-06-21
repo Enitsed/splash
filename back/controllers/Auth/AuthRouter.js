@@ -90,8 +90,8 @@ module.exports = class AuthRouter {
           if (!data) {
             return res.json(
               new ErrorResult(
-                Constants.ERROR_CODE._NO_DATA_EXIST,
-                Constants.ERROR_MESSAGE._NO_DATA_EXIST
+                Constants.ERROR_CODE._NO_VALID_USER_EXIST,
+                Constants.ERROR_MESSAGE._NO_VALID_USER_EXIST
               )
             );
           }
