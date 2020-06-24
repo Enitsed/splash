@@ -7,6 +7,7 @@ const Routes = require("./controllers/Main/MainRouter");
 const ejs = require("ejs");
 const session = require("express-session");
 const path = require("path");
+const Constants = require("./models/common/Constants");
 
 class App {
   /**
@@ -64,7 +65,7 @@ class App {
         saveUninitialized: true,
         cookie: {
           secure: this.configs.stage === "production",
-          maxAge: 1000 * 60 * 30, // 30분
+          maxAge: Constants.COOKIE_OPTION.maxAge, // 30분
         },
       })
     );
