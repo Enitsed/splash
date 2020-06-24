@@ -1,3 +1,5 @@
+import { LOG_IN, LOG_OUT } from './Actions/UserAction';
+
 // define User Initial States
 const initialState = {
   userData: {
@@ -16,10 +18,10 @@ const initialState = {
 // write reducer here
 const UserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'LOG_IN':
+    case LOG_IN:
       return JSON.parse(JSON.stringify(payload));
-    case 'LOG_OUT':
-      return initialState;
+    case LOG_OUT:
+      return state;
     default:
       return state;
   }

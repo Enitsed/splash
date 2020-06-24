@@ -163,6 +163,8 @@ class User extends DAO {
       where: {
         email: email,
       },
+      offset: 1,
+      limit: 1,
     });
   }
 }

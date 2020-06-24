@@ -10,7 +10,7 @@ import {
   Message,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Login } from '../../Redux/Actions';
+import { Login } from '../../Reducers/Actions';
 import { requestUserData } from '../../services/UserService';
 
 class LoginModal extends Component {
