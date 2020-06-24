@@ -44,7 +44,7 @@ class FindInfoModal extends Component {
         } else if (data.errorMsg) {
           this.setState({
             emailError: true,
-            errorMsg: data.error,
+            errorMsg: `${data.errorCode} : ${data.errorMsg}`,
           });
         } else {
           this.setState({
