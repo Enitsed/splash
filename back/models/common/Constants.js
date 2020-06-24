@@ -5,10 +5,6 @@ const Constants = {
     INACTIVE: "inactive",
     DELETED: "deleted",
   },
-  SIGNUP_RESULT: {
-    SUCCESS: "success",
-    FAIL: "fail",
-  },
   LOGIN_RESULT: {
     SUCCESS: "success",
     FAIL: "fail",

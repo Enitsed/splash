@@ -1,8 +1,35 @@
 const DAO = require("../../lib/dao");
 const mySQLWrapper = require("../../lib/mySqlWrapper");
 const bcrypt = require("bcrypt");
+const { sequelize } = require("../");
+const { DataTypes } = require("sequelize");
 
 class User extends DAO {
+  // get an sequelize object
+  static get USER() {
+    return sequelize.define("users", {
+      user_seq: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      user_name: { type: DataTypes.STRING(50), allowNull: false },
+      user_id: { type: DataTypes.STRING, allowNull: false },
+      user_password: { type: DataTypes.STRING, allowNull: false },
+      gender: { type: DataTypes.STRING(2) },
+      address: { type: DataTypes.STRING },
+      phone_num: { type: DataTypes.STRING },
+      email: { type: DataTypes.STRING },
+      user_status: { type: DataTypes.STRING(10), allowNull: false },
+      create_time: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.NOW,
+        allowNull: false,
+      },
+    });
+  }
+
   /**
    * Overrides TABLE_NAME with this class' backing table at MySQL
    */
@@ -53,7 +80,6 @@ class User extends DAO {
       email,
       user_status,
       create_time,
-      signup_result,
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
@@ -74,7 +100,6 @@ class User extends DAO {
           email,
           user_status,
           create_time,
-          signup_result,
         },
       });
 
@@ -129,6 +154,16 @@ class User extends DAO {
       // Releases the connection
       if (connection != null) connection.release();
     }
+  }
+
+  /** use sequelize */
+  static findUser(email) {
+    return this.USER.findAll({
+      attributes: ["user_id"],
+      where: {
+        email: email,
+      },
+    });
   }
 }
 

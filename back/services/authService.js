@@ -48,7 +48,6 @@ const authService = {
             email,
             user_status: Constants.USER_STATUS.ACTIVE,
             create_time: new Date(),
-            signup_result: Constants.SIGNUP_RESULT.SUCCESS,
           });
           return sign_up_result;
         }
@@ -120,16 +119,22 @@ const authService = {
     return login_result;
   },
   findId: function (_, { email }) {
-    const findIdResult = User.findByFields({ fields: { email } })
+    // const findIdResult = User.findByFields({ fields: { email } })
+    //   .then((data) => {
+    //     if (!data) {
+    //       throw new Error("해당 데이터가 존재하지 않습니다.");
+    //     }
+    //     return data.shift();
+    //   })
+    //   .catch((err) => console.error(err));
+    return User.findUser(email)
       .then((data) => {
         if (!data) {
           throw new Error("해당 데이터가 존재하지 않습니다.");
         }
         return data.shift();
       })
-      .catch((err) => console.error(err));
-
-    return findIdResult;
+      .catch((err) => console.log(err));
   },
 };
 

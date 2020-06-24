@@ -66,7 +66,6 @@ module.exports = gql`
     user_status: String
     create_time: Date
     login_history: Auth_History
-    signup_result: String
   }
 
   type Auth_History {
