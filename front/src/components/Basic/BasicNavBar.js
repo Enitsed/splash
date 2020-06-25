@@ -5,7 +5,7 @@ import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
 import FindInfoModal from '../User/FindInfoModal';
-import { Logout, Login } from '../../Redux/Actions';
+import { Logout, Login } from '../../Reducers/Actions';
 import {
   cookieRequestUserData,
   clearUserData,
@@ -13,7 +13,7 @@ import {
 
 class BasicNavBar extends Component {
   constructor(props) {
-    super();
+    super(props);
     const { tryLogin } = props;
 
     const loggedUserData = cookieRequestUserData();

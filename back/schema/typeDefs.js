@@ -64,14 +64,12 @@ module.exports = gql`
     phone_num: String
     email: String
     user_status: String
-    create_time: Date
     login_history: Auth_History
   }
 
   type Auth_History {
     seq: ID
     login_ip: String
-    login_date: Date
     login_status: String
     user_num: Int
   }

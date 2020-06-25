@@ -26,10 +26,11 @@ module.exports = class AuthRouter {
       }
 
       // 회원 가입전 해당 이메일로 가입 여부 조회
-      await AuthService.findId({ ip: req.ip }, { email })
-        .then((data) => {
-          if (data) {
-            return res.json(new ErrorResult(501, "이미 등록된 이메일입니다."));
+      // 이상 없을 경우 아무것도 반환하지 않는다.
+      await AuthService.findDuplicate({ ip: req.ip }, { user_id, email })
+        .then((errorResult) => {
+          if (errorResult) {
+            return res.json(errorResult);
           }
 
           // 회원가입 처리
@@ -46,7 +47,7 @@ module.exports = class AuthRouter {
             }
           )
             .then((data) => {
-              if (!data || data.error) {
+              if (!data || data.errorCode) {
                 return res.json(data);
               } else {
                 req.session.user = data;
@@ -64,10 +65,12 @@ module.exports = class AuthRouter {
             })
             .catch((err) => {
               console.error(err);
+              return res.json(err);
             });
         })
         .catch((err) => {
           console.error(err);
+          return res.json(err);
         });
     });
 

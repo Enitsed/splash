@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import BasicLayout from './components/Basic/BasicLayout';
-import reducer from './Redux/Reducers';
+import reducer from './Reducers';
 
 export default class App extends Component {
   render() {

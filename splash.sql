@@ -33,9 +33,10 @@ CREATE TABLE IF NOT EXISTS `board` (
   `board_content` VARCHAR(2000) NULL,
   `board_div_cd` VARCHAR(2) NULL,
   `reg_id` VARCHAR(255) NULL,
-  `reg_date` VARCHAR(45) NULL,
   `reg_ip` VARCHAR(45) NULL,
   `user_seq` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`board_seq`),
   CONSTRAINT `fk_board_category1`
     FOREIGN KEY (`category_seq`)
@@ -64,9 +65,10 @@ CREATE TABLE IF NOT EXISTS `splash`.`board_comments` (
   `comment_text` VARCHAR(1000) NOT NULL,
   `reg_id` VARCHAR(255) NOT NULL,
   `reg_ip` VARCHAR(45) NOT NULL,
-  `reg_date` DATE NOT NULL,
   `board_seq` INT NOT NULL,
   `user_seq` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`comment_seq`),
   CONSTRAINT `fk_board_comments_board1`
     FOREIGN KEY (`board_seq`)
@@ -88,9 +90,10 @@ DROP TABLE IF EXISTS `splash`.`board_likes` ;
 CREATE TABLE IF NOT EXISTS `splash`.`board_likes` (
   `like_seq` INT NOT NULL AUTO_INCREMENT COMMENT '시퀀스',
   `reg_id` VARCHAR(255) NOT NULL COMMENT '유저 아이디',
-  `reg_date` VARCHAR(45) NOT NULL COMMENT '등록일',
   `board_seq` INT NOT NULL,
   `user_seq` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`like_seq`),
   CONSTRAINT `fk_board_likes_board1`
     FOREIGN KEY (`board_seq`)
@@ -114,9 +117,10 @@ CREATE TABLE IF NOT EXISTS `splash`.`category` (
   `category_name` VARCHAR(255) NULL COMMENT '카테고리명',
   `category_lvl` INT NOT NULL COMMENT '카테고리 레벨',
   `parent_category_seq` VARCHAR(255) NOT NULL,
-  `reg_date` DATE NOT NULL,
   `reg_id` VARCHAR(255) NOT NULL,
   `reg_ip` VARCHAR(45) NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`category_seq`),
   CONSTRAINT `fk_category_category1`
     FOREIGN KEY (`parent_category_seq`)
@@ -134,10 +138,11 @@ DROP TABLE IF EXISTS `splash`.`login_history` ;
 
 CREATE TABLE IF NOT EXISTS `splash`.`login_history` (
   `seq` INT NOT NULL AUTO_INCREMENT COMMENT '로그인 시퀀스',
-  `login_ip` VARCHAR(45) NOT NULL COMMENT '로그인 아이디\n',
-  `login_date` DATE NOT NULL COMMENT '로그인 날짜',
+  `login_ip` VARCHAR(45) NOT NULL COMMENT '로그인 아이디',
   `login_status` VARCHAR(3) NOT NULL COMMENT '로그인 결과',
   `user_num` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`seq`),
   CONSTRAINT `fk_login_history_user`
     FOREIGN KEY (`user_num`)
@@ -158,9 +163,10 @@ CREATE TABLE IF NOT EXISTS `splash`.`photo_comments` (
   `comment_text` VARCHAR(1000) NOT NULL,
   `reg_id` VARCHAR(255) NOT NULL,
   `reg_ip` VARCHAR(45) NOT NULL,
-  `reg_date` DATE NOT NULL,
   `photo_seq` INT NOT NULL,
   `user_seq` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`comment_seq`),
   CONSTRAINT `fk_comments_photos1`
     FOREIGN KEY (`photo_seq`)
@@ -182,9 +188,10 @@ DROP TABLE IF EXISTS `splash`.`photo_likes` ;
 CREATE TABLE IF NOT EXISTS `splash`.`photo_likes` (
   `like_seq` INT NOT NULL COMMENT '시퀀스',
   `reg_id` VARCHAR(255) NOT NULL COMMENT '유저 아이디',
-  `reg_date` VARCHAR(45) NOT NULL COMMENT '등록일',
   `photo_seq` INT NOT NULL,
   `user_seq` INT NOT NULL,
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`like_seq`),
   CONSTRAINT `fk_like_photos1`
     FOREIGN KEY (`photo_seq`)
@@ -211,8 +218,9 @@ CREATE TABLE IF NOT EXISTS `splash`.`photos` (
   `photo_name` VARCHAR(500) NULL COMMENT '사진 찍은 위치',
   `photo_path` VARCHAR(500) NULL COMMENT '사진 실제 경로',
   `reg_id` VARCHAR(255) NOT NULL COMMENT '등록자',
-  `reg_date` DATE NOT NULL COMMENT '등록자 ip',
   `reg_ip` VARCHAR(45) NOT NULL COMMENT '등록자 ip',
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`photo_seq`),
   CONSTRAINT `fk_photos_category1`
     FOREIGN KEY (`category_seq`)
@@ -241,12 +249,13 @@ CREATE TABLE IF NOT EXISTS `splash`.`user` (
   `user_name` VARCHAR(50) NOT NULL COMMENT '유저 이름',
   `user_id` VARCHAR(255) NOT NULL COMMENT '유저 아이디',
   `user_password` VARCHAR(255) NOT NULL COMMENT '유저 비밀번호',
-  `gender` VARCHAR(2) NULL COMMENT '이메일',
-  `address` VARCHAR(255) NULL COMMENT '이메일',
-  `phone_num` VARCHAR(255) NULL COMMENT '이메일',
+  `gender` VARCHAR(2) NULL COMMENT '성별',
+  `address` VARCHAR(255) NULL COMMENT '주소',
+  `phone_num` VARCHAR(255) NULL COMMENT '연락처',
   `email` VARCHAR(255) NULL COMMENT '이메일',
   `user_status` VARCHAR(3) NOT NULL DEFAULT '00' COMMENT '회원 상태 값\n',
-  `create_time` DATE NOT NULL COMMENT '가입일',
+  `createdAt` DATE NULL COMMENT '생성일',
+  `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`user_seq`));
 
 SET SQL_MODE=@OLD_SQL_MODE;

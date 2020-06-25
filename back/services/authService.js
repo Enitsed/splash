@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user/user");
 const Auth = require("../models/auth/authManage");
 const Constants = require("../models/common/Constants");
+const ErrorResult = require("../models/common/ErrorResult");
 
 const authService = {
   // check user data is wrong or not
@@ -28,15 +29,13 @@ const authService = {
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
     if (checkIfEmpty([user_name, user_id, user_password, gender, email])) {
-      return {
-        error: "필수 입력값을 입력해주세요.",
-      };
+      return new ErrorResult(504, "필수 입력값을 입력해주세요.");
     }
 
     return await User.findMatching(_, { user_id })
-      .then((res) => {
-        if (res.shift() && res.length > 0) {
-          return { error: "해당 아이디는 사용중입니다." };
+      .then((data) => {
+        if (data && data.length) {
+          return new ErrorResult(504, "해당 아이디는 사용중입니다.");
         } else {
           const sign_up_result = User.createEntry(_, {
             user_name,
@@ -47,7 +46,6 @@ const authService = {
             phone_num,
             email,
             user_status: Constants.USER_STATUS.ACTIVE,
-            create_time: new Date(),
           });
           return sign_up_result;
         }
@@ -96,7 +94,6 @@ const authService = {
         Auth.createEntry(_, {
           user_num: userData.user_seq,
           login_ip: _.ip,
-          login_date: new Date(),
           login_status: password_check_result
             ? Constants.LOGIN_RESULT.SUCCESS
             : Constants.LOGIN_RESULT.FAIL,
@@ -118,23 +115,36 @@ const authService = {
 
     return login_result;
   },
-  findId: function (_, { email }) {
-    // const findIdResult = User.findByFields({ fields: { email } })
+  findDuplicate: function (_, { user_id, email }) {
+    return User.findByFields({ fields: { user_id } })
+      .then((data) => {
+        if (data && data.length) {
+          return new ErrorResult(501, "해당 아이디는 이미 사용 중입니다.");
+        }
+
+        return User.findByFields({ fields: { email } })
+          .then((data) => {
+            if (data && data.length) {
+              return new ErrorResult(501, "이미 등록된 이메일입니다.");
+            }
+            return;
+          })
+          .catch((err) => {
+            return err;
+          });
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    // return User.findUser(email)
     //   .then((data) => {
     //     if (!data) {
     //       throw new Error("해당 데이터가 존재하지 않습니다.");
     //     }
     //     return data.shift();
     //   })
-    //   .catch((err) => console.error(err));
-    return User.findUser(email)
-      .then((data) => {
-        if (!data) {
-          throw new Error("해당 데이터가 존재하지 않습니다.");
-        }
-        return data.shift();
-      })
-      .catch((err) => console.log(err));
+    //   .catch((err) => console.log(err));
   },
 };
 
