@@ -6,13 +6,13 @@ export const LOG_OUT = 'LOG_OUT';
 export const Login = (payload) => ({
   type: LOG_IN,
   payload: {
-    userData: payload,
+    userData: JSON.parse(JSON.stringify(payload)),
   },
 });
 
 export const Logout = (payload) => ({
   type: LOG_OUT,
   payload: {
-    userData: payload,
+    userData: JSON.parse(JSON.stringify(payload)),
   },
 });

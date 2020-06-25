@@ -22,11 +22,6 @@ class User extends DAO {
       phone_num: { type: DataTypes.STRING },
       email: { type: DataTypes.STRING },
       user_status: { type: DataTypes.STRING(10), allowNull: false },
-      create_time: {
-        type: DataTypes.DATE,
-        defaultValue: sequelize.NOW,
-        allowNull: false,
-      },
     });
   }
 
@@ -79,37 +74,58 @@ class User extends DAO {
       phone_num,
       email,
       user_status,
-      create_time,
     }
   ) {
-    const connection = await mySQLWrapper.getConnectionFromPool();
-    try {
-      user_password = await bcrypt.hashSync(
-        user_password,
-        Number(process.env.SALT_ROUNDS || 10)
-      );
+    user_password = await bcrypt.hashSync(
+      user_password,
+      Number(process.env.SALT_ROUNDS || 10)
+    );
 
-      let _result = await this.insert(connection, {
-        data: {
-          user_name,
-          user_id,
-          user_password,
-          gender,
-          address,
-          phone_num,
-          email,
-          user_status,
-          create_time,
-        },
-      });
+    const result = await this.USER.create({
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+    })
+      .then(({ dataValues }) => {
+        return dataValues;
+      })
+      .catch((err) => err);
 
-      return this.getByUserSeq(_, {
-        user_seq: _result.insertId,
-      });
-    } finally {
-      // Releases the connection
-      if (connection != null) connection.release();
-    }
+    return result;
+
+    // const connection = await mySQLWrapper.getConnectionFromPool();
+    // try {
+    // user_password = await bcrypt.hashSync(
+    //   user_password,
+    //   Number(process.env.SALT_ROUNDS || 10)
+    // );
+
+    // let _result = await this.insert(connection, {
+    //   data: {
+    //     user_name,
+    //     user_id,
+    //     user_password,
+    //     gender,
+    //     address,
+    //     phone_num,
+    //     email,
+    //     user_status,
+    //   },
+    // });
+
+    // return this.getByUserSeq(_, {
+    //   user_seq: _result.insertId,
+    // });
+
+    // } finally {
+    // Releases the connection
+    // if (connection != null) connection.release();
+    // }
   }
 
   /**
@@ -127,7 +143,6 @@ class User extends DAO {
       phone_num,
       email,
       user_status,
-      create_time,
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
@@ -143,7 +158,6 @@ class User extends DAO {
           phone_num,
           email,
           user_status,
-          create_time,
         },
       });
 
@@ -158,12 +172,12 @@ class User extends DAO {
 
   /** use sequelize */
   static findUser(email) {
-    return this.USER.findAll({
+    return this.USER.findOne({
       attributes: ["user_id"],
       where: {
         email: email,
       },
-      offset: 1,
+      order: ["createdAt", "DESC"],
       limit: 1,
     });
   }

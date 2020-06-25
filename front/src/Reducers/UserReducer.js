@@ -19,9 +19,9 @@ const initialState = {
 const UserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOG_IN:
-      return JSON.parse(JSON.stringify(payload));
+      return payload;
     case LOG_OUT:
-      return state;
+      return payload;
     default:
       return state;
   }

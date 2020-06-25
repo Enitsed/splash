@@ -10,9 +10,8 @@ import {
   Message,
   Radio,
 } from 'semantic-ui-react';
-
 import { connect } from 'react-redux';
-import { Login } from '../../Redux/Actions';
+import { Login } from '../../Reducers/Actions';
 import { requestSignUp } from '../../services/UserService';
 
 class JoinModal extends Component {
@@ -21,18 +20,18 @@ class JoinModal extends Component {
     this.state = {
       modalOpen: false,
       userName: '',
-      userNameError: false,
       id: '',
-      idError: false,
       password: '',
-      passwordError: false,
       gender: 'M',
-      genderError: false,
       address: '',
-      addressError: false,
       phoneNum: '',
-      phoneNumError: false,
       email: '',
+      userNameError: false,
+      passwordError: false,
+      idError: false,
+      genderError: false,
+      addressError: false,
+      phoneNumError: false,
       emailError: false,
       accountError: false,
       errorMsg: '',
