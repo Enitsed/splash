@@ -6,7 +6,7 @@ const { DataTypes } = require("sequelize");
 
 class User extends DAO {
   // get an sequelize object
-  static get USER() {
+  static get Dao() {
     return sequelize.define("users", {
       user_seq: {
         type: DataTypes.INTEGER,
@@ -62,6 +62,7 @@ class User extends DAO {
 
   /**
    * Creates a new user
+   * @deprecated use "create" function instead
    */
   static async createEntry(
     _,
@@ -76,60 +77,39 @@ class User extends DAO {
       user_status,
     }
   ) {
-    user_password = await bcrypt.hashSync(
-      user_password,
-      Number(process.env.SALT_ROUNDS || 10)
-    );
+    const connection = await mySQLWrapper.getConnectionFromPool();
 
-    const result = await this.USER.create({
-      user_name,
-      user_id,
-      user_password,
-      gender,
-      address,
-      phone_num,
-      email,
-      user_status,
-    })
-      .then(({ dataValues }) => {
-        return dataValues;
-      })
-      .catch((err) => err);
+    try {
+      user_password = await bcrypt.hashSync(
+        user_password,
+        Number(process.env.SALT_ROUNDS || 10)
+      );
 
-    return result;
+      let _result = await this.insert(connection, {
+        data: {
+          user_name,
+          user_id,
+          user_password,
+          gender,
+          address,
+          phone_num,
+          email,
+          user_status,
+        },
+      });
 
-    // const connection = await mySQLWrapper.getConnectionFromPool();
-    // try {
-    // user_password = await bcrypt.hashSync(
-    //   user_password,
-    //   Number(process.env.SALT_ROUNDS || 10)
-    // );
-
-    // let _result = await this.insert(connection, {
-    //   data: {
-    //     user_name,
-    //     user_id,
-    //     user_password,
-    //     gender,
-    //     address,
-    //     phone_num,
-    //     email,
-    //     user_status,
-    //   },
-    // });
-
-    // return this.getByUserSeq(_, {
-    //   user_seq: _result.insertId,
-    // });
-
-    // } finally {
-    // Releases the connection
-    // if (connection != null) connection.release();
-    // }
+      return this.getByUserSeq(_, {
+        user_seq: _result.insertId,
+      });
+    } finally {
+      // Releases the connection
+      if (connection != null) connection.release();
+    }
   }
 
   /**
    * Updates a user
+   * @deprecated use "modify" function instead
    */
   static async updateEntry(
     _,
@@ -146,7 +126,13 @@ class User extends DAO {
     }
   ) {
     const connection = await mySQLWrapper.getConnectionFromPool();
+
     try {
+      user_password = await bcrypt.hashSync(
+        user_password,
+        Number(process.env.SALT_ROUNDS || 10)
+      );
+
       await this.update(connection, {
         user_seq,
         data: {
@@ -170,13 +156,92 @@ class User extends DAO {
     }
   }
 
-  /** use sequelize */
-  static findUser(email) {
-    return this.USER.findOne({
-      attributes: ["user_id"],
-      where: {
-        email: email,
+  /**
+   * Creates a new user (sequelize)
+   */
+  static async create(
+    _,
+    {
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+    }
+  ) {
+    user_password = await bcrypt.hashSync(
+      user_password,
+      Number(process.env.SALT_ROUNDS || 10)
+    );
+
+    const result = await this.Dao.create({
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+    })
+      .then(({ dataValues }) => {
+        return dataValues;
+      })
+      .catch((err) => err);
+
+    return result;
+  }
+
+  /**
+   * Updates a user (sequelize)
+   */
+  static async modify(
+    _,
+    {
+      user_seq,
+      user_name,
+      user_id,
+      user_password,
+      gender,
+      address,
+      phone_num,
+      email,
+      user_status,
+    }
+  ) {
+    user_password = await bcrypt.hashSync(
+      user_password,
+      Number(process.env.SALT_ROUNDS || 10)
+    );
+
+    this.Dao.update(
+      {
+        user_name,
+        user_password,
+        gender,
+        address,
+        phone_num,
+        email,
+        user_status,
       },
+      { where: { user_id } }
+    );
+  }
+
+  /** find User sequelize */
+  static findUser({ user_id, email }) {
+    const param = !!!user_id
+      ? { email: email }
+      : !!!email
+      ? { user_id: user_id }
+      : { user_id: user_id, email: email };
+
+    return this.Dao.findOne({
+      attributes: ["user_id"],
+      where: param,
       order: ["createdAt", "DESC"],
       limit: 1,
     });

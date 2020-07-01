@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import BasicButton from './BasicButton';
 import LoginModal from '../User/LoginModal';
 import JoinModal from '../User/JoinModal';
@@ -25,33 +26,43 @@ class BasicNavBar extends Component {
   }
 
   render() {
-    const { userData, tryLogout } = this.props;
+    const { userData, tryLogout, history } = this.props;
 
-    return userData && userData.user_status === 'active' ? (
+    return (
       <div className="nav">
-        <p>
-          Welcome!
-          <br />
-          {userData.user_name}
-        </p>
-        <BasicButton
-          className="btn_header"
-          clickHandler={() => {
-            clearUserData()
-              .then(() => {
-                tryLogout();
-              })
-              .catch((err) => console.error(err));
-          }}
-          text="Logout"
-          size="tiny"
-        />
-      </div>
-    ) : (
-      <div className="nav">
-        <LoginModal />
-        <JoinModal />
-        <FindInfoModal />
+        {userData && userData.user_id ? (
+          <>
+            <p>
+              Welcome!
+              <br />
+              {userData.user_id}
+            </p>
+            <BasicButton
+              className="btn_header"
+              clickHandler={() => {
+                clearUserData()
+                  .then((data) => {
+                    if (data.isAxiosError) { 
+                      alert('해당 서비스 요청에 응답이 없습니다. 잠시 후 다시 시도해 주세요.');
+                      console.error(data.message);
+                      return;
+                    }
+                    tryLogout();
+                    history.push('/');
+                  })
+                  .catch((err) => console.error(err));
+              }}
+              text="Logout"
+              size="tiny"
+            />
+          </>
+        ) : (
+          <>
+            <LoginModal />
+            <JoinModal />
+            <FindInfoModal />
+          </>
+        )}
       </div>
     );
   }
@@ -72,6 +83,7 @@ BasicNavBar.defaultProps = {
   userData: { user_name: '', user_status: 'inactive' },
   tryLogin: () => {},
   tryLogout: () => {},
+  history: {},
 };
 
 BasicNavBar.propTypes = {
@@ -81,6 +93,10 @@ BasicNavBar.propTypes = {
   }),
   tryLogin: Proptypes.func,
   tryLogout: Proptypes.func,
+  history: Proptypes.shape({}),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicNavBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(BasicNavBar));

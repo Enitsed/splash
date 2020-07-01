@@ -35,7 +35,7 @@ module.exports = class AuthRouter {
 
           // 회원가입 처리
           AuthService.signUpUserInfo(
-            { ip: req.ip },
+            { ip },
             {
               user_name,
               user_id,
@@ -165,8 +165,9 @@ module.exports = class AuthRouter {
     // expire session cookie
     app.post("/logout", (req, res) => {
       req.session.destroy();
-      res.clearCookie("user");
-      return res.redirect("/");
+      return res
+        .clearCookie("user")
+        .json({ msg: "성공적으로 로그아웃 되었습니다." });
     });
   }
 };

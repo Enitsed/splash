@@ -4,7 +4,7 @@ const Auth = require("../models/auth/authManage");
 const Constants = require("../models/common/Constants");
 const ErrorResult = require("../models/common/ErrorResult");
 
-const authService = {
+const AuthService = {
   // check user data is wrong or not
   userValidate: function (user_id, user_password) {
     if (checkIfEmpty([user_id, user_password])) {
@@ -23,32 +23,40 @@ const authService = {
 
     return true;
   },
+
   // sign up service
   signUpUserInfo: async function (
     _,
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
     if (checkIfEmpty([user_name, user_id, user_password, gender, email])) {
-      return new ErrorResult(504, "필수 입력값을 입력해주세요.");
+      return new ErrorResult(
+        Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
+        Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
+      );
     }
 
-    return await User.findMatching(_, { user_id })
+    return await this.findDuplicate(_, { user_id, email })
       .then((data) => {
         if (data && data.length) {
-          return new ErrorResult(504, "해당 아이디는 사용중입니다.");
-        } else {
-          const sign_up_result = User.createEntry(_, {
-            user_name,
-            user_id,
-            user_password,
-            gender,
-            address,
-            phone_num,
-            email,
-            user_status: Constants.USER_STATUS.ACTIVE,
-          });
-          return sign_up_result;
+          return new ErrorResult(
+            Constants.ERROR_CODE._ALREADY_USED,
+            Constants.ERROR_MESSAGE._ALREADY_USED
+          );
         }
+
+        const sign_up_result = User.create(_, {
+          user_name,
+          user_id,
+          user_password,
+          gender,
+          address,
+          phone_num,
+          email,
+          user_status: Constants.USER_STATUS.ACTIVE,
+        });
+
+        return sign_up_result;
       })
       .catch((err) => {
         console.error(err);
@@ -115,6 +123,16 @@ const authService = {
 
     return login_result;
   },
+  findUser: function (_, { email }) {
+    return User.findUser(email)
+      .then((data) => {
+        if (!data) {
+          throw new Error("해당 데이터가 존재하지 않습니다.");
+        }
+        return data;
+      })
+      .catch((err) => console.log(err));
+  },
   findDuplicate: function (_, { user_id, email }) {
     return User.findByFields({ fields: { user_id } })
       .then((data) => {
@@ -136,15 +154,6 @@ const authService = {
       .catch((err) => {
         return err;
       });
-
-    // return User.findUser(email)
-    //   .then((data) => {
-    //     if (!data) {
-    //       throw new Error("해당 데이터가 존재하지 않습니다.");
-    //     }
-    //     return data.shift();
-    //   })
-    //   .catch((err) => console.log(err));
   },
 };
 
@@ -169,4 +178,4 @@ const checkIfEmpty = (params) => {
   return false;
 };
 
-module.exports = authService;
+module.exports = AuthService;

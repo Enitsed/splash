@@ -195,7 +195,7 @@ class JoinModal extends Component {
               }
             />
             <Form.Group inline>
-              <label>Gender</label>
+              <Form.Field label="Gender"></Form.Field>
               <Form.Field
                 control={Radio}
                 error={genderError || accountError}
