@@ -1,9 +1,9 @@
 const DAO = require("../../lib/dao");
 const mySQLWrapper = require("../../lib/mySqlWrapper");
 
-class authManage extends DAO {
+class AuthManage extends DAO {
   // get an sequelize object
-  static get USER() {
+  static get Dao() {
     return sequelize.define("login_history", {
       seq: {
         type: DataTypes.INTEGER,
@@ -11,8 +11,8 @@ class authManage extends DAO {
         primaryKey: true,
         autoIncrement: true,
       },
-      login_ip: { type: DataTypes.STRING(50), allowNull: false },
-      login_status: { type: DataTypes.STRING, allowNull: false },
+      login_ip: { type: DataTypes.STRING(45), allowNull: false },
+      login_status: { type: DataTypes.STRING(10), allowNull: false },
       user_num: { type: DataTypes.STRING, allowNull: false },
     });
   }
@@ -98,4 +98,4 @@ class authManage extends DAO {
   }
 }
 
-module.exports = authManage;
+module.exports = AuthManage;

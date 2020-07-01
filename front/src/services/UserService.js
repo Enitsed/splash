@@ -92,8 +92,14 @@ const requestSignUp = (
 const clearUserData = () => {
   return axios
     .post('/logout')
-    .then(() => alert('로그아웃 되었습니다.'))
-    .catch((err) => console.error(err));
+    .then((res) => {
+      if (res.status !== 200) {
+        throw new Error('서버에서 오류가 발생하였습니다.');
+      }
+
+      alert(res.data.msg);
+    })
+    .catch((err) => err);
 };
 
 // test

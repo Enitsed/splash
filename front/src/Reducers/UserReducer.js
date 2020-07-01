@@ -3,15 +3,8 @@ import { LOG_IN, LOG_OUT } from './Actions/UserAction';
 // define User Initial States
 const initialState = {
   userData: {
-    user_seq: 0,
     user_name: '',
-    gender: '',
     user_id: '',
-    address: '',
-    phone_num: '',
-    email: '',
-    user_status: 'inactive',
-    create_time: '',
   },
 };
 

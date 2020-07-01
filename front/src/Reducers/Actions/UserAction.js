@@ -10,9 +10,9 @@ export const Login = (payload) => ({
   },
 });
 
-export const Logout = (payload) => ({
+export const Logout = () => ({
   type: LOG_OUT,
   payload: {
-    userData: JSON.parse(JSON.stringify(payload)),
+    userData: {},
   },
 });
