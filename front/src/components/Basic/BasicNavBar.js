@@ -27,7 +27,6 @@ class BasicNavBar extends Component {
 
   render() {
     const { userData, tryLogout, history } = this.props;
-
     return (
       <div className="nav">
         {userData && userData.user_id ? (
@@ -80,10 +79,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 BasicNavBar.defaultProps = {
-  userData: { user_name: '', user_status: 'inactive' },
-  tryLogin: () => {},
-  tryLogout: () => {},
-  history: {},
+  userData: null,
+  tryLogin: undefined,
+  tryLogout: undefined,
+  history: undefined,
 };
 
 BasicNavBar.propTypes = {
@@ -93,7 +92,8 @@ BasicNavBar.propTypes = {
   }),
   tryLogin: Proptypes.func,
   tryLogout: Proptypes.func,
-  history: Proptypes.shape({}),
+  history: Proptypes.shape({
+  }),
 };
 
 export default connect(

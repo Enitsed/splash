@@ -6,7 +6,7 @@ import BasicHeader from './BasicHeader';
 import BasicContainer from './BasicContainer';
 import BasicFooter from './BasicFooter';
 import AlbumWrapper from '../Album/AlbumWrapper';
-import Board from '../Board/Board';
+import BoardLayout from '../Board/BoardLayout';
 
 class Layout extends Component {
   render() {
@@ -16,9 +16,9 @@ class Layout extends Component {
         <BasicHeader />
         <BasicContainer>
           <Route path="/" exact component={testComponent} />
-          <Route path="/timeline" exact component={testComponent2} />
-          <Route path="/board" exact component={Board} />
-          <Route path="/album" exact component={AlbumWrapper} />
+          <Route path="/timeline" component={testComponent2} />
+          <Route path="/board" component={BoardLayout} />
+          <Route path="/album" component={AlbumWrapper} />
         </BasicContainer>
         <BasicFooter />
       </div>
