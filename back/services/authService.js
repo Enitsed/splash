@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user/user");
 const Auth = require("../models/auth/authManage");
 const Constants = require("../models/common/Constants");
-const ErrorResult = require("../models/common/ErrorResult");
+const Result = require("../models/common/Result");
 
 const AuthService = {
   // check user data is wrong or not
@@ -30,7 +30,7 @@ const AuthService = {
     { user_name, user_id, user_password, gender, address, phone_num, email }
   ) {
     if (checkIfEmpty([user_name, user_id, user_password, gender, email])) {
-      return new ErrorResult(
+      return new Result(
         Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
         Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
       );
@@ -39,7 +39,7 @@ const AuthService = {
     return await this.findDuplicate(_, { user_id, email })
       .then((data) => {
         if (data && data.length) {
-          return new ErrorResult(
+          return new Result(
             Constants.ERROR_CODE._ALREADY_USED,
             Constants.ERROR_MESSAGE._ALREADY_USED
           );
@@ -69,7 +69,7 @@ const AuthService = {
     if (!validateId(user_id)) {
       return {
         login_history: {
-          login_status: Constants.LOGIN_RESULT.FAIL,
+          login_status: Constants.RESULT_MESSAGE.FAIL,
           msg: "type user id",
         },
       };
@@ -78,7 +78,7 @@ const AuthService = {
     if (!validatePassword(user_password)) {
       return {
         login_history: {
-          login_status: Constants.LOGIN_RESULT.FAIL,
+          login_status: Constants.RESULT_MESSAGE.FAIL,
           msg: "type user password",
         },
       };
@@ -103,8 +103,8 @@ const AuthService = {
           user_num: userData.user_seq,
           login_ip: _.ip,
           login_status: password_check_result
-            ? Constants.LOGIN_RESULT.SUCCESS
-            : Constants.LOGIN_RESULT.FAIL,
+            ? Constants.RESULT_MESSAGE.SUCCESS
+            : Constants.RESULT_MESSAGE.FAIL,
         });
 
         // when failed to login
@@ -127,7 +127,10 @@ const AuthService = {
     return User.findUser(email)
       .then((data) => {
         if (!data) {
-          throw new Error("해당 데이터가 존재하지 않습니다.");
+          return new Result(
+            Constants.ERROR_CODE._NO_DATA_EXIST,
+            Constants.ERROR_MESSAGE._NO_DATA_EXIST
+          );
         }
         return data;
       })
@@ -137,13 +140,19 @@ const AuthService = {
     return User.findByFields({ fields: { user_id } })
       .then((data) => {
         if (data && data.length) {
-          return new ErrorResult(501, "해당 아이디는 이미 사용 중입니다.");
+          return new Result(
+            Constants.ERROR_CODE._ALREADY_USED,
+            "해당 아이디는 이미 사용 중입니다."
+          );
         }
 
         return User.findByFields({ fields: { email } })
           .then((data) => {
             if (data && data.length) {
-              return new ErrorResult(501, "이미 등록된 이메일입니다.");
+              return new Result(
+                Constants.ERROR_CODE._ALREADY_USED,
+                "이미 등록된 이메일입니다."
+              );
             }
             return;
           })

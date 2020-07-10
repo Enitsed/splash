@@ -5,7 +5,10 @@ const Constants = {
     INACTIVE: "inactive",
     DELETED: "deleted",
   },
-  LOGIN_RESULT: {
+  RESULT_CODE: {
+    SUCCESS: 200,
+  },
+  RESULT_MESSAGE: {
     SUCCESS: "success",
     FAIL: "fail",
   },
@@ -20,12 +23,12 @@ const Constants = {
     subject: "splash",
   },
   ERROR_CODE: {
-    _NECESSARY_INPUT_NEEDED: "402",
-    _NO_DATA_EXIST: "404",
-    _ALREADY_USED: "405",
-    _NOT_AUTHORIZED: "500",
-    _DENIAL_OF_SERVICES: "501",
-    _NO_VALID_USER_EXIST: "503",
+    _NECESSARY_INPUT_NEEDED: 402,
+    _NO_DATA_EXIST: 404,
+    _ALREADY_USED: 405,
+    _NOT_AUTHORIZED: 500,
+    _DENIAL_OF_SERVICES: 501,
+    _NO_VALID_USER_EXIST: 503,
   },
   ERROR_MESSAGE: {
     _NECESSARY_INPUT_NEEDED: "필수 입력값이 비어있습니다.",

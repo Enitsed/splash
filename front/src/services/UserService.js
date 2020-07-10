@@ -93,11 +93,11 @@ const clearUserData = () => {
   return axios
     .post('/logout')
     .then((res) => {
-      if (res.status !== 200) {
+      if (!res || res.statusCode !== 200) {
         throw new Error('서버에서 오류가 발생하였습니다.');
       }
 
-      alert(res.data.msg);
+      alert(res.data.resultMsg);
     })
     .catch((err) => err);
 };
