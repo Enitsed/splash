@@ -41,8 +41,10 @@ class BasicNavBar extends Component {
               clickHandler={() => {
                 clearUserData()
                   .then((data) => {
-                    if (data.isAxiosError) { 
-                      alert('해당 서비스 요청에 응답이 없습니다. 잠시 후 다시 시도해 주세요.');
+                    if (!data || data.isAxiosError) {
+                      alert(
+                        '해당 서비스 요청에 응답이 없습니다. 잠시 후 다시 시도해 주세요.',
+                      );
                       console.error(data.message);
                       return;
                     }
@@ -92,8 +94,7 @@ BasicNavBar.propTypes = {
   }),
   tryLogin: Proptypes.func,
   tryLogout: Proptypes.func,
-  history: Proptypes.shape({
-  }),
+  history: Proptypes.shape({}),
 };
 
 export default connect(

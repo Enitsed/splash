@@ -1,7 +1,7 @@
 const AuthService = require("../../services/authService");
 const jwt = require("jsonwebtoken");
 const Constants = require("../../models/common/Constants");
-const ErrorResult = require("../../models/common/ErrorResult");
+const Result = require("../../models/common/Result");
 
 module.exports = class AuthRouter {
   constructor(app) {
@@ -23,7 +23,7 @@ module.exports = class AuthRouter {
 
       if (!user_name || !user_id || !user_password || !gender || !email) {
         return res.json(
-          new ErrorResult(
+          new Result(
             Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
             Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
           )
@@ -33,14 +33,14 @@ module.exports = class AuthRouter {
       // 회원 가입전 해당 이메일로 가입 여부 조회
       // 이상 없을 경우 아무것도 반환하지 않는다.
       await AuthService.findDuplicate({ ip: req.ip }, { user_id, email })
-        .then((errorResult) => {
-          if (errorResult) {
-            return res.json(errorResult);
+        .then((result) => {
+          if (result.statusCode !== Constants.RESULT_CODE.SUCCESS) {
+            return res.json(result);
           }
 
           // 회원가입 처리
           AuthService.signUpUserInfo(
-            { ip },
+            { ip: req.ip },
             {
               user_name,
               user_id,
@@ -97,7 +97,7 @@ module.exports = class AuthRouter {
         .then((data) => {
           if (!data) {
             return res.json(
-              new ErrorResult(
+              new Result(
                 Constants.ERROR_CODE._NO_VALID_USER_EXIST,
                 Constants.ERROR_MESSAGE._NO_VALID_USER_EXIST
               )
@@ -130,7 +130,7 @@ module.exports = class AuthRouter {
         const userJwt = jwt.verify(req.cookies.user, app.get("jwt-secret"));
         if (req.session.user.user_password !== userJwt.user.user_password) {
           return res.json(
-            new ErrorResult(
+            new Result(
               Constants.ERROR_CODE._NO_VALID_USER_EXIST,
               Constants.ERROR_MESSAGE._NO_VALID_USER_EXIST
             )
@@ -151,7 +151,7 @@ module.exports = class AuthRouter {
         .then((data) => {
           if (!data) {
             return res.json(
-              new ErrorResult(
+              new Result(
                 Constants.ERROR_CODE._NO_DATA_EXIST,
                 Constants.ERROR_MESSAGE._NO_DATA_EXIST
               )
@@ -175,7 +175,12 @@ module.exports = class AuthRouter {
       req.session.destroy();
       return res
         .clearCookie("user")
-        .json({ msg: "성공적으로 로그아웃 되었습니다." });
+        .json(
+          new Result(
+            Constants.RESULT_CODE.SUCCESS,
+            "성공적으로 로그아웃 되었습니다."
+          )
+        );
     });
   }
 };
