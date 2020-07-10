@@ -22,7 +22,12 @@ module.exports = class AuthRouter {
       } = req.body.variables;
 
       if (!user_name || !user_id || !user_password || !gender || !email) {
-        return res.json(new ErrorResult(501, "필수 입력란을 기입해주세요."));
+        return res.json(
+          new ErrorResult(
+            Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
+            Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
+          )
+        );
       }
 
       // 회원 가입전 해당 이메일로 가입 여부 조회
@@ -125,7 +130,10 @@ module.exports = class AuthRouter {
         const userJwt = jwt.verify(req.cookies.user, app.get("jwt-secret"));
         if (req.session.user.user_password !== userJwt.user.user_password) {
           return res.json(
-            new ErrorResult(504, "세션 유저 데이터와 일치하지 않는 쿠키 데이터")
+            new ErrorResult(
+              Constants.ERROR_CODE._NO_VALID_USER_EXIST,
+              Constants.ERROR_MESSAGE._NO_VALID_USER_EXIST
+            )
           );
         }
 

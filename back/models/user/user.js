@@ -232,18 +232,11 @@ class User extends DAO {
   }
 
   /** find User sequelize */
-  static findUser({ user_id, email }) {
-    const param = !!!user_id
-      ? { email: email }
-      : !!!email
-      ? { user_id: user_id }
-      : { user_id: user_id, email: email };
-
+  static findUser(param) {
     return this.Dao.findOne({
       attributes: ["user_id"],
       where: param,
       order: ["createdAt", "DESC"],
-      limit: 1,
     });
   }
 }
