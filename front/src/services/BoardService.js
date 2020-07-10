@@ -54,4 +54,4 @@ const getBoardListData = () => {
   ];
 };
 
-export { getBoardListData };
+export default { getBoardListData };

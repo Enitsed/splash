@@ -35,4 +35,4 @@ const getCategoryData = () => {
   ];
 };
 
-export { getCategoryData };
+export default { getCategoryData };
