@@ -46,7 +46,8 @@ const getBoardListData = () => {
     },
     {
       no: 3,
-      title: 'test3',
+      title:
+        'ㅁㄴ어만ㅇ마ㅓㄴ아ㅓㅁ나ㅓㄹ마ㅓㄴ러ㅏㅁ나ㅗㅓㅇ뫄너오머노어모너엄나어몬라ㅓ몬라ㅓㅗ냐ㅕㄹ벼조ㅑㄷ봊뎌',
       writer: 'that',
       date: moment(new Date()).format('MM-DD hh:mm:ss A'),
       views: 5,
