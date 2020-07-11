@@ -11,7 +11,7 @@ export default class BoardCategoryListView extends React.Component {
     return (
       <div className="board_category_box">
         {categoryData.map((category) => (
-          <table className="board_table">
+          <table className="board_table" key={category.id}>
             <caption>
               <Link to={`/board/boardList/${category.name}`}>
                 {category.name}
