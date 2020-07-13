@@ -1,7 +1,7 @@
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../../schema/schema");
-const User = require("../../models/user/user");
-const AuthService = require("../../services/authService");
+const AuthRouter = require("../Auth/AuthRouter");
+const jwt = require("jsonwebtoken");
 
 module.exports = class Routes {
   /**
@@ -20,28 +20,35 @@ module.exports = class Routes {
       resolvers,
       context: ({ req }) => {
         rootValue.ip = req.ip;
+
+        const token = req.cookies.user || "";
+
+        if (!token || !req.cookies.user) {
+          throw new Error("Not Logged In");
+        }
+
+        const userJwt = jwt.verify(token, app.get("jwt-secret"));
+
+        if (req.session.user.user_password !== userJwt.user.user_password) {
+          throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
+        }
+
+        return { user: req.session.user };
       },
-      rootValue: rootValue
+      rootValue: rootValue,
     }).applyMiddleware({ app });
 
     // render React router
     app.get("/", (req, res) => {
-      res.render("index.html");
+      res.render("index.html", { userData: req.session.user });
     });
 
-    // login mapping
-    app.post("/login", (req, res) => {
-      const { user_id, user_password } = req.body;
-
-      req.session.user = AuthService.getUserInfo(
-        { ip: req.ip },
-        {
-          user_id,
-          user_password
-        }
-      );
-
+    app.get("/check", (req, res) => {
+      console.dir("/check route");
+      console.dir(req.session.user);
       res.redirect("/");
     });
+
+    new AuthRouter(app);
   }
 };

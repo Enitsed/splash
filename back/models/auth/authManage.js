@@ -1,7 +1,22 @@
 const DAO = require("../../lib/dao");
 const mySQLWrapper = require("../../lib/mySqlWrapper");
 
-class authManage extends DAO {
+class AuthManage extends DAO {
+  // get an sequelize object
+  static get Dao() {
+    return sequelize.define("login_history", {
+      seq: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      login_ip: { type: DataTypes.STRING(45), allowNull: false },
+      login_status: { type: DataTypes.STRING(10), allowNull: false },
+      user_num: { type: DataTypes.STRING, allowNull: false },
+    });
+  }
+
   /**
    * Overrides TABLE_NAME with this class' backing table at MySQL
    */
@@ -33,27 +48,23 @@ class authManage extends DAO {
 
     // Find matching login_historys
     return this.findByFields({
-      fields
+      fields,
     });
   }
 
   /**
    * Creates a new login_history
    */
-  static async createEntry(
-    _,
-    { user_num, login_ip, login_date, login_status, seq }
-  ) {
+  static async createEntry(_, { user_num, login_ip, login_status, seq }) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
       let _result = await this.insert(connection, {
         data: {
           user_num,
           login_ip,
-          login_date,
           login_status,
-          seq
-        }
+          seq,
+        },
       });
 
       return this.getByAuthManageSeq(_, { seq: _result.insertId });
@@ -66,10 +77,7 @@ class authManage extends DAO {
   /**
    * Updates a login_history
    */
-  static async updateEntry(
-    _,
-    { user_num, login_ip, login_date, login_status, seq }
-  ) {
+  static async updateEntry(_, { user_num, login_ip, login_status, seq }) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
       await this.update(connection, {
@@ -77,10 +85,9 @@ class authManage extends DAO {
         data: {
           user_num,
           login_ip,
-          login_date,
           login_status,
-          seq
-        }
+          seq,
+        },
       });
 
       return this.getByAuthManageSeq(_, { seq });
@@ -91,4 +98,4 @@ class authManage extends DAO {
   }
 }
 
-module.exports = authManage;
+module.exports = AuthManage;

@@ -1,11 +1,13 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const Routes = require("./controllers/Main/MainRouter");
 const ejs = require("ejs");
 const session = require("express-session");
 const path = require("path");
+const Constants = require("./models/common/Constants");
 
 class App {
   /**
@@ -25,7 +27,11 @@ class App {
 
       get port() {
         return process.env.PORT || 3010;
-      }
+      },
+
+      get secret() {
+        return process.env.SECRET || "secret";
+      },
     };
   }
 
@@ -39,11 +45,17 @@ class App {
     //Allows the server to parse json
     this.expressApp.use(bodyParser.json());
 
+    //Allows the server to  parse cookie
+    this.expressApp.use(cookieParser());
+
     //Allows the server to parse application/x-www-form-urlencoded
     this.expressApp.use(bodyParser.urlencoded({ extended: false }));
 
     //Allows the server to parse form-data
     this.expressApp.use(multer().array());
+
+    //Set JWT secret key
+    this.expressApp.set("jwt-secret", this.configs.secret);
 
     //Use Express Session
     this.expressApp.use(
@@ -53,20 +65,21 @@ class App {
         saveUninitialized: true,
         cookie: {
           secure: this.configs.stage === "production",
-          maxAge: 60000
-        }
+          maxAge: Constants.COOKIE_OPTION.maxAge, // 30분
+        },
       })
     );
 
     // set view path
     this.expressApp.set("views", path.relative("./", "src"));
+
+    // set app view Directory and template engine
     this.expressApp.set("view engine", "ejs");
     this.expressApp.engine("html", ejs.renderFile);
     this.expressApp.use(express.static(path.relative("./", "src")));
 
     //Registers the routes used by the app
     new Routes(this.expressApp);
-    // set app view Directory and template engine
   }
 
   /**

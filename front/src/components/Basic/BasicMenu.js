@@ -4,11 +4,10 @@ import Proptypes from 'prop-types';
 
 class BasicMenu extends Component {
   render() {
-    const { location, menuClass } = this.props;
+    const { location, active } = this.props;
     const currentPath = location.pathname;
-
     return (
-      <div className={menuClass}>
+      <div className={active ? 'menu' : 'menu hidden'}>
         <ul>
           <li className={currentPath === '/' ? 'active' : ''}>
             <Link to="/">Home</Link>
@@ -32,12 +31,12 @@ export default withRouter(BasicMenu);
 
 BasicMenu.defaultProps = {
   location: '/',
-  menuClass: 'menu',
+  active: true,
 };
 
 BasicMenu.propTypes = {
   location: Proptypes.shape({
     pathname: Proptypes.string,
   }),
-  menuClass: Proptypes.string,
+  active: Proptypes.bool,
 };

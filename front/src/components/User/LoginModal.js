@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
+import {
+  Button,
+  Header,
+  Icon,
+  Modal,
+  Form,
+  Input,
+  Message,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Login } from '../../Redux/Actions';
+import { Login } from '../../Reducers/Actions';
 import { requestUserData } from '../../services/UserService';
-
-function loginModalOpenButton(e) {
-  return (
-    <Button className="btn_header" size="tiny" onClick={() => e.handleOpen()}>
-      Login
-    </Button>
-  );
-}
 
 class LoginModal extends Component {
   constructor(props) {
@@ -20,106 +20,125 @@ class LoginModal extends Component {
     this.state = {
       modalOpen: false,
       id: '',
+      idError: false,
       password: '',
+      passwordError: false,
+      accountError: false,
+      errorMsg: '',
     };
 
-    this.handleOpen.bind(this);
-    this.handleClose.bind(this);
     this.login.bind(this);
-    this.idInputHandler.bind(this);
-    this.passwordInputHandler.bind(this);
-  }
-
-  handleOpen() {
-    this.setState({ modalOpen: true });
-  }
-
-  handleClose() {
-    this.setState({ modalOpen: false });
   }
 
   login() {
     const { id, password } = this.state;
-    const { tryLogin } = this.props;
+    const { loginComplete } = this.props;
 
     if (id === '') {
-      alert('아이디를 입력해주세요.');
+      this.setState({ idError: true, errorMsg: '아이디를 다시 입력하세요.' });
       return;
     }
 
     if (password === '') {
-      alert('비밀번호를 입력해주세요.');
+      this.setState({
+        passwordError: true,
+        errorMsg: '패스워드를 다시 입력하세요.',
+      });
       return;
     }
 
     const user = requestUserData(id, password);
-    if (user !== undefined) {
+
+    if (user) {
       user
-        .then(userData => {
-          if (!userData) {
-            alert('회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.');
-            return;
+        .then((data) => {
+          if (!data) {
+            this.setState({
+              accountError: true,
+              errorMsg:
+                '회원님의 로그인 정보가 잘못되었습니다. 다시 입력 해주세요.',
+            });
+          } else if (data.errorMsg) {
+            this.setState({
+              accountError: true,
+              errorMsg: data.errorMsg,
+            });
+          } else {
+            this.setState({
+              id: '',
+              password: '',
+            });
+
+            loginComplete(data);
           }
-
-          tryLogin(userData);
         })
-
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          console.debug(err);
         });
     }
   }
 
-  idInputHandler(e) {
-    this.setState({ id: e.target.value });
-  }
-
-  passwordInputHandler(e) {
-    this.setState({ password: e.target.value });
-  }
-
   render() {
-    const { modalOpen } = this.state;
+    const {
+      modalOpen,
+      idError,
+      passwordError,
+      accountError,
+      errorMsg,
+    } = this.state;
     return (
       <Modal
-        trigger={loginModalOpenButton(this)}
+        trigger={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.setState({ modalOpen: true })}
+          >
+            Login
+          </Button>
+        }
         open={modalOpen}
-        onClose={() => this.handleClose()}
+        onClose={() => this.setState({ modalOpen: false })}
         size="small"
       >
         <Header icon="browser" content="Login Form" />
         <Modal.Content>
-          <Form size="big">
+          <Form size="big" error={idError || passwordError || accountError}>
             <Form.Group widths="equal">
-              <Form.Field>
-                <label htmlFor="id_input">
-                  ID
-                  <input
-                    id="id_input"
-                    name="id_input"
-                    placeholder="ID"
-                    type="text"
-                    onChange={e => this.idInputHandler(e)}
-                  />
-                </label>
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="password_input">
-                  Password
-                  <input
-                    id="password_input"
-                    name="password_input"
-                    placeholder="Password"
-                    type="password"
-                    onChange={e => this.passwordInputHandler(e)}
-                  />
-                </label>
-              </Form.Field>
+              <Form.Field
+                label="ID"
+                placeholder="ID"
+                control={Input}
+                error={idError || accountError}
+                onChange={(e, { value }) =>
+                  this.setState({
+                    id: value,
+                    idError: false,
+                    accountError: false,
+                  })
+                }
+              />
+              <Form.Field
+                label="Password"
+                placeholder="Password"
+                type="password"
+                control={Input}
+                error={passwordError || accountError}
+                onChange={(e, { value }) =>
+                  this.setState({
+                    password: value,
+                    passwordError: false,
+                    accountError: false,
+                  })
+                }
+              />
             </Form.Group>
+            <Message error header="Error" content={errorMsg} />
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={e => this.login(e)} inverted>
+          <Button color="green" onClick={() => this.login()} inverted>
             <Icon name="checkmark" />
             Log in
           </Button>
@@ -129,19 +148,19 @@ class LoginModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    tryLogin: userData => dispatch(Login(userData)),
+    loginComplete: (userData) => dispatch(Login(userData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginModal);
-
 LoginModal.defaultProps = {
-  tryLogin() {
+  loginComplete() {
     return () => false;
   },
 };
 LoginModal.propTypes = {
-  tryLogin: PropTypes.func,
+  loginComplete: PropTypes.func,
 };
+
+export default connect(null, mapDispatchToProps)(LoginModal);

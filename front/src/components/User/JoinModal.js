@@ -1,84 +1,293 @@
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
+import propTypes from 'prop-types';
+import {
+  Button,
+  Header,
+  Icon,
+  Modal,
+  Form,
+  Input,
+  Message,
+  Radio,
+} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Login } from '../../Reducers/Actions';
+import { requestSignUp } from '../../services/UserService';
 
-function joinModalOpenButton(e) {
-  // think should change the way to pass this to the function.
-  // we can may use hooks. need to look into it.
-  return (
-    <Button
-      className="btn_header"
-      size="tiny"
-      onClick={() => e.setState({ modalOpen: true })}
-    >
-      Join
-    </Button>
-  );
-}
-
-export default class JoinModal extends Component {
+class JoinModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalOpen: false,
+      userName: '',
+      id: '',
+      password: '',
+      gender: 'M',
+      address: '',
+      phoneNum: '',
+      email: '',
+      userNameError: false,
+      passwordError: false,
+      idError: false,
+      genderError: false,
+      addressError: false,
+      phoneNumError: false,
+      emailError: false,
+      accountError: false,
+      errorMsg: '',
     };
   }
 
-  closeModal() {
-    this.setState({ modalOpen: false });
+  signUp() {
+    const {
+      userName,
+      id,
+      password,
+      gender,
+      address,
+      phoneNum,
+      email,
+    } = this.state;
+    const { loginComplete } = this.props;
+
+    if (id === '') {
+      this.setState({ idError: true, errorMsg: '아이디를 다시 입력하세요.' });
+      return;
+    }
+
+    if (password === '') {
+      this.setState({
+        passwordError: true,
+        errorMsg: '패스워드를 다시 입력하세요.',
+      });
+      return;
+    }
+
+    if (!email) {
+      this.setState({
+        emailError: true,
+        errorMsg: '이메일을 다시 입력하세요.',
+      });
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      this.setState({
+        emailError: true,
+        errorMsg: '이메일을 다시 입력하세요.',
+      });
+    }
+
+    const user = requestSignUp(
+      userName,
+      id,
+      password,
+      gender,
+      address,
+      phoneNum,
+      email,
+    );
+    if (user !== undefined) {
+      user
+        .then((data) => {
+          if (!data) {
+            this.setState({
+              accountError: true,
+              errorMsg:
+                '회원 가입 처리 중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
+            });
+          } else if (data.errorMsg) {
+            this.setState({
+              accountError: true,
+              errorMsg: data.errorMsg,
+            });
+          } else {
+            // reset input
+            this.setState({
+              modalOpen: false,
+              userName: '',
+              id: '',
+              password: '',
+              gender: 'M',
+              address: '',
+              phoneNum: '',
+              email: '',
+            });
+
+            loginComplete(data);
+          }
+        })
+        .catch((err) => {
+          console.debug(err);
+        });
+    }
   }
 
   render() {
-    const { modalOpen } = this.state;
+    const {
+      modalOpen,
+      userNameError,
+      idError,
+      passwordError,
+      genderError,
+      addressError,
+      phoneNumError,
+      emailError,
+      accountError,
+      errorMsg,
+      gender,
+    } = this.state;
     return (
       <Modal
-        trigger={joinModalOpenButton(this)}
+        trigger={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <Button
+            className="btn_header"
+            size="tiny"
+            onClick={() => this.setState({ modalOpen: true })}
+          >
+            Join
+          </Button>
+        }
         open={modalOpen}
-        onClose={() => this.closeModal()}
+        onClose={() => this.setState({ modalOpen: false })}
         size="small"
       >
         <Header icon="browser" content="Join Form" />
         <Modal.Content>
-          <Form size="big">
-            <Form.Field>
-              <label htmlFor="id_input">
-                ID
-                <input
-                  id="id_input"
-                  name="id_input"
-                  placeholder="ID"
-                  type="text"
-                />
-              </label>
-            </Form.Field>
-            <Form.Field>
-              <label htmlFor="password_input">
-                Password
-                <input
-                  id="password_input"
-                  name="password_input"
-                  placeholder="Password"
-                  type="password"
-                />
-              </label>
-            </Form.Field>
-            <Form.Field>
-              <label htmlFor="name_input">
-                Name
-                <input
-                  id="name_input"
-                  name="name_input"
-                  placeholder="Name"
-                  type="text"
-                />
-              </label>
-            </Form.Field>
+          <Form
+            size="big"
+            error={
+              userNameError ||
+              idError ||
+              passwordError ||
+              genderError ||
+              addressError ||
+              phoneNumError ||
+              emailError ||
+              accountError
+            }
+          >
+            <Form.Field
+              id="form-input-control-error-id"
+              label="ID"
+              placeholder="ID"
+              control={Input}
+              error={idError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  id: value,
+                  idError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Form.Field
+              label="Password"
+              placeholder="Password"
+              type="password"
+              control={Input}
+              error={passwordError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  password: value,
+                  passwordError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Form.Field
+              label="User Name"
+              placeholder="User Name"
+              control={Input}
+              error={userNameError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  userName: value,
+                  userNameError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Form.Group inline>
+              <Form.Field label="Gender"></Form.Field>
+              <Form.Field
+                control={Radio}
+                error={genderError || accountError}
+                label="Male"
+                value="M"
+                checked={gender === 'M'}
+                onClick={(e, { value }) => {
+                  this.setState({
+                    gender: value,
+                    genderError: false,
+                    accountError: false,
+                  });
+                }}
+              />
+              <Form.Field
+                control={Radio}
+                error={genderError || accountError}
+                label="Femail"
+                value="F"
+                checked={gender === 'F'}
+                onClick={(e, { value }) =>
+                  this.setState({
+                    gender: value,
+                    genderError: false,
+                    accountError: false,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Field
+              label="Address"
+              placeholder="Address"
+              control={Input}
+              error={addressError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  address: value,
+                  addressError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Form.Field
+              label="Phone Number"
+              placeholder="Phone Number"
+              control={Input}
+              error={phoneNumError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  phoneNum: value,
+                  phoneNumError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Form.Field
+              label="Email"
+              placeholder="Email"
+              control={Input}
+              error={emailError || accountError}
+              onChange={(e, { value }) =>
+                this.setState({
+                  email: value,
+                  emailError: false,
+                  accountError: false,
+                })
+              }
+            />
+            <Message error header="Error" content={errorMsg} />
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="red" onClick={() => this.closeModal()} inverted>
+          <Button
+            color="red"
+            onClick={() => this.setState({ modalOpen: false })}
+            inverted
+          >
             Cancel
           </Button>
-          <Button color="green" onClick={() => this.closeModal()} inverted>
+          <Button color="green" onClick={() => this.signUp()} inverted>
             <Icon name="checkmark" />
             Submit
           </Button>
@@ -87,3 +296,21 @@ export default class JoinModal extends Component {
     );
   }
 }
+
+JoinModal.defaultProps = {
+  loginComplete() {
+    return false;
+  },
+};
+
+JoinModal.propTypes = {
+  loginComplete: propTypes.func,
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginComplete: (userData) => dispatch(Login(userData)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(JoinModal);
