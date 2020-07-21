@@ -25,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && yarn clear && yarn copy",
+    "netlify-build": "react-scripts build",
     "copy": "copyfiles -u 1 './build/**/*' ../back/src/",
     "clear": "rm -rfv ../back/src/*",
     "test": "react-scripts test",
