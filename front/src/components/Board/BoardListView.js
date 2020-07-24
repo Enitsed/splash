@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Input, Button } from 'semantic-ui-react';
 import BoardService from '../../services/BoardService';
 import BoardListItem from './BoardListItem';
 
-export default class BoardListView extends Component {
+const BoardTableWrapper = styled.div`
+  width: 100%;
+`;
+
+const SearchInputWrapper = styled.div`
+  display: flex
+  width: 226px
+  justify-content: space-between
+`;
+
+const WriteBtnWrapper = styled.div`
+  margin-left: 20px
+`;
+
+class BoardListView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +37,7 @@ export default class BoardListView extends Component {
     const { listData } = this.state;
 
     return (
-      <div style={{ width: '100%' }}>
+      <BoardTableWrapper>
         <table className="board_table">
           <caption>
             <Link to={`/board/boardList/${tableName}`}>{tableName}</Link>
@@ -52,26 +67,16 @@ export default class BoardListView extends Component {
         </table>
         <div className="board_list_control_box_wrapper">
           <div className="board_list_control_box">
-            <div
-              style={{
-                display: 'flex',
-                width: '226px',
-                justifyContent: 'space-between',
-              }}
-            >
+            <SearchInputWrapper>
               <Input size="mini" placeholder="search" />
               <Button size="tiny" content="search" />
-            </div>
-            <div
-              style={{
-                marginLeft: '20px',
-              }}
-            >
+            </SearchInputWrapper>
+            <WriteBtnWrapper>
               <Button size="tiny" content="write" />
-            </div>
+            </WriteBtnWrapper>
           </div>
         </div>
-      </div>
+      </BoardTableWrapper>
     );
   }
 }
@@ -79,3 +84,6 @@ export default class BoardListView extends Component {
 BoardListView.propTypes = {
   tableName: PropTypes.string.isRequired,
 };
+
+
+export default BoardListView;

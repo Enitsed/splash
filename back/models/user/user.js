@@ -231,12 +231,16 @@ class User extends DAO {
     );
   }
 
-  /** find User sequelize */
-  static findUser(param) {
+  /** find User sequelize
+   * @param : Object = find matching keys
+   * @attr : Array = get wanted attributes
+   */
+
+  static findUser(param, attr) {
     return this.Dao.findOne({
-      attributes: ["user_id"],
+      attributes: attr,
       where: param,
-      order: ["createdAt", "DESC"],
+      order: [["createdAt", "DESC"]],
     });
   }
 }

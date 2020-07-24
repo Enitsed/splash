@@ -123,8 +123,27 @@ const AuthService = {
 
     return login_result;
   },
-  findUser: function (_, { email }) {
-    return User.findUser(email)
+  findId: function (_, { email }) {
+    return User.findUser({ email: email }, ["user_id"])
+      .then((data) => {
+        if (!data) {
+          return new Result(
+            Constants.ERROR_CODE._NO_DATA_EXIST,
+            Constants.ERROR_MESSAGE._NO_DATA_EXIST
+          );
+        }
+        return data;
+      })
+      .catch((err) => console.log(err));
+  },
+  /**
+   * find password
+   * @param {context} _ : object has ip
+   * @param {parameter} object has key for "user_id"
+   * @return email
+   */
+  findPassword: function (_, { user_id }) {
+    return User.findUser({ user_id: user_id }, ["email"])
       .then((data) => {
         if (!data) {
           return new Result(
@@ -154,7 +173,11 @@ const AuthService = {
                 "이미 등록된 이메일입니다."
               );
             }
-            return;
+
+            return new Result(
+              Constants.RESULT_CODE.SUCCESS,
+              Constants.RESULT_MESSAGE.SUCCESS
+            );
           })
           .catch((err) => {
             return err;
@@ -164,6 +187,7 @@ const AuthService = {
         return err;
       });
   },
+  // TODO : 회원 정보 바꾸는 메서드 필요함.
 };
 
 const validateId = function (id) {

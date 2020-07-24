@@ -2,6 +2,8 @@ const AuthService = require("../../services/authService");
 const jwt = require("jsonwebtoken");
 const Constants = require("../../models/common/Constants");
 const Result = require("../../models/common/Result");
+const nodemailer = require("nodemailer");
+const SMTPConfig = require("../../config/SMTPConfig");
 
 module.exports = class AuthRouter {
   constructor(app) {
@@ -145,20 +147,29 @@ module.exports = class AuthRouter {
 
     // find Id mapping
     app.post("/findId", (req, res) => {
+      // TODO : validate email regex
       const { email } = req.body.variables;
+
+      if (!email) {
+        return res.json(
+          new Result(
+            Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
+            Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
+          )
+        );
+      }
 
       AuthService.findId({ ip: req.ip }, { email })
         .then((data) => {
-          if (!data) {
+          if (!data || !data.dataValues) {
             return res.json(
               new Result(
                 Constants.ERROR_CODE._NO_DATA_EXIST,
                 Constants.ERROR_MESSAGE._NO_DATA_EXIST
               )
             );
-          } else {
-            return res.json(data.user_id);
           }
+          return res.json(data.dataValues.user_id);
         })
         .catch((err) => {
           console.error(err);
@@ -166,8 +177,51 @@ module.exports = class AuthRouter {
     });
 
     // find Password mapping
-    app.post("/findPassword", (req, res) => {
-      return res.redirect("/");
+    app.post("/findPassword", async (req, res) => {
+      const { user_id } = req.body.variables;
+
+      if (!user_id) {
+        return res.json(
+          new Result(
+            Constants.ERROR_CODE._NECESSARY_INPUT_NEEDED,
+            Constants.ERROR_MESSAGE._NECESSARY_INPUT_NEEDED
+          )
+        );
+      }
+
+      AuthService.findPassword({ ip: req.ip }, { user_id })
+        .then(async (data) => {
+          if (!data && !data.dataValues) {
+            return res.json(
+              new Result(
+                Constants.ERROR_CODE._NO_VALID_USER_EXIST,
+                Constants.ERROR_MESSAGE._NO_VALID_USER_EXIST
+              )
+            );
+          }
+          // create reusable transporter object using the default SMTP transport
+          const transporter = nodemailer.createTransport(SMTPConfig);
+
+          // TODO : 비밀번호 재설정 페이지로 이동 시켜야함.
+          // send mail with defined transport object
+          const info = await transporter.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>', // sender address
+            to: data.dataValues.email, // list of receivers
+            subject: "비밀번호 찾기 결과입니다.", // Subject line
+            text: `비밀번호는 : ${data.dataValues.user_password} 입니다. 요청하신 적이 없으면 무시해주세요.`, // plain text body
+            // html: "<b>Hello world?</b>", // html body
+          });
+
+          console.log("Message sent: %s", info.messageId);
+
+          return res.json(
+            new Result(
+              Constants.RESULT_CODE.SUCCESS,
+              Constants.RESULT_MESSAGE.SUCCESS
+            )
+          );
+        })
+        .catch((err) => console.error(err));
     });
 
     // expire session cookie
