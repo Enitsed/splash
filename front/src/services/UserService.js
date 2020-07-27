@@ -154,7 +154,7 @@ const findIdInfo = (email) => {
       const userData = response.data;
 
       if (!userData) {
-        console.error('no data availiable');
+        // console.error('no data availiable');
         return;
       }
 
@@ -162,10 +162,30 @@ const findIdInfo = (email) => {
       return userData;
     })
     .catch((err) => {
-      console.error(err);
       // eslint-disable-next-line no-alert
-      alert('아이디 찾기에 실패하였습니다. 잠시 후 재시도 해주세요.');
-      return err;
+      alert('아이디 찾기에 실패하였습니다. 잠시 후 다시 시도 해주세요.');
+    });
+};
+
+const findPasswordInfo = (id) => {
+  return axios
+    .post('/findPassword', {
+      variables: { user_id: id },
+    })
+    .then((response) => {
+      const result = response.data;
+
+      if (!result) {
+        // console.error('no data availiable');
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return result;
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-alert
+      alert('비밀번호 찾기에 실패하였습니다. 잠시 후 다시 시도 해주세요.');
     });
 };
 
@@ -176,4 +196,5 @@ export {
   requestSignUp,
   testQuery,
   findIdInfo,
+  findPasswordInfo,
 };

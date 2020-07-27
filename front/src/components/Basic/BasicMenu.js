@@ -12,7 +12,7 @@ class BasicMenu extends Component {
           <li className={currentPath === '/' ? 'active' : ''}>
             <Link to="/">Home</Link>
           </li>
-          <li className={currentPath === '/board' ? 'active' : ''}>
+          <li className={currentPath.startsWith('/board') ? 'active' : ''}>
             <Link to="/board">Board</Link>
           </li>
           <li className={currentPath === '/album' ? 'active' : ''}>
@@ -30,7 +30,7 @@ class BasicMenu extends Component {
 export default withRouter(BasicMenu);
 
 BasicMenu.defaultProps = {
-  location: '/',
+  location: { pathname: '/' },
   active: true,
 };
 

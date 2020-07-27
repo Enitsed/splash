@@ -199,6 +199,11 @@ module.exports = class AuthRouter {
               )
             );
           }
+
+          if (data.statusCode && data.statusCode !== 200) {
+            return res.json(data);
+          }
+
           // create reusable transporter object using the default SMTP transport
           const transporter = nodemailer.createTransport(SMTPConfig);
 
@@ -208,8 +213,9 @@ module.exports = class AuthRouter {
             from: '"Fred Foo 👻" <foo@example.com>', // sender address
             to: data.dataValues.email, // list of receivers
             subject: "비밀번호 찾기 결과입니다.", // Subject line
-            text: `비밀번호는 : ${data.dataValues.user_password} 입니다. 요청하신 적이 없으면 무시해주세요.`, // plain text body
-            // html: "<b>Hello world?</b>", // html body
+            text: `요청하신 적이 없으면 무시해주세요.`, // plain text body
+            html:
+              "<h1>다음 링크를 클릭하여 비밀번호를 변경해주세요.</h1><a href='#'>test link</a><b>요청하신 적이 없으면 무시해주세요.</b>", // html body
           });
 
           console.log("Message sent: %s", info.messageId);
@@ -217,7 +223,7 @@ module.exports = class AuthRouter {
           return res.json(
             new Result(
               Constants.RESULT_CODE.SUCCESS,
-              Constants.RESULT_MESSAGE.SUCCESS
+              "성공적으로 해당 계정의 이메일로 전송되었습니다. 링크 접속 후 비밀번호를 변경해주세요."
             )
           );
         })

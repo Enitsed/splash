@@ -269,6 +269,11 @@ footer {
     display: flex;
     flex-direction: column;
   }
+
+  .board_category_box {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 /* animation */

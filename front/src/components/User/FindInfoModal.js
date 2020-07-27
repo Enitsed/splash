@@ -8,7 +8,7 @@ import {
   Message,
   Input,
 } from 'semantic-ui-react';
-import { findIdInfo } from '../../services/UserService';
+import { findIdInfo, findPasswordInfo } from '../../services/UserService';
 
 class FindInfoModal extends Component {
   constructor(props) {
@@ -16,11 +16,16 @@ class FindInfoModal extends Component {
 
     this.state = {
       modalOpen: false,
+      toggleFind: 'email',
       email: '',
       emailError: false,
       emailResult: null,
       emailSuccess: false,
-      errorMsg: 'Email 입력 오류',
+      id: '',
+      idError: false,
+      idResult: null,
+      idSuccess: false,
+      errorMsg: '입력 오류',
     };
 
     this.findId.bind(this);
@@ -29,8 +34,17 @@ class FindInfoModal extends Component {
   findId() {
     const { email } = this.state;
 
-    if (email === '') {
-      this.setState({ emailError: true });
+    if (
+      email === '' ||
+      // eslint-disable-next-line no-useless-escape
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email,
+      )
+    ) {
+      this.setState({
+        emailError: true,
+        errorMsg: '이메일이 올바른 형식이 아니거나 입력되지 않았습니다.',
+      });
       return;
     }
 
@@ -39,17 +53,51 @@ class FindInfoModal extends Component {
         if (!data) {
           this.setState({
             emailError: true,
-            errorMsg: '입력하신 정보에 일치하는 회원이 없습니다.',
+            errorMsg: '오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.',
           });
-        } else if (data.errorMsg) {
+        } else if (data.errorCode) {
           this.setState({
             emailError: true,
             errorMsg: `${data.errorCode} : ${data.errorMsg}`,
           });
         } else {
           this.setState({
+            emailError: false,
             emailSuccess: true,
             emailResult: `회원님의 아이디는 ${data}입니다.`,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  findPassword() {
+    const { id } = this.state;
+
+    if (id === '') {
+      this.setState({ idError: true });
+      return;
+    }
+
+    findPasswordInfo(id)
+      .then((data) => {
+        if (!data) {
+          this.setState({
+            idError: true,
+            errorMsg: '오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.',
+          });
+        } else if (data.statusCode !== 200) {
+          this.setState({
+            idError: true,
+            errorMsg: `${data.statusCode} : ${data.errorMsg}`,
+          });
+        } else {
+          this.setState({
+            idError: false,
+            idSuccess: true,
+            idResult: `${data.statusCode} : ${data.resultMsg}`,
           });
         }
       })
@@ -61,10 +109,14 @@ class FindInfoModal extends Component {
   render() {
     const {
       modalOpen,
-      emailError,
       errorMsg,
+      toggleFind,
+      emailError,
       emailSuccess,
       emailResult,
+      idError,
+      idSuccess,
+      idResult,
     } = this.state;
     return (
       <Modal
@@ -84,32 +136,75 @@ class FindInfoModal extends Component {
       >
         <Header icon="browser" content="Find ID / Password" />
         <Modal.Content>
-          <Form size="big" error={emailError} success={emailSuccess}>
-            <Form.Group widths="equal">
-              <Form.Field
-                label="Email"
-                placeholder="Email"
-                type="email"
-                control={Input}
-                error={emailError}
-                onChange={(e, { value }) => {
-                  this.setState({
-                    email: value,
-                    emailError: false,
-                    emailSuccess: false,
-                  });
-                }}
-              />
-            </Form.Group>
-            <Message error header="Error" content={errorMsg} />
-            <Message success header="Success" content={emailResult} />
-          </Form>
+          {toggleFind ? (
+            <Form size="big" error={emailError} success={emailSuccess}>
+              <Form.Group widths="equal">
+                <Form.Field
+                  label="Email을 입력해주세요"
+                  placeholder="Email"
+                  type="email"
+                  control={Input}
+                  error={emailError}
+                  onChange={(e, { value }) => {
+                    this.setState({
+                      email: value,
+                      emailError: false,
+                      emailSuccess: false,
+                    });
+                  }}
+                />
+              </Form.Group>
+              <Message error header="Error" content={errorMsg} />
+              <Message success header="Success" content={emailResult} />
+            </Form>
+          ) : (
+            <Form size="big" error={idError} success={idSuccess}>
+              <Form.Group widths="equal">
+                <Form.Field
+                  label="ID를 입력해주세요"
+                  placeholder="ID"
+                  type="text"
+                  control={Input}
+                  error={idError}
+                  onChange={(e, { value }) => {
+                    this.setState({
+                      id: value,
+                      idError: false,
+                      idSuccess: false,
+                    });
+                  }}
+                />
+              </Form.Group>
+              <Message error header="Error" content={errorMsg} />
+              <Message success header="Success" content={idResult} />
+            </Form>
+          )}
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" onClick={() => this.findId()} inverted>
-            <Icon name="checkmark" />
-            Submit
+          <Button
+            color="yellow"
+            onClick={() =>
+              this.setState({
+                toggleFind: !toggleFind,
+                idError: false,
+                emailError: false,
+              })
+            }
+            inverted
+          >
+            {toggleFind ? '비밀번호 찾기로 변경' : '아이디 찾기로 변경'}
           </Button>
+          {toggleFind ? (
+            <Button color="green" onClick={() => this.findId()} inverted>
+              <Icon name="checkmark" />
+              Find ID
+            </Button>
+          ) : (
+            <Button color="green" onClick={() => this.findPassword()} inverted>
+              <Icon name="checkmark" />
+              Find Password
+            </Button>
+          )}
         </Modal.Actions>
       </Modal>
     );
