@@ -1,6 +1,7 @@
 const User = require("../models/user/user");
 const AuthService = require("../services/authService");
 const TimeStamp = require("../models/common/GraphQLTimestamp");
+const CategoryService = require("../services/categoryService");
 
 const resolvers = {
   Query: {
@@ -23,11 +24,20 @@ const resolvers = {
     },
   },
   Mutation: {
-    async addUser(_, { userSignUpInput }) {
+    addUser(_, { userSignUpInput }, context) {
       if (!context.user || !context.user.isAdmin) {
         throw new Error("admin only");
       }
+
       return AuthService.signUpUserInfo(_, userSignUpInput);
+    },
+
+    addCategory(_, { categoryInput }, context) {
+      // if (!context.user || !context.user.isAdmin) {
+      //   throw new Error("admin only");
+      // }
+
+      return CategoryService.addCategory(_, categoryInput);
     },
   },
   Date: TimeStamp,

@@ -9,6 +9,7 @@ module.exports = gql`
 
   type Mutation {
     addUser(userSignUpInput: User_Sign_Up_Input!): User
+    addCategory(categoryInput: Category_Input_Add!): Category
   }
   """
   directives
@@ -51,6 +52,13 @@ module.exports = gql`
     email: String
   }
 
+  input Category_Input_Add {
+    category_seq: String
+    category_name: String
+    category_lvl: Int
+    parent_category_seq: String
+  }
+
   """
   types
   """
@@ -74,6 +82,17 @@ module.exports = gql`
     login_ip: String
     login_status: String
     user_num: Int
+    createdAt: String
+    updatedAt: String
+  }
+
+  type Category {
+    category_seq: String
+    category_name: String
+    category_lvl: Int
+    parent_category_seq: String
+    reg_id: String
+    reg_ip: String
     createdAt: String
     updatedAt: String
   }

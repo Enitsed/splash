@@ -2,21 +2,6 @@ const DAO = require("../../lib/dao");
 const mySQLWrapper = require("../../lib/mySqlWrapper");
 
 class AuthManage extends DAO {
-  // get an sequelize object
-  static get Dao() {
-    return sequelize.define("login_history", {
-      seq: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      login_ip: { type: DataTypes.STRING(45), allowNull: false },
-      login_status: { type: DataTypes.STRING(10), allowNull: false },
-      user_num: { type: DataTypes.STRING, allowNull: false },
-    });
-  }
-
   /**
    * Overrides TABLE_NAME with this class' backing table at MySQL
    */

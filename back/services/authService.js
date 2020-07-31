@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user/user");
+const UserManager = require("../models/sequelizer/managers/userManager");
 const Auth = require("../models/auth/authManage");
 const Constants = require("../models/common/Constants");
 const Result = require("../models/common/Result");
@@ -36,6 +37,13 @@ const AuthService = {
       );
     }
 
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      return new Result(
+        Constants.ERROR_CODE._DENIAL_OF_SERVICES,
+        "이메일 형식이 잘못 되었습니다."
+      );
+    }
+
     return await this.findDuplicate(_, { user_id, email })
       .then((data) => {
         if (data && data.length) {
@@ -45,7 +53,7 @@ const AuthService = {
           );
         }
 
-        const sign_up_result = User.create(_, {
+        const sign_up_result = UserManager.create(_, {
           user_name,
           user_id,
           user_password,
@@ -124,7 +132,7 @@ const AuthService = {
     return login_result;
   },
   findId: function (_, { email }) {
-    return User.findUser({ email: email }, ["user_id"])
+    return UserManager.findUser({ email: email }, ["user_id"])
       .then((data) => {
         if (!data) {
           return new Result(
@@ -143,7 +151,7 @@ const AuthService = {
    * @return email
    */
   findPassword: function (_, { user_id }) {
-    return User.findUser({ user_id: user_id }, ["email"])
+    return UserManager.findUser({ user_id: user_id }, ["email"])
       .then((data) => {
         if (!data) {
           return new Result(

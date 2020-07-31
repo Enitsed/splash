@@ -1,6 +1,7 @@
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../../schema/schema");
 const AuthRouter = require("../Auth/AuthRouter");
+const BoardRouter = require("../Board/BoardRouter");
 const jwt = require("jsonwebtoken");
 
 module.exports = class Routes {
@@ -21,9 +22,9 @@ module.exports = class Routes {
       context: ({ req }) => {
         rootValue.ip = req.ip;
 
-        const token = req.cookies.user || "";
+        const token = req.cookies.user || req.session.user || "";
 
-        if (!token || !req.cookies.user) {
+        if (!token || !req.session.user || !req.cookies.user) {
           throw new Error("Not Logged In");
         }
 
@@ -33,9 +34,16 @@ module.exports = class Routes {
           throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
         }
 
+        rootValue.reg_id = req.session.user.user_id;
+
         return { user: req.session.user };
       },
       rootValue: rootValue,
+      playground: {
+        settings: {
+          "request.credentials": "include",
+        },
+      },
     }).applyMiddleware({ app });
 
     // render React router
@@ -50,5 +58,6 @@ module.exports = class Routes {
     });
 
     new AuthRouter(app);
+    new BoardRouter(app);
   }
 };

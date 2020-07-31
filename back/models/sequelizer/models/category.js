@@ -1,0 +1,25 @@
+module.exports = (sequelize, DataTypes) =>
+  sequelize.define(
+    "category",
+    {
+      category_seq: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      category_name: { type: DataTypes.STRING(255), allowNull: false },
+      category_lvl: { type: DataTypes.INTEGER, allowNull: false },
+      parent_category_seq: {
+        type: DataTypes.STRING(255),
+        references: {
+          key: "category_seq",
+        },
+      },
+      reg_id: { type: DataTypes.STRING(255), allowNull: false },
+      reg_ip: { type: DataTypes.STRING(45), allowNull: false },
+    },
+    {
+      freezeTableName: true,
+    }
+  );
