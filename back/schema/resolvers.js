@@ -22,6 +22,10 @@ const resolvers = {
     userLogin(_, { userLoginInput }, context) {
       return AuthService.getUserInfo(_, userLoginInput);
     },
+
+    categories(_, param, context) {
+      return CategoryService.categoryList(param);
+    },
   },
   Mutation: {
     addUser(_, { userSignUpInput }, context) {

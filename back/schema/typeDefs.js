@@ -5,6 +5,7 @@ module.exports = gql`
     user(user_seq: ID!): User
     userLogin(userLoginInput: User_Login_Input!): User
     users: [User!]!
+    categories: [Category]
   }
 
   type Mutation {

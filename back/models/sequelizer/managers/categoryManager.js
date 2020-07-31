@@ -65,11 +65,20 @@ const CategoryManager = {
   },
 
   /** find category sequelize */
-  findcategory: function (param) {
-    return category.find({
-      attributes: ["category_seq"],
+  findCategory: function (param) {
+    return category.findAll({
+      attributes: [
+        "category_seq",
+        "category_name",
+        "category_lvl",
+        "parent_category_seq",
+        "reg_id",
+        "reg_ip",
+        "createdAt",
+        "updatedAt",
+      ],
       where: param,
-      order: ["createdAt", "DESC"],
+      order: [["category_seq", "ASC"]],
     });
   },
 };

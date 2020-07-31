@@ -5,7 +5,7 @@ const Result = require("../models/common/Result");
 const CategoryService = {
   /** 카테고리 조회 */
   categoryList: function (_, param) {
-    return CategoryManager.findcategory(param);
+    return CategoryManager.findCategory(param);
   },
   /** 카테고리 조회 */
   findCategory: function (_, param) {},
