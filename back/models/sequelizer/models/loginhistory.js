@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define("login_history", {
+module.exports = (sequelize, DataTypes) => {
+  const login_history = sequelize.define("login_history", {
     seq: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -10,3 +10,10 @@ module.exports = (sequelize, DataTypes) =>
     login_status: { type: DataTypes.STRING(10), allowNull: false },
     user_num: { type: DataTypes.STRING, allowNull: false },
   });
+
+  login_history.associate = function (models) {
+    login_history.belongsTo(models.users, { foreignKey: "user_seq" });
+  };
+
+  return login_history;
+};

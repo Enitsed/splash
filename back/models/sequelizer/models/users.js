@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+  const user = sequelize.define(
     "users",
     {
       user_seq: {
@@ -21,3 +21,10 @@ module.exports = (sequelize, DataTypes) =>
       freezeTableName: true,
     }
   );
+
+  user.associate = function (models) {
+    user.hasMany(models.login_history);
+  };
+
+  return user;
+};

@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+  const category = sequelize.define(
     "category",
     {
       category_seq: {
@@ -23,3 +23,12 @@ module.exports = (sequelize, DataTypes) =>
       freezeTableName: true,
     }
   );
+
+  category.associate = function (models) {
+    category.hasMany(models.category);
+    category.belongsTo(models.category, { foreignKey: "parent_category_seq" });
+    category.hasMany(models.board);
+  };
+
+  return category;
+};
