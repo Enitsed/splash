@@ -4,13 +4,14 @@ const Constants = require("../../models/common/Constants");
 const Result = require("../../models/common/Result");
 const nodemailer = require("nodemailer");
 const SMTPConfig = require("../../config/SMTPConfig");
+const config = require("../../config/config");
 
 module.exports = class AuthRouter {
   constructor(app) {
     // signUp mapping
     app.post("/signUp", async (req, res) => {
       if (req.session.user && req.cookies.user) {
-        return res.redirect("/cookieLogin");
+        return res.redirect("/");
       }
 
       const {
@@ -62,11 +63,11 @@ module.exports = class AuthRouter {
                 const encodedUserData = jwt.sign(
                   { user: { ...req.session.user } },
                   req.app.get("jwt-secret"),
-                  Constants.JWT_TOKEN_OPTION
+                  config.JWT_TOKEN_OPTION
                 );
 
                 return res
-                  .cookie("user", encodedUserData, Constants.COOKIE_OPTION)
+                  .cookie("user", encodedUserData, config.COOKIE_OPTION)
                   .json(req.session.user);
               }
             })
@@ -109,7 +110,7 @@ module.exports = class AuthRouter {
           const encodedUserData = jwt.sign(
             { user: { ...data } },
             req.app.get("jwt-secret"),
-            Constants.JWT_TOKEN_OPTION
+            config.JWT_TOKEN_OPTION
           );
 
           req.session.user = data;
@@ -118,7 +119,7 @@ module.exports = class AuthRouter {
           // req.session.user.isAdmin = true;
 
           return res
-            .cookie("user", encodedUserData, Constants.COOKIE_OPTION)
+            .cookie("user", encodedUserData, config.COOKIE_OPTION)
             .json(req.session.user);
         })
         .catch((err) => {

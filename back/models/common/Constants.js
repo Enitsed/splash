@@ -12,16 +12,6 @@ const Constants = {
     SUCCESS: "success",
     FAIL: "fail",
   },
-  COOKIE_OPTION: {
-    maxAge: 1000 * 60 * 30, // 30 분
-    // httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 60 * 30), // 30 분
-  },
-  JWT_TOKEN_OPTION: {
-    expiresIn: "30m",
-    issuer: "localhost",
-    subject: "splash",
-  },
   ERROR_CODE: {
     _NECESSARY_INPUT_NEEDED: 402,
     _NO_DATA_EXIST: 404,
