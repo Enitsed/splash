@@ -68,11 +68,14 @@ class JoinModal extends Component {
         emailError: true,
         errorMsg: '이메일을 다시 입력하세요.',
       });
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      return;
+    }
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       this.setState({
         emailError: true,
         errorMsg: '이메일을 다시 입력하세요.',
       });
+      return;
     }
 
     const user = requestSignUp(
