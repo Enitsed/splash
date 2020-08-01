@@ -3,14 +3,19 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   type Query {
     user(user_seq: ID!): User
-    userLogin(userLoginInput: User_Login_Input!): User
+    userLogin(userInput: User_Login_Input!): User
     users: [User!]!
-    categories: [Category]
+    category(category_seq: Int): Category
+    categories(category_lvl: Int): [Category]
+    board(board_seq: ID!): Board
+    listOfBoard(category_seq: ID!): [Board]
   }
 
   type Mutation {
-    addUser(userSignUpInput: User_Sign_Up_Input!): User
+    addUser(userInput: User_Sign_Up_Input!): User
     addCategory(categoryInput: Category_Input_Add!): Category
+    removeCategory(categoryInput: Category_Input_Remove!): Category
+    addBoard(boardInput: Board_Input_Add!): Board
   }
   """
   directives
@@ -54,10 +59,20 @@ module.exports = gql`
   }
 
   input Category_Input_Add {
-    category_seq: String
     category_name: String
     category_lvl: Int
-    parent_category_seq: String
+    parent_category_seq: Int
+  }
+
+  input Category_Input_Remove {
+    category_seq: Int
+  }
+
+  input Board_Input_Add {
+    category_seq: Int
+    board_title: String
+    board_content: String
+    board_div_cd: String
   }
 
   """
@@ -82,19 +97,30 @@ module.exports = gql`
     seq: ID
     login_ip: String
     login_status: String
-    user_num: Int
+    user_seq: Int
     createdAt: String
     updatedAt: String
   }
 
   type Category {
-    category_seq: String
+    category_seq: ID
     category_name: String
     category_lvl: Int
-    parent_category_seq: String
+    parent_category_seq: Int
     reg_id: String
     reg_ip: String
     createdAt: String
     updatedAt: String
+  }
+
+  type Board {
+    board_seq: ID
+    category_seq: Int
+    board_title: String
+    board_content: String
+    board_div_cd: String
+    reg_id: String
+    reg_ip: String
+    user_seq: Int
   }
 `;

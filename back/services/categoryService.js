@@ -8,15 +8,16 @@ const CategoryService = {
     return CategoryManager.findCategory(param);
   },
   /** 카테고리 조회 */
-  findCategory: function (_, param) {},
+  findCategory: function (_, param) {
+    return CategoryManager.findOneCategory(param);
+  },
 
   /** 카테고리 추가 */
   addCategory: function (
     _,
-    { category_seq, category_name, category_lvl, parent_category_seq }
+    { category_name, category_lvl, parent_category_seq }
   ) {
     return CategoryManager.create(_, {
-      category_seq,
       category_name,
       category_lvl,
       parent_category_seq,

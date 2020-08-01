@@ -65,11 +65,38 @@ const BoardManager = {
   },
 
   /** find board sequelize */
-  findboard: function (param) {
-    return board.find({
-      attributes: ["board_seq"],
+  findOneBoard: function (param) {
+    return board.findOne({
+      attributes: [
+        "board_seq",
+        "category_seq",
+        "board_title",
+        "board_content",
+        "board_div_cd",
+        "reg_id",
+        "reg_ip",
+        "user_seq",
+      ],
       where: param,
-      order: ["createdAt", "DESC"],
+      order: [["createdAt", "DESC"]],
+    });
+  },
+
+  /** find board sequelize */
+  findboard: function (param) {
+    return board.findAll({
+      attributes: [
+        "board_seq",
+        "category_seq",
+        "board_title",
+        "board_content",
+        "board_div_cd",
+        "reg_id",
+        "reg_ip",
+        "user_seq",
+      ],
+      where: param,
+      order: [["createdAt", "DESC"]],
     });
   },
 };

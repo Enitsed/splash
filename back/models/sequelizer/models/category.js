@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "category",
     {
       category_seq: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER(11),
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       category_name: { type: DataTypes.STRING(255), allowNull: false },
       category_lvl: { type: DataTypes.INTEGER, allowNull: false },
       parent_category_seq: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER(11),
         references: {
           key: "category_seq",
         },

@@ -6,18 +6,10 @@ const CategoryManager = {
    */
   create: function (
     _,
-    {
-      category_seq,
-      category_name,
-      category_lvl,
-      parent_category_seq,
-      reg_id,
-      reg_ip,
-    }
+    { category_name, category_lvl, parent_category_seq, reg_id, reg_ip }
   ) {
     return category
       .create({
-        category_seq,
         category_name,
         category_lvl,
         parent_category_seq,
@@ -47,7 +39,6 @@ const CategoryManager = {
     return category
       .update(
         {
-          category_seq,
           category_name,
           category_lvl,
           parent_category_seq,
@@ -62,6 +53,24 @@ const CategoryManager = {
       .catch((err) => {
         console.error(err);
       });
+  },
+
+  /** find category sequelize */
+  findOneCategory: function (param) {
+    return category.findOne({
+      attributes: [
+        "category_seq",
+        "category_name",
+        "category_lvl",
+        "parent_category_seq",
+        "reg_id",
+        "reg_ip",
+        "createdAt",
+        "updatedAt",
+      ],
+      where: param,
+      order: [["category_seq", "ASC"]],
+    });
   },
 
   /** find category sequelize */

@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `splash`.`board` ;
 
 CREATE TABLE IF NOT EXISTS `board` (
   `board_seq` INT NOT NULL AUTO_INCREMENT,
-  `category_seq` VARCHAR(255) NOT NULL,
+  `category_seq` INT(11) NOT NULL,
   `board_title` VARCHAR(500) NULL,
   `board_content` VARCHAR(2000) NULL,
   `board_div_cd` VARCHAR(2) NULL,
@@ -113,10 +113,10 @@ CREATE INDEX `fk_board_likes_board1_idx` ON `splash`.`board_likes` (`board_seq` 
 DROP TABLE IF EXISTS `splash`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `splash`.`category` (
-  `category_seq` VARCHAR(255) NOT NULL COMMENT '카테고리 번호',
+  `category_seq` INT(11) NOT NULL COMMENT '카테고리 번호',
   `category_name` VARCHAR(255) NULL COMMENT '카테고리명',
   `category_lvl` INT NOT NULL COMMENT '카테고리 레벨',
-  `parent_category_seq` VARCHAR(255) NOT NULL,
+  `parent_category_seq` INT(11) NULL,
   `reg_id` VARCHAR(255) NOT NULL,
   `reg_ip` VARCHAR(45) NOT NULL,
   `createdAt` DATE NULL COMMENT '생성일',
@@ -212,7 +212,7 @@ DROP TABLE IF EXISTS `splash`.`photos` ;
 
 CREATE TABLE IF NOT EXISTS `splash`.`photos` (
   `photo_seq` INT NOT NULL AUTO_INCREMENT COMMENT '시퀀스',
-  `category_seq` VARCHAR(255) NOT NULL COMMENT '카테고리 번호\n',
+  `category_seq` INT(11) NOT NULL COMMENT '카테고리 번호\n',
   `user_seq` INT NOT NULL,
   `photo_url` VARCHAR(500) NULL COMMENT '사진 url',
   `photo_name` VARCHAR(500) NULL COMMENT '사진 찍은 위치',
