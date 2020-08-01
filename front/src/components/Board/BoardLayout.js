@@ -14,7 +14,11 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
-    this.setState({ categoryData: CategoryService.getCategoryData() });
+    CategoryService.getCategoryData()
+      .then((data) => {
+        this.setState({ categoryData: data });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -31,11 +35,11 @@ export default class Board extends Component {
         />
         {categoryData.map((category) => (
           <Route
-            key={category.id}
+            key={category.category_seq}
             exact
-            path={`/board/boardList/${category.name}`}
+            path={`/board/boardList/${category.category_name}`}
             render={(props) => (
-              <BoardListView {...props} tableName={category.name} />
+              <BoardListView {...props} tableName={category.category_name} />
             )}
           />
         ))}

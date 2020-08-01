@@ -17,7 +17,7 @@ const SearchInputWrapper = styled.div`
 `;
 
 const WriteBtnWrapper = styled.div`
-  margin-left: 20px
+  margin-left: 20px;
 `;
 
 class BoardListView extends Component {
@@ -84,6 +84,5 @@ class BoardListView extends Component {
 BoardListView.propTypes = {
   tableName: PropTypes.string.isRequired,
 };
-
 
 export default BoardListView;

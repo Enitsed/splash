@@ -11,10 +11,10 @@ export default class BoardCategoryListView extends React.Component {
     return (
       <div className="board_category_box">
         {categoryData.map((category) => (
-          <table className="board_table" key={category.id}>
+          <table className="board_table" key={category.category_seq}>
             <caption>
-              <Link to={`/board/boardList/${category.name}`}>
-                {category.name}
+              <Link to={`/board/boardList/${category.category_name}`}>
+                {category.category_name}
               </Link>
             </caption>
             <thead className="board_table_head">
@@ -51,8 +51,8 @@ export default class BoardCategoryListView extends React.Component {
 BoardCategoryListView.propTypes = {
   categoryData: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
+      category_name: PropTypes.string.isRequired,
+      category_seq: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
 };

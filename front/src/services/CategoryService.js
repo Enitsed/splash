@@ -1,38 +1,33 @@
 import axios from 'axios';
 
 const getCategoryData = () => {
-  //   const categoryQuery = `query {
-  //     category {
+  const categoryQuery = `query {   
+      categories {
+        category_seq,
+        category_lvl,
+        category_name,
+      }
+    }`;
 
-  //     }
-  //   }`;
+  return axios
+    .post('/graphql', {
+      query: categoryQuery,
+      variables: {},
+    })
+    .then((response) => {
+      const { data } = response.data;
 
-  //   return axios
-  //     .post('/graphql', {
-  //       query: categoryQuery,
-  //       variables: {},
-  //     })
-  //     .then((response) => {
-  //       const { data, errors } = response.data;
+      if (!data.categories) {
+        // 데이터 없을 경우 빈 배열
+        return [];
+      }
 
-  //       if (errors && errors.shift()) {
-  //         console.error('no data availiable');
-  //         return;
-  //       }
-
-  //       // eslint-disable-next-line consistent-return
-  //       return data.userData;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       // eslint-disable-next-line no-alert
-  //       return err;
-  //     });
-  return [
-    { name: 'Freeboard', id: 1 },
-    { name: 'Q&A', id: 2 },
-    { name: 'Notice', id: 3 },
-  ];
+      return data.categories;
+    })
+    .catch((err) => {
+      console.error(err);
+      return err;
+    });
 };
 
 export default { getCategoryData };
