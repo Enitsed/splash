@@ -4,9 +4,12 @@ const Result = require("../models/common/Result");
 
 const CategoryService = {
   /** 카테고리 조회 */
-  categoryList: function (_, param) {
-    return CategoryManager.findCategory(param);
+  categoryList: function (_, { category_lvl, offset }) {
+    let limit = 10;
+
+    return CategoryManager.findCategory({ category_lvl }, offset, limit);
   },
+
   /** 카테고리 조회 */
   findCategory: function (_, param) {
     return CategoryManager.findOneCategory(param);
@@ -23,6 +26,23 @@ const CategoryService = {
       parent_category_seq,
       reg_id: _.reg_id,
       reg_ip: _.ip,
+    });
+  },
+
+  /** 카테고리 삭제 */
+  removeCategory: function (_, { category_seq }) {
+    return CategoryManager.remove(_, {
+      category_seq,
+    }).then((result) => {
+      return result === 1
+        ? new Result(
+            Constants.RESULT_CODE.SUCCESS,
+            Constants.RESULT_MESSAGE.SUCCESS
+          )
+        : new Result(
+            Constants.ERROR_CODE._NO_DATA_EXIST,
+            Constants.ERROR_MESSAGE._NO_DATA_EXIST
+          );
     });
   },
 };

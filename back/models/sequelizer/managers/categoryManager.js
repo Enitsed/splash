@@ -47,6 +47,20 @@ const CategoryManager = {
         },
         { where: { category_seq } }
       )
+      .then(({ dataValues }) => {
+        return dataValues;
+      })
+      .catch((err) => err);
+  },
+
+  /***
+   * Remove a category
+   */
+  remove: function (_, { category_seq }) {
+    return category
+      .destroy({
+        where: { category_seq },
+      })
       .then((result) => {
         return result;
       })
@@ -57,38 +71,50 @@ const CategoryManager = {
 
   /** find category sequelize */
   findOneCategory: function (param) {
-    return category.findOne({
-      attributes: [
-        "category_seq",
-        "category_name",
-        "category_lvl",
-        "parent_category_seq",
-        "reg_id",
-        "reg_ip",
-        "createdAt",
-        "updatedAt",
-      ],
-      where: param,
-      order: [["category_seq", "ASC"]],
-    });
+    return category
+      .findOne({
+        attributes: [
+          "category_seq",
+          "category_name",
+          "category_lvl",
+          "parent_category_seq",
+          "reg_id",
+          "reg_ip",
+          "createdAt",
+          "updatedAt",
+        ],
+        where: param,
+        order: [["category_seq", "ASC"]],
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => err);
   },
 
   /** find category sequelize */
-  findCategory: function (param) {
-    return category.findAll({
-      attributes: [
-        "category_seq",
-        "category_name",
-        "category_lvl",
-        "parent_category_seq",
-        "reg_id",
-        "reg_ip",
-        "createdAt",
-        "updatedAt",
-      ],
-      where: param,
-      order: [["category_seq", "ASC"]],
-    });
+  findCategory: function (param, offset, limit) {
+    return category
+      .findAll({
+        attributes: [
+          "category_seq",
+          "category_name",
+          "category_lvl",
+          "parent_category_seq",
+          "reg_id",
+          "reg_ip",
+          "createdAt",
+          "updatedAt",
+        ],
+        where: param,
+        order: [["category_seq", "ASC"]],
+        offset: offset,
+        limit: limit,
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => err);
   },
 };
 

@@ -21,23 +21,38 @@ const resolvers = {
     },
 
     userLogin(_, { userInput }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
       return AuthService.getUserInfo(_, userInput);
     },
 
     category(_, { category_seq }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
       return CategoryService.findCategory(_, { category_seq });
     },
 
-    categories(_, { category_lvl }, context) {
-      return CategoryService.categoryList(_, { category_lvl });
+    categories(_, { category_lvl, offset }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
+      return CategoryService.categoryList(_, { category_lvl, offset });
     },
 
     board(_, { board_seq }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
       return BoardService.findBoard(_, { board_seq });
     },
 
-    listOfBoard(_, { category_seq }, context) {
-      return BoardService.boardList(_, { category_seq });
+    listOfBoard(_, { category_seq, offset }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
+      return BoardService.boardList(_, { category_seq, offset });
     },
   },
   Mutation: {
@@ -50,19 +65,19 @@ const resolvers = {
     },
 
     addCategory(_, { categoryInput }, context) {
-      // if (!context.user || !context.user.isAdmin) {
-      //   throw new Error("admin only");
-      // }
-
-      return CategoryService.addCategory(_, categoryInput);
-    },
-
-    removeCategory(_, { categoryInput }, context) {
       if (!context.user || !context.user.isAdmin) {
         throw new Error("admin only");
       }
 
-      return CategoryService.removeCategory(_, categoryInput);
+      return CategoryService.addCategory(_, categoryInput);
+    },
+
+    removeCategory(_, { category_seq }, context) {
+      if (!context.user || !context.user.isAdmin) {
+        throw new Error("admin only");
+      }
+
+      return CategoryService.removeCategory(_, { category_seq });
     },
 
     addBoard(_, { boardInput }, context) {
@@ -72,6 +87,17 @@ const resolvers = {
 
       return BoardService.writeBoard(_, {
         ...boardInput,
+        user_seq: context.user.user_seq,
+      });
+    },
+
+    removeBoard(_, { board_seq }, context) {
+      if (!context.user) {
+        throw new Error("member only");
+      }
+
+      return BoardService.removeBoard(_, {
+        board_seq,
         user_seq: context.user.user_seq,
       });
     },

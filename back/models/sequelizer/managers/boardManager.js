@@ -4,7 +4,7 @@ const BoardManager = {
   /**
    * Creates a new board (sequelize)
    */
-  create: async function (
+  create: function (
     _,
     {
       category_seq,
@@ -16,7 +16,7 @@ const BoardManager = {
       user_seq,
     }
   ) {
-    const result = await board
+    return board
       .create({
         category_seq,
         board_title,
@@ -30,14 +30,12 @@ const BoardManager = {
         return dataValues;
       })
       .catch((err) => err);
-
-    return result;
   },
 
   /**
    * Updates a board (sequelize)
    */
-  modify: async function (
+  modify: function (
     _,
     {
       board_seq,
@@ -50,54 +48,85 @@ const BoardManager = {
       user_seq,
     }
   ) {
-    board.update(
-      {
-        category_seq,
-        board_title,
-        board_content,
-        board_div_cd,
-        reg_id,
-        reg_ip,
-        user_seq,
-      },
-      { where: { board_seq } }
-    );
+    return board
+      .update(
+        {
+          category_seq,
+          board_title,
+          board_content,
+          board_div_cd,
+          reg_id,
+          reg_ip,
+          user_seq,
+        },
+        { where: { board_seq } }
+      )
+      .then(({ dataValues }) => {
+        return dataValues;
+      })
+      .catch((err) => err);
+  },
+
+  /**
+   * remove a board (sequelize)
+   */
+  remove: function (_, { board_seq }) {
+    return board
+      .destroy({
+        where: { board_seq },
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => err);
   },
 
   /** find board sequelize */
-  findOneBoard: function (param) {
-    return board.findOne({
-      attributes: [
-        "board_seq",
-        "category_seq",
-        "board_title",
-        "board_content",
-        "board_div_cd",
-        "reg_id",
-        "reg_ip",
-        "user_seq",
-      ],
-      where: param,
-      order: [["createdAt", "DESC"]],
-    });
+  findBoard: function (param) {
+    return board
+      .findOne({
+        attributes: [
+          "board_seq",
+          "category_seq",
+          "board_title",
+          "board_content",
+          "board_div_cd",
+          "reg_id",
+          "reg_ip",
+          "user_seq",
+        ],
+        where: param,
+        order: [["createdAt", "DESC"]],
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => err);
   },
 
   /** find board sequelize */
-  findboard: function (param) {
-    return board.findAll({
-      attributes: [
-        "board_seq",
-        "category_seq",
-        "board_title",
-        "board_content",
-        "board_div_cd",
-        "reg_id",
-        "reg_ip",
-        "user_seq",
-      ],
-      where: param,
-      order: [["createdAt", "DESC"]],
-    });
+  boardList: function (param, offset, limit) {
+    return board
+      .findAll({
+        attributes: [
+          "board_seq",
+          "category_seq",
+          "board_title",
+          "board_content",
+          "board_div_cd",
+          "reg_id",
+          "reg_ip",
+          "user_seq",
+        ],
+        where: param,
+        order: [["createdAt", "DESC"]],
+        offset: offset,
+        limit: limit,
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => err);
   },
 };
 
