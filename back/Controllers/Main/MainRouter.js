@@ -34,7 +34,9 @@ module.exports = class Routes {
           throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
         }
 
-        rootValue.reg_id = req.session.user.user_id;
+        if (req.session.user) {
+          rootValue.reg_id = req.session.user.user_id;
+        }
 
         return { user: req.session.user };
       },
