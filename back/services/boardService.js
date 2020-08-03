@@ -9,9 +9,7 @@ const BoardService = {
   },
 
   /** 게시글 조회(목록) */
-  boardList: function (_, { category_seq, offset }) {
-    const limit = 10;
-
+  boardList: function (_, { category_seq, offset, limit }) {
     return BoardManager.boardList({ category_seq }, offset, limit);
   },
 

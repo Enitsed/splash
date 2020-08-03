@@ -1,18 +1,45 @@
 const CategoryManager = require("../models/sequelizer/managers/categoryManager");
 const Constants = require("../models/common/Constants");
 const Result = require("../models/common/Result");
+const BoardService = require("./boardService");
 
 const CategoryService = {
   /** 카테고리 조회 */
-  categoryList: function (_, { category_lvl, offset }) {
+  categoryList: async function (_, { category_lvl, offset }) {
     let limit = 10;
 
-    return CategoryManager.findCategory({ category_lvl }, offset, limit);
+    return await CategoryManager.findCategory({ category_lvl }, offset, limit)
+      .then((data) => {
+        return data.map(({ dataValues }) => {
+          const listOfBoard = BoardService.boardList(_, {
+            category_seq: dataValues.category_seq,
+            limit: 5,
+          })
+            .then((boardData) => {
+              return boardData;
+            })
+            .catch((err) => console.error(err));
+          return { ...dataValues, listOfBoard };
+        });
+      })
+      .catch((err) => console.error(err));
   },
 
   /** 카테고리 조회 */
-  findCategory: function (_, param) {
-    return CategoryManager.findOneCategory(param);
+  findCategory: async function (_, param) {
+    return await CategoryManager.findOneCategory(param)
+      .then(async (data) => {
+        const { dataValues } = data;
+        const listOfBoard = await BoardService.boardList(_, {
+          category_seq: dataValues.category_seq,
+        })
+          .then((boardData) => {
+            return boardData;
+          })
+          .catch((err) => console.error(err));
+        return { ...dataValues, listOfBoard };
+      })
+      .catch((err) => console.error(err));
   },
 
   /** 카테고리 추가 */

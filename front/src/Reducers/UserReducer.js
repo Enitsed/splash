@@ -5,6 +5,7 @@ const initialState = {
   userData: {
     user_name: '',
     user_id: '',
+    user_status: '',
   },
 };
 

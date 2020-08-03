@@ -13,7 +13,6 @@ const cookieRequestUserData = () => {
     .then((response) => {
       const { data } = response;
 
-      // eslint-disable-next-line consistent-return
       return data;
     })
     .catch((err) => {
@@ -36,7 +35,6 @@ const requestUserData = (userId, userPassword) => {
     .then((response) => {
       const { data } = response;
 
-      // eslint-disable-next-line consistent-return
       return data;
     })
     .catch((err) => {
@@ -74,10 +72,9 @@ const requestSignUp = (
 
       if (!userData) {
         console.error('no data availiable');
-        return;
+        return null;
       }
 
-      // eslint-disable-next-line consistent-return
       return userData;
     })
     .catch((err) => {
@@ -102,49 +99,6 @@ const clearUserData = () => {
     .catch((err) => err);
 };
 
-// test
-const testQuery = () => {
-  const userQuery = `query {
-    users {
-      user_seq
-      user_name
-      user_id
-      gender
-      user_status
-      create_time
-      address
-      phone_num
-      email
-      login_history {
-        login_status
-        login_date
-      }
-    }
-  }`;
-
-  return axios
-    .post('/graphql', {
-      query: userQuery,
-      variables: {},
-    })
-    .then((response) => {
-      const { data, errors } = response.data;
-
-      if (errors && errors.shift()) {
-        console.error('no data availiable');
-        return;
-      }
-
-      // eslint-disable-next-line consistent-return
-      return data.userData;
-    })
-    .catch((err) => {
-      console.error(err);
-      // eslint-disable-next-line no-alert
-      return err;
-    });
-};
-
 const findIdInfo = (email) => {
   return axios
     .post('/findId', {
@@ -155,15 +109,15 @@ const findIdInfo = (email) => {
 
       if (!userData) {
         // console.error('no data availiable');
-        return;
+        return null;
       }
 
-      // eslint-disable-next-line consistent-return
       return userData;
     })
     .catch((err) => {
       // eslint-disable-next-line no-alert
       alert('아이디 찾기에 실패하였습니다. 잠시 후 다시 시도 해주세요.');
+      console.error(err);
     });
 };
 
@@ -176,16 +130,16 @@ const findPasswordInfo = (id) => {
       const result = response.data;
 
       if (!result) {
-        // console.error('no data availiable');
-        return;
+        console.error('no data availiable');
+        return null;
       }
 
-      // eslint-disable-next-line consistent-return
       return result;
     })
     .catch((err) => {
       // eslint-disable-next-line no-alert
       alert('비밀번호 찾기에 실패하였습니다. 잠시 후 다시 시도 해주세요.');
+      console.error(err);
     });
 };
 
@@ -194,7 +148,6 @@ export {
   requestUserData,
   clearUserData,
   requestSignUp,
-  testQuery,
   findIdInfo,
   findPasswordInfo,
 };

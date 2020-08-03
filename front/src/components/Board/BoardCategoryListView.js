@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BoardListItem from './BoardListItem';
-import BoardService from '../../services/BoardService';
 
 export default class BoardCategoryListView extends React.Component {
   render() {
@@ -37,9 +36,9 @@ export default class BoardCategoryListView extends React.Component {
               </tr>
             </thead>
             <tbody className="board_table_body">
-              {BoardService.getBoardListData().map((data) =>
-                BoardListItem(data),
-              )}
+              {category.listOfBoard.map((board) => {
+                return BoardListItem(board);
+              })}
             </tbody>
           </table>
         ))}

@@ -29,18 +29,25 @@ class BoardListView extends Component {
   }
 
   componentDidMount() {
-    this.setState({ listData: BoardService.getBoardListData() });
+    const { category } = this.props;
+    BoardService.getBoardListData(category.category_seq, 0)
+      .then((data) => {
+        this.setState({ listData: data });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
-    const { tableName } = this.props;
+    const { category } = this.props;
     const { listData } = this.state;
 
     return (
       <BoardTableWrapper>
         <table className="board_table">
           <caption>
-            <Link to={`/board/boardList/${tableName}`}>{tableName}</Link>
+            <Link to={`/board/boardList/${category.category_name}`}>
+              {category.category_name}
+            </Link>
           </caption>
           <thead className="board_table_head">
             <tr className="board_table_row">
@@ -62,7 +69,9 @@ class BoardListView extends Component {
             </tr>
           </thead>
           <tbody className="board_table_body">
-            {listData.map((data) => BoardListItem(data))}
+            {Array.isArray(listData)
+              ? listData.map((data) => BoardListItem(data))
+              : null}
           </tbody>
         </table>
         <div className="board_list_control_box_wrapper">
@@ -82,7 +91,10 @@ class BoardListView extends Component {
 }
 
 BoardListView.propTypes = {
-  tableName: PropTypes.string.isRequired,
+  category: PropTypes.shape({
+    category_seq: PropTypes.string.isRequired,
+    category_name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default BoardListView;

@@ -1,24 +1,33 @@
 import axios from 'axios';
 
-const getCategoryData = () => {
-  const categoryQuery = `query {   
-      categories {
-        category_seq,
-        category_lvl,
-        category_name,
+const getCategoryData = (categoryLvl) => {
+  const categoryQuery = `query 
+    categories($category_lvl: Int!) {
+      categories(category_lvl: $category_lvl) {
+        category_seq
+        category_lvl
+        category_name
+        listOfBoard {
+          board_seq
+          board_title
+          board_content
+        }
       }
     }`;
 
   return axios
     .post('/graphql', {
       query: categoryQuery,
-      variables: {},
+      variables: {
+        category_lvl: categoryLvl,
+      },
     })
     .then((response) => {
-      const { data } = response.data;
+      const { data, errors } = response.data;
 
-      if (!data.categories) {
+      if ((errors && errors.shift()) || !data.categories) {
         // 데이터 없을 경우 빈 배열
+        console.error('no data availiable');
         return [];
       }
 

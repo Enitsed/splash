@@ -5,16 +5,16 @@ const BoardListItem = (data) => {
   const maxTitleLength = 30;
 
   return (
-    <tr className="board_table_row" key={data.no}>
-      <th scope="row">{data.no}</th>
+    <tr className="board_table_row" key={data.board_seq}>
+      <th scope="row">{data.board_seq}</th>
       <td>
-        {data.title.length > maxTitleLength
-          ? `${data.title.substring(0, maxTitleLength)}...`
-          : data.title}
+        {data.board_title.length > maxTitleLength
+          ? `${data.board_title.substring(0, maxTitleLength)}...`
+          : data.board_title}
       </td>
-      <td>{data.writer}</td>
-      <td>{data.date}</td>
-      <td>{data.views}</td>
+      <td>{data.board_content}</td>
+      <td>{data.board_content}</td>
+      <td>{data.board_content}</td>
     </tr>
   );
 };

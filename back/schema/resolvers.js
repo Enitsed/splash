@@ -52,7 +52,7 @@ const resolvers = {
       if (!context.user) {
         throw new Error("member only");
       }
-      return BoardService.boardList(_, { category_seq, offset });
+      return BoardService.boardList(_, { category_seq, offset, limit: 10 });
     },
   },
   Mutation: {

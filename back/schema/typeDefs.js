@@ -5,7 +5,7 @@ module.exports = gql`
     user(user_seq: ID!): User
     userLogin(userInput: User_Login_Input!): User
     users: [User!]!
-    category(category_seq: Int): Category
+    category(category_seq: ID): Category
     categories(category_lvl: Int, offset: Int): [Category]
     board(board_seq: ID!): Board
     listOfBoard(category_seq: ID!, offset: Int): [Board]
@@ -14,9 +14,9 @@ module.exports = gql`
   type Mutation {
     addUser(userInput: User_Sign_Up_Input!): User
     addCategory(categoryInput: Category_Input_Add!): Category
-    removeCategory(category_seq: Int!): Result
+    removeCategory(category_seq: ID!): Result
     addBoard(boardInput: Board_Input_Add!): Board
-    removeBoard(board_seq: Int!): Result
+    removeBoard(board_seq: ID!): Result
   }
   """
   directives
@@ -115,6 +115,7 @@ module.exports = gql`
     reg_ip: String
     createdAt: String
     updatedAt: String
+    listOfBoard(category_seq: ID, offset: Int): [Board]
   }
 
   type Board {

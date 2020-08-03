@@ -13,9 +13,8 @@ import {
 } from '../../services/UserService';
 
 class BasicNavBar extends Component {
-  constructor(props) {
-    super(props);
-    const { tryLogin } = props;
+  componentDidMount() {
+    const { tryLogin } = this.props;
 
     const loggedUserData = cookieRequestUserData();
     if (loggedUserData) {
