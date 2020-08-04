@@ -24,21 +24,17 @@ module.exports = class Routes {
 
         const token = req.cookies.user || req.session.user || "";
 
-        if (!token || !req.session.user || !req.cookies.user) {
-          throw new Error("Not Logged In");
-        }
+        if (token || req.session.user || req.cookies.user) {
+          const userJwt = jwt.verify(token, app.get("jwt-secret"));
 
-        const userJwt = jwt.verify(token, app.get("jwt-secret"));
-
-        if (req.session.user.user_password !== userJwt.user.user_password) {
-          throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
-        }
-
-        if (req.session.user) {
           rootValue.reg_id = req.session.user.user_id;
-        }
 
-        return { user: req.session.user };
+          if (req.session.user.user_password !== userJwt.user.user_password) {
+            throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");
+          }
+
+          return { user: req.session.user };
+        }
       },
       rootValue: rootValue,
       playground: {

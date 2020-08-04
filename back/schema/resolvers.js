@@ -28,30 +28,18 @@ const resolvers = {
     },
 
     category(_, { category_seq }, context) {
-      if (!context.user) {
-        throw new Error("member only");
-      }
       return CategoryService.findCategory(_, { category_seq });
     },
 
     categories(_, { category_lvl, offset }, context) {
-      if (!context.user) {
-        throw new Error("member only");
-      }
       return CategoryService.categoryList(_, { category_lvl, offset });
     },
 
     board(_, { board_seq }, context) {
-      if (!context.user) {
-        throw new Error("member only");
-      }
       return BoardService.findBoard(_, { board_seq });
     },
 
     listOfBoard(_, { category_seq, offset }, context) {
-      if (!context.user) {
-        throw new Error("member only");
-      }
       return BoardService.boardList(_, { category_seq, offset, limit: 10 });
     },
   },
