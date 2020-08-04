@@ -115,7 +115,7 @@ module.exports = gql`
     reg_ip: String
     createdAt: String
     updatedAt: String
-    listOfBoard(category_seq: ID, offset: Int): [Board]
+    listOfBoard: [Board]
   }
 
   type Board {

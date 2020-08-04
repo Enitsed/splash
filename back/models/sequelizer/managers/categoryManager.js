@@ -1,4 +1,4 @@
-const { category } = require("../../");
+const { category, board } = require("../../");
 
 const CategoryManager = {
   /**
@@ -84,6 +84,13 @@ const CategoryManager = {
           "updatedAt",
         ],
         where: param,
+        include: [
+          {
+            model: board,
+            // required: true, // comment this out if you want this to be left out join
+            as: "listOfBoard", // alias
+          },
+        ],
         order: [["category_seq", "ASC"]],
       })
       .then((data) => {
@@ -107,6 +114,13 @@ const CategoryManager = {
           "updatedAt",
         ],
         where: param,
+        include: [
+          {
+            model: board,
+            // required: true, // comment this out if you want this to be left out join
+            as: "listOfBoard", // alias
+          },
+        ],
         order: [["category_seq", "ASC"]],
         offset: offset,
         limit: limit,

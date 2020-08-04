@@ -25,9 +25,16 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   category.associate = function (models) {
-    category.hasMany(models.category);
-    category.belongsTo(models.category, { foreignKey: "parent_category_seq" });
-    category.hasMany(models.board);
+    category.hasMany(models.category, {
+      foreignKey: "category_seq",
+    });
+    category.belongsTo(models.category, {
+      foreignKey: "parent_category_seq",
+    });
+    category.hasMany(models.board, {
+      foreignKey: "category_seq",
+      as: "listOfBoard",
+    });
   };
 
   return category;
