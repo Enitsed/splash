@@ -140,17 +140,17 @@ CREATE TABLE IF NOT EXISTS `splash`.`login_history` (
   `seq` INT NOT NULL AUTO_INCREMENT COMMENT '로그인 시퀀스',
   `login_ip` VARCHAR(45) NOT NULL COMMENT '로그인 아이디',
   `login_status` VARCHAR(10) NOT NULL COMMENT '로그인 결과',
-  `user_num` INT NOT NULL,
+  `user_seq` INT NOT NULL,
   `createdAt` DATE NULL COMMENT '생성일',
   `updatedAt` DATE NULL COMMENT '수정일',
   PRIMARY KEY (`seq`),
   CONSTRAINT `fk_login_history_user`
-    FOREIGN KEY (`user_num`)
+    FOREIGN KEY (`user_seq`)
     REFERENCES `splash`.`user` (`user_seq`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE INDEX `fk_login_history_user_idx` ON `splash`.`login_history` (`user_num` ASC);
+CREATE INDEX `fk_login_history_user_idx` ON `splash`.`login_history` (`user_seq` ASC);
 
 
 -- -----------------------------------------------------
