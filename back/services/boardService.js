@@ -9,8 +9,8 @@ const BoardService = {
   },
 
   /** 게시글 조회(목록) */
-  boardList: function (_, { category_seq, offset, limit }) {
-    return BoardManager.boardList({ category_seq }, offset, limit);
+  boardList: function (_, { param, board_offset, board_limit }) {
+    return BoardManager.boardList(param, board_offset, board_limit);
   },
 
   /** 게시글 작성 */

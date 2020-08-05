@@ -27,20 +27,24 @@ const resolvers = {
       return AuthService.getUserInfo(_, userInput);
     },
 
-    category(_, { category_seq }, context) {
-      return CategoryService.findCategory(_, { category_seq });
+    category(_, { category_seq, board_limit }, context) {
+      return CategoryService.findCategory(_, { category_seq, board_limit });
     },
 
-    categories(_, { category_lvl, offset }, context) {
-      return CategoryService.categoryList(_, { category_lvl, offset });
+    categories(_, { category_lvl, category_offset }, context) {
+      return CategoryService.categoryList(_, { category_lvl, category_offset });
     },
 
     board(_, { board_seq }, context) {
       return BoardService.findBoard(_, { board_seq });
     },
 
-    listOfBoard(_, { category_seq, offset }, context) {
-      return BoardService.boardList(_, { category_seq, offset, limit: 10 });
+    listOfBoard(_, { param, board_offset, board_limit }, context) {
+      return BoardService.boardList(_, {
+        param,
+        board_offset,
+        board_limit,
+      });
     },
   },
   Mutation: {

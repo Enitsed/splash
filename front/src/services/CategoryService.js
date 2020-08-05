@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const getCategoryData = (categoryLvl) => {
+const getCategoryData = (categoryLvl, categoryOffset) => {
   const categoryQuery = `query 
-    categories($category_lvl: Int!) {
-      categories(category_lvl: $category_lvl) {
+    categories($category_lvl: Int!, $category_offset: Int!) {
+      categories(category_lvl: $category_lvl,  category_offset: $category_offset) {
         category_seq
         category_lvl
         category_name
@@ -11,6 +11,12 @@ const getCategoryData = (categoryLvl) => {
           board_seq
           board_title
           board_content
+          board_div_cd
+          user {
+            user_seq
+            user_id
+            user_name
+          }
         }
       }
     }`;
@@ -20,6 +26,7 @@ const getCategoryData = (categoryLvl) => {
       query: categoryQuery,
       variables: {
         category_lvl: categoryLvl,
+        category_offset: categoryOffset,
       },
     })
     .then((response) => {

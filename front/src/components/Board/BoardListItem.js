@@ -12,8 +12,8 @@ const BoardListItem = (data) => {
           ? `${data.board_title.substring(0, maxTitleLength)}...`
           : data.board_title}
       </td>
-      <td>{data.board_content}</td>
-      <td>{data.board_content}</td>
+      <td>{data.user.user_id}</td>
+      <td>{data.createdAt}</td>
       <td>{data.board_content}</td>
     </tr>
   );

@@ -25,12 +25,40 @@ class BoardListView extends Component {
     super(props);
     this.state = {
       listData: [],
+      boardOffset: 0,
+      boardLimit: 10,
+      param: {
+        categorySeq: props.category.category_seq,
+        boardTitle: '',
+      },
     };
+
+    this.searchInputHandler = this.searchInputHandler.bind(this);
+    this.searchBtnHandler = this.searchBtnHandler.bind(this);
   }
 
   componentDidMount() {
+    const { param, boardOffset, boardLimit } = this.state;
+
+    BoardService.getBoardListData(param, boardOffset, boardLimit)
+      .then((data) => {
+        this.setState({ listData: data });
+      })
+      .catch((err) => console.error(err));
+  }
+
+  searchInputHandler(e) {
     const { category } = this.props;
-    BoardService.getBoardListData(category.category_seq, 0)
+
+    this.setState({
+      param: { categorySeq: category.category_seq, boardTitle: e.target.value },
+    });
+  }
+
+  searchBtnHandler() {
+    const { param, boardOffset, boardLimit } = this.state;
+
+    BoardService.getBoardListData(param, boardOffset, boardLimit)
       .then((data) => {
         this.setState({ listData: data });
       })
@@ -77,11 +105,25 @@ class BoardListView extends Component {
         <div className="board_list_control_box_wrapper">
           <div className="board_list_control_box">
             <SearchInputWrapper>
-              <Input size="mini" placeholder="search" />
-              <Button size="tiny" content="search" />
+              <Input
+                size="mini"
+                placeholder="search"
+                onChange={this.searchInputHandler}
+              />
+              <Button
+                size="tiny"
+                content="search"
+                onClick={this.searchBtnHandler}
+              />
             </SearchInputWrapper>
             <WriteBtnWrapper>
-              <Button size="tiny" content="write" />
+              <Button size="tiny">
+                <Link
+                  to={`/board/boardWrite?category_seq=${category.category_seq}`}
+                >
+                  write
+                </Link>
+              </Button>
             </WriteBtnWrapper>
           </div>
         </div>

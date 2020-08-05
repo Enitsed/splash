@@ -70,7 +70,7 @@ const CategoryManager = {
   },
 
   /** find category sequelize */
-  findOneCategory: function (param) {
+  findOneCategory: function ({ category_seq, board_limit }) {
     return category
       .findOne({
         attributes: [
@@ -83,11 +83,13 @@ const CategoryManager = {
           "createdAt",
           "updatedAt",
         ],
-        where: param,
+        where: category_seq,
         include: [
           {
             model: board,
             as: "listOfBoard", // alias
+            required: false,
+            limit: board_limit,
             include: [
               {
                 model: users,
@@ -106,7 +108,12 @@ const CategoryManager = {
   },
 
   /** find category sequelize */
-  findCategory: function (param, offset, limit) {
+  findCategoryList: function (
+    param,
+    category_offset,
+    category_limit,
+    board_limit
+  ) {
     return category
       .findAll({
         attributes: [
@@ -124,6 +131,7 @@ const CategoryManager = {
           {
             model: board,
             as: "listOfBoard", // alias
+            limit: board_limit,
             include: [
               {
                 model: users,
@@ -134,8 +142,8 @@ const CategoryManager = {
           },
         ],
         order: [["category_seq", "ASC"]],
-        offset: offset,
-        limit: limit,
+        offset: category_offset,
+        limit: category_limit,
       })
       .then((data) => {
         return data;

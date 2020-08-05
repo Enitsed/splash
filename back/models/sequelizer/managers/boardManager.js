@@ -1,4 +1,5 @@
-const { board } = require("../../");
+const { board, users } = require("../../");
+const { Op } = require("sequelize");
 
 const BoardManager = {
   /**
@@ -96,6 +97,13 @@ const BoardManager = {
           "user_seq",
         ],
         where: param,
+        include: [
+          {
+            model: users,
+            as: "user",
+            required: true,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       })
       .then((data) => {
@@ -105,7 +113,11 @@ const BoardManager = {
   },
 
   /** find board sequelize */
-  boardList: function (param, offset, limit) {
+  boardList: function (
+    { category_seq, board_title },
+    board_offset,
+    board_limit
+  ) {
     return board
       .findAll({
         attributes: [
@@ -118,10 +130,20 @@ const BoardManager = {
           "reg_ip",
           "user_seq",
         ],
-        where: param,
+        where: {
+          category_seq,
+          board_title: { [Op.like]: "%" + board_title + "%" },
+        },
+        include: [
+          {
+            model: users,
+            as: "user",
+            required: true,
+          },
+        ],
         order: [["createdAt", "DESC"]],
-        offset: offset,
-        limit: limit,
+        offset: board_offset,
+        limit: board_limit,
       })
       .then((data) => {
         return data;

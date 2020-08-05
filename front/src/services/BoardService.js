@@ -1,19 +1,36 @@
 import axios from 'axios';
 
-const getBoardListData = (categorySeq, offset) => {
+const getBoardListData = (
+  { categorySeq, boardTitle },
+  boardOffset,
+  boardLimit,
+) => {
   const boardQuery = `query
-    listOfBoard($category_seq: ID!, $offset: Int!) {
-      listOfBoard(category_seq: $category_seq, offset: $offset) {
+    listOfBoard($param: Board_Input_List!, $board_offset: Int!, $board_limit: Int!) {
+      listOfBoard(param: $param, board_offset: $board_offset, board_limit: $board_limit) {
         board_seq
         board_title
         board_content
+        createdAt
+        user {
+          user_seq
+          user_id
+          user_name
+        }
       }
     }`;
 
   return axios
     .post('/graphql', {
       query: boardQuery,
-      variables: { category_seq: categorySeq, offset },
+      variables: {
+        param: {
+          category_seq: categorySeq,
+          board_title: boardTitle,
+        },
+        board_offset: boardOffset,
+        board_limit: boardLimit,
+      },
     })
     .then((response) => {
       const { data, errors } = response.data;

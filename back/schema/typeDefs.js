@@ -5,10 +5,14 @@ module.exports = gql`
     user(user_seq: ID!): User
     userLogin(userInput: User_Login_Input!): User
     users: [User!]!
-    category(category_seq: ID): Category
-    categories(category_lvl: Int, offset: Int): [Category]
+    category(category_seq: ID, board_limit: Int!): Category
+    categories(category_lvl: Int, category_offset: Int): [Category]
     board(board_seq: ID!): Board
-    listOfBoard(category_seq: ID!, offset: Int): [Board]
+    listOfBoard(
+      param: Board_Input_List!
+      board_offset: Int
+      board_limit: Int!
+    ): [Board]
   }
 
   type Mutation {
@@ -62,14 +66,19 @@ module.exports = gql`
   input Category_Input_Add {
     category_name: String
     category_lvl: Int
-    parent_category_seq: Int
+    parent_category_seq: ID!
   }
 
   input Board_Input_Add {
-    category_seq: Int
+    category_seq: ID!
     board_title: String
     board_content: String
     board_div_cd: String
+  }
+
+  input Board_Input_List {
+    category_seq: ID!
+    board_title: String
   }
 
   """
@@ -101,7 +110,7 @@ module.exports = gql`
     seq: ID
     login_ip: String
     login_status: String
-    user_seq: Int
+    user_seq: ID
     createdAt: String
     updatedAt: String
   }
@@ -110,7 +119,7 @@ module.exports = gql`
     category_seq: ID
     category_name: String
     category_lvl: Int
-    parent_category_seq: Int
+    parent_category_seq: ID
     reg_id: String
     reg_ip: String
     createdAt: String
@@ -120,13 +129,15 @@ module.exports = gql`
 
   type Board {
     board_seq: ID
-    category_seq: Int
+    category_seq: ID
     board_title: String
     board_content: String
     board_div_cd: String
     reg_id: String
     reg_ip: String
-    user_seq: Int
+    user_seq: ID
+    createdAt: String
+    updatedAt: String
     user: User
   }
 `;

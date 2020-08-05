@@ -4,15 +4,21 @@ const Result = require("../models/common/Result");
 
 const CategoryService = {
   /** 카테고리 조회 */
-  categoryList: function (_, { category_lvl, offset }) {
-    let limit = 10;
+  categoryList: function (_, { category_lvl, category_offset }) {
+    const category_limit = 10;
+    const board_limit = 5;
 
-    return CategoryManager.findCategory({ category_lvl }, offset, limit);
+    return CategoryManager.findCategoryList(
+      { category_lvl },
+      category_offset,
+      category_limit,
+      board_limit
+    );
   },
 
   /** 카테고리 조회 */
-  findCategory: function (_, param) {
-    return CategoryManager.findOneCategory(param);
+  findCategory: function (_, { category_seq, board_limit }) {
+    return CategoryManager.findOneCategory({ category_seq, board_limit });
   },
 
   /** 카테고리 추가 */

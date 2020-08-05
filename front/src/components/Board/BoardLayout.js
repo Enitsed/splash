@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import BoardListView from './BoardListView';
-import BoardCategoryListView from './BoardCategoryListView';
 import CategoryService from '../../services/CategoryService';
+import BoardListView from './BoardListView';
+import BoardWriteView from './BoardWriteView';
+import BoardCategoryListView from './BoardCategoryListView';
 
 export default class Board extends Component {
   constructor(props) {
@@ -10,14 +11,15 @@ export default class Board extends Component {
 
     this.state = {
       categoryLvl: 1,
+      categoryOffset: 0,
       categoryData: [],
     };
   }
 
   componentDidMount() {
-    const { categoryLvl } = this.state;
+    const { categoryLvl, categoryOffset } = this.state;
 
-    CategoryService.getCategoryData(categoryLvl)
+    CategoryService.getCategoryData(categoryLvl, categoryOffset)
       .then((data) => {
         if (Array.isArray(data)) {
           this.setState({ categoryData: data });
@@ -31,21 +33,21 @@ export default class Board extends Component {
 
     return (
       <div className="board_container">
-        <Route
-          exact
-          path="/board"
-          render={(props) => (
-            <BoardCategoryListView {...props} categoryData={categoryData} />
-          )}
-        />
+        <Route exact path="/board">
+          <BoardCategoryListView categoryData={categoryData} />
+        </Route>
         {categoryData.map((category) => (
           <Route
             key={category.category_seq}
             exact
             path={`/board/boardList/${category.category_name}`}
-            render={(props) => <BoardListView {...props} category={category} />}
-          />
+          >
+            <BoardListView category={category} />
+          </Route>
         ))}
+        <Route exact path="/board/boardWrite/">
+          <BoardWriteView />
+        </Route>
       </div>
     );
   }
