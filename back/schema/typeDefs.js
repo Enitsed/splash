@@ -127,5 +127,6 @@ module.exports = gql`
     reg_id: String
     reg_ip: String
     user_seq: Int
+    user: User
   }
 `;

@@ -35,10 +35,11 @@ module.exports = (sequelize, DataTypes) => {
 
   board.associate = function (models) {
     board.belongsTo(models.category, {
-      foreignKey: "category_seq",
       as: "listOfBoard",
+      foreignKey: "category_seq",
     });
     board.belongsTo(models.users, {
+      as: "user",
       foreignKey: "user_seq",
     });
   };

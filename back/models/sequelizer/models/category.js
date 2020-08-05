@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       parent_category_seq: {
         type: DataTypes.INTEGER(11),
         references: {
+          model: this,
           key: "category_seq",
         },
       },
@@ -27,9 +28,11 @@ module.exports = (sequelize, DataTypes) => {
   category.associate = function (models) {
     category.hasMany(models.category, {
       foreignKey: "category_seq",
+      as: "child_category",
     });
     category.belongsTo(models.category, {
       foreignKey: "parent_category_seq",
+      as: "parent_category",
     });
     category.hasMany(models.board, {
       foreignKey: "category_seq",

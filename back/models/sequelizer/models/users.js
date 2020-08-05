@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "users",
     {
       user_seq: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER(11),
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
@@ -23,7 +23,14 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   user.associate = function (models) {
-    user.hasMany(models.login_history);
+    user.hasMany(models.login_history, {
+      as: "login_history",
+      foreignKey: "user_seq",
+    });
+    user.hasMany(models.board, {
+      as: "user",
+      foreignKey: "user_seq",
+    });
   };
 
   return user;

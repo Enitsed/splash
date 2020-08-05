@@ -1,4 +1,4 @@
-const { category, board } = require("../../");
+const { category, board, users } = require("../../");
 
 const CategoryManager = {
   /**
@@ -87,8 +87,14 @@ const CategoryManager = {
         include: [
           {
             model: board,
-            // required: true, // comment this out if you want this to be left out join
             as: "listOfBoard", // alias
+            include: [
+              {
+                model: users,
+                as: "user",
+                required: true,
+              },
+            ],
           },
         ],
         order: [["category_seq", "ASC"]],
@@ -117,8 +123,14 @@ const CategoryManager = {
         include: [
           {
             model: board,
-            // required: true, // comment this out if you want this to be left out join
             as: "listOfBoard", // alias
+            include: [
+              {
+                model: users,
+                as: "user",
+                required: true,
+              },
+            ],
           },
         ],
         order: [["category_seq", "ASC"]],
