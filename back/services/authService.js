@@ -108,7 +108,7 @@ const AuthService = {
 
         // Connect Logs
         Auth.createEntry(_, {
-          user_num: userData.user_seq,
+          user_seq: userData.user_seq,
           login_ip: _.ip,
           login_status: password_check_result
             ? Constants.RESULT_MESSAGE.SUCCESS

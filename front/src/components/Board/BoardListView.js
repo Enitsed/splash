@@ -33,6 +33,7 @@ class BoardListView extends Component {
       },
     };
 
+    this.searchInputSubmitHandler = this.searchInputSubmitHandler.bind(this);
     this.searchInputHandler = this.searchInputHandler.bind(this);
     this.searchBtnHandler = this.searchBtnHandler.bind(this);
   }
@@ -53,6 +54,18 @@ class BoardListView extends Component {
     this.setState({
       param: { categorySeq: category.category_seq, boardTitle: e.target.value },
     });
+  }
+
+  searchInputSubmitHandler(e) {
+    if (e.key === 'Enter') {
+      const { param, boardOffset, boardLimit } = this.state;
+
+      BoardService.getBoardListData(param, boardOffset, boardLimit)
+        .then((data) => {
+          this.setState({ listData: data });
+        })
+        .catch((err) => console.error(err));
+    }
   }
 
   searchBtnHandler() {
@@ -109,6 +122,7 @@ class BoardListView extends Component {
                 size="mini"
                 placeholder="search"
                 onChange={this.searchInputHandler}
+                onKeyDown={this.searchInputSubmitHandler}
               />
               <Button
                 size="tiny"

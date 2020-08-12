@@ -36,9 +36,17 @@ export default class BoardCategoryListView extends React.Component {
               </tr>
             </thead>
             <tbody className="board_table_body">
-              {category.listOfBoard.map((board) => {
-                return BoardListItem(board);
-              })}
+              {category.listOfBoard.length > 0 ? (
+                category.listOfBoard.map((board) => {
+                  return BoardListItem(board);
+                })
+              ) : (
+                <tr className="board_table_row">
+                  <th scope="row" colSpan="5">
+                    글이 존재하지 않습니다.
+                  </th>
+                </tr>
+              )}
             </tbody>
           </table>
         ))}

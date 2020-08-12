@@ -125,6 +125,7 @@ module.exports = gql`
     createdAt: String
     updatedAt: String
     listOfBoard: [Board]
+    child_category: [Category]
   }
 
   type Board {

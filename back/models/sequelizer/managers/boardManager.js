@@ -95,6 +95,8 @@ const BoardManager = {
           "reg_id",
           "reg_ip",
           "user_seq",
+          "createdAt",
+          "updatedAt",
         ],
         where: param,
         include: [
@@ -129,6 +131,8 @@ const BoardManager = {
           "reg_id",
           "reg_ip",
           "user_seq",
+          "createdAt",
+          "updatedAt",
         ],
         where: {
           category_seq,

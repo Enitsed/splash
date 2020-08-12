@@ -12,6 +12,7 @@ const getCategoryData = (categoryLvl, categoryOffset) => {
           board_title
           board_content
           board_div_cd
+          createdAt
           user {
             user_seq
             user_id

@@ -58,7 +58,7 @@ const resolvers = {
 
     addCategory(_, { categoryInput }, context) {
       if (!context.user || !context.user.isAdmin) {
-        throw new Error("admin only");
+        // throw new Error("admin only");
       }
 
       return CategoryService.addCategory(_, categoryInput);
@@ -90,7 +90,7 @@ const resolvers = {
 
       return BoardService.removeBoard(_, {
         board_seq,
-        user_seq: context.user.user_seq,
+        user_seq: _.user_seq,
       });
     },
   },

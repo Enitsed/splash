@@ -25,15 +25,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  category.isHierarchy({
+    levelFieldName: "category_lvl",
+    primaryKey: "category_seq",
+    foreignKey: "parent_category_seq",
+    descendentsAs: "child_category",
+  });
+
   category.associate = function (models) {
-    category.hasMany(models.category, {
-      foreignKey: "category_seq",
-      as: "child_category",
-    });
-    category.belongsTo(models.category, {
-      foreignKey: "parent_category_seq",
-      as: "parent_category",
-    });
+    // category.hasMany(models.category, {
+    //   foreignKey: "parent_category_seq",
+    //   as: "child_category",
+    // });
+
     category.hasMany(models.board, {
       foreignKey: "category_seq",
       as: "listOfBoard",

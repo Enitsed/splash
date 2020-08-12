@@ -40,12 +40,12 @@ class AuthManage extends DAO {
   /**
    * Creates a new login_history
    */
-  static async createEntry(_, { user_num, login_ip, login_status, seq }) {
+  static async createEntry(_, { user_seq, login_ip, login_status, seq }) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
       let _result = await this.insert(connection, {
         data: {
-          user_num,
+          user_seq,
           login_ip,
           login_status,
           seq,
@@ -53,6 +53,8 @@ class AuthManage extends DAO {
       });
 
       return this.getByAuthManageSeq(_, { seq: _result.insertId });
+    } catch (err) {
+      console.error(err);
     } finally {
       // Releases the connection
       if (connection != null) connection.release();
@@ -62,13 +64,13 @@ class AuthManage extends DAO {
   /**
    * Updates a login_history
    */
-  static async updateEntry(_, { user_num, login_ip, login_status, seq }) {
+  static async updateEntry(_, { user_seq, login_ip, login_status, seq }) {
     const connection = await mySQLWrapper.getConnectionFromPool();
     try {
       await this.update(connection, {
         seq,
         data: {
-          user_num,
+          user_seq,
           login_ip,
           login_status,
           seq,
@@ -76,6 +78,8 @@ class AuthManage extends DAO {
       });
 
       return this.getByAuthManageSeq(_, { seq });
+    } catch (err) {
+      console.error(err);
     } finally {
       // Releases the connection
       if (connection != null) connection.release();

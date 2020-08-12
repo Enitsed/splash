@@ -83,7 +83,7 @@ const CategoryManager = {
           "createdAt",
           "updatedAt",
         ],
-        where: category_seq,
+        where: { category_seq },
         include: [
           {
             model: board,
@@ -98,6 +98,7 @@ const CategoryManager = {
               },
             ],
           },
+          { model: category, as: "child_category", hierarchy: true },
         ],
         order: [["category_seq", "ASC"]],
       })
@@ -140,7 +141,13 @@ const CategoryManager = {
               },
             ],
           },
+          {
+            model: category,
+            as: "child_category",
+            hierarchy: true,
+          },
         ],
+        // hierarchy: true,
         order: [["category_seq", "ASC"]],
         offset: category_offset,
         limit: category_limit,

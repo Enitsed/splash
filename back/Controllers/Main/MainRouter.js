@@ -22,12 +22,13 @@ module.exports = class Routes {
       context: ({ req }) => {
         rootValue.ip = req.ip;
 
-        const token = req.cookies.user || req.session.user || "";
+        const token = req.cookies.user || "";
 
-        if (token || req.session.user || req.cookies.user) {
+        if (token && req.session.user && req.cookies.user) {
           const userJwt = jwt.verify(token, app.get("jwt-secret"));
 
-          rootValue.reg_id = req.session.user.user_id;
+          rootValue.reg_id = req.session.user.user_id; // this will not be used afterwards
+          rootValue.user_seq = req.session.user.user_seq;
 
           if (req.session.user.user_password !== userJwt.user.user_password) {
             throw new Error("세션 유저 데이터와 일치하지 않는 쿠키 데이터");

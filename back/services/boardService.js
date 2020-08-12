@@ -36,13 +36,17 @@ const BoardService = {
 
   /** 게시글 삭제 */
   removeBoard: function (_, { board_seq, user_seq }) {
-    return this.findBoard(_, { board_seq, user_seq })
+    return this.findBoard(_, { board_seq })
       .then((data) => {
         if (!data) {
           return new Result(
-            Constants.ERROR_CODE._DENIAL_OF_SERVICES,
-            Constants.ERROR_MESSAGE._DENIAL_OF_SERVICES
+            404,
+            "이미 삭제한 글이거나 존재하지 않는 글입니다."
           );
+        }
+
+        if (data.user_seq != user_seq) {
+          return new Result(400, "본인이 작성하신 글만 삭제 할 수 있습니다.");
         }
 
         return BoardManager.remove(_, { board_seq })
@@ -52,10 +56,7 @@ const BoardService = {
                   Constants.RESULT_CODE.SUCCESS,
                   Constants.RESULT_MESSAGE.SUCCESS
                 )
-              : new Result(
-                  Constants.ERROR_CODE._DENIAL_OF_SERVICES,
-                  Constants.ERROR_CODE._DENIAL_OF_SERVICES
-                );
+              : new Result(404, "이미 삭제한 글이거나 존재하지 않는 글입니다.");
           })
           .catch((err) => {
             return new Result(
