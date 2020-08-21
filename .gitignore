@@ -4,4 +4,3 @@ back/node_modules/
 back/.env
 back/.vscode
 back/src
-back/config/SMTPConfig.js
