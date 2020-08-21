@@ -6,11 +6,11 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const Routes = require("./controllers/Main/MainRouter");
 const ejs = require("ejs");
 const session = require("express-session");
 const path = require("path");
-const config = require("./config/config");
+const Routes = require("/controllers/Main/MainRouter");
+const config = require("/config/config");
 
 class App {
   /**
