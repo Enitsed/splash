@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER(11),
         references: {
           model: this,
-          key: "category_seq",
+          key: this.category_seq,
         },
       },
       reg_id: { type: DataTypes.STRING(255), allowNull: false },
@@ -25,18 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  category.isHierarchy({
-    levelFieldName: "category_lvl",
-    primaryKey: "category_seq",
-    foreignKey: "parent_category_seq",
-    descendentsAs: "child_category",
-  });
-
   category.associate = function (models) {
-    // category.hasMany(models.category, {
-    //   foreignKey: "parent_category_seq",
-    //   as: "child_category",
-    // });
+    category.hasMany(models.category, {
+      foreignKey: "parent_category_seq",
+      as: "child_category",
+    });
 
     category.hasMany(models.board, {
       foreignKey: "category_seq",

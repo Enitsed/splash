@@ -1,11 +1,15 @@
 {
   "name": "splash-api",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x"
+  },
   "description": "splash api server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "nodemon": "nodemon app.js"
   },
   "author": "enitsed",
   "license": "ISC",
@@ -25,8 +29,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "nodemailer": "^6.4.11",
-    "sequelize": "^5.22.3",
-    "sequelize-hierarchy": "^2.0.4"
+    "sequelize": "^5.22.3"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

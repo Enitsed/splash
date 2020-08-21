@@ -98,7 +98,7 @@ const CategoryManager = {
               },
             ],
           },
-          { model: category, as: "child_category", hierarchy: true },
+          { model: category, as: "child_category" },
         ],
         order: [["category_seq", "ASC"]],
       })
@@ -144,10 +144,26 @@ const CategoryManager = {
           {
             model: category,
             as: "child_category",
-            hierarchy: true,
+            include: [
+              {
+                model: category,
+                as: "child_category",
+                include: [
+                  {
+                    model: category,
+                    as: "child_category",
+                    include: [
+                      {
+                        model: category,
+                        as: "child_category",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
-        // hierarchy: true,
         order: [["category_seq", "ASC"]],
         offset: category_offset,
         limit: category_limit,
