@@ -1,4 +1,4 @@
-const mySQLConnector = require("./mysqlConnector");
+const mySQLConnector = require("./mySqlConnector");
 
 module.exports = class MySQLWrapper {
   /**
@@ -90,7 +90,7 @@ module.exports = class MySQLWrapper {
   static commit(connection) {
     return new Promise((succeed, fail) => {
       try {
-        connection.commit(err => {
+        connection.commit((err) => {
           if (err) {
             return rollback(connection, err);
           }
@@ -135,7 +135,7 @@ module.exports = class MySQLWrapper {
    */
   static beginTransaction(connection) {
     return new Promise((succeed, fail) => {
-      connection.beginTransaction(err => {
+      connection.beginTransaction((err) => {
         //Fails the promise if the transaction cannot be opened
         if (err) {
           return fail(err);

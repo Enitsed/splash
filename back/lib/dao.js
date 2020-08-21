@@ -1,4 +1,4 @@
-const mysql = require("./mysqlWrapper");
+const mysql = require("./mySqlWrapper");
 
 class DAO {
   /**
@@ -16,7 +16,7 @@ class DAO {
     return (
       await mysql.createQuery({
         query: `SELECT * FROM ?? WHERE ?? = ? LIMIT 1;`,
-        params: [this.TABLE_NAME, this.PRIMARY_KEY, id]
+        params: [this.TABLE_NAME, this.PRIMARY_KEY, id],
       })
     ).shift();
   }
@@ -27,7 +27,7 @@ class DAO {
   static findAll() {
     return mysql.createQuery({
       query: `SELECT * FROM ??;`,
-      params: [this.TABLE_NAME]
+      params: [this.TABLE_NAME],
     });
   }
 
@@ -61,7 +61,7 @@ class DAO {
 
     return mysql.createQuery({
       query: baseQuery,
-      params
+      params,
     });
   }
 
@@ -77,7 +77,7 @@ class DAO {
                     SET ?
                     WHERE ?? = ?;`,
       params: [this.TABLE_NAME, data, this.PRIMARY_KEY, id],
-      connection
+      connection,
     });
   }
 
@@ -91,7 +91,7 @@ class DAO {
       query: `INSERT INTO ${this.TABLE_NAME}
                     SET ?;`,
       params: [data],
-      connection
+      connection,
     });
   }
 
@@ -105,7 +105,7 @@ class DAO {
       query: `DELETE FROM  ??
                     WHERE ?? = ?;`,
       params: [this.TABLE_NAME, this.PRIMARY_KEY, id],
-      connection
+      connection,
     });
   }
 }
