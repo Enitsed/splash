@@ -9,7 +9,7 @@ const multer = require("multer");
 const ejs = require("ejs");
 const session = require("express-session");
 const path = require("path");
-const Routes = require("./Controllers/Main/MainRouter");
+const Routes = require("./controllers/Main/MainRouter");
 const config = require("./config/config");
 
 class App {
