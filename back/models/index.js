@@ -1,6 +1,6 @@
 "use strict";
 
-if (process.env.STAGE === "production") {
+if (process.env.STAGE === "development") {
   require("dotenv").config();
 }
 const fs = require("fs");
