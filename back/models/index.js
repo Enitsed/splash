@@ -1,8 +1,8 @@
 "use strict";
 
-if (process.env.STAGE === "development") {
-  require("dotenv").config();
-}
+// include this only in local
+require("dotenv").config();
+
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
@@ -12,6 +12,7 @@ const env = process.env.STAGE || "development";
 const config = require(__dirname + "/../config/config.json")[env];
 
 let sequelize;
+
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {

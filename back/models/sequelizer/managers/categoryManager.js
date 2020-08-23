@@ -98,7 +98,7 @@ const CategoryManager = {
               },
             ],
           },
-          { model: category, as: "child_category" },
+          { model: category, as: "childCategory" },
         ],
         order: [["category_seq", "ASC"]],
       })
@@ -131,37 +131,25 @@ const CategoryManager = {
         include: [
           {
             model: board,
+            attributes: [
+              "category_seq",
+              "board_title",
+              "board_content",
+              "user_seq",
+            ],
             as: "listOfBoard", // alias
             limit: board_limit,
             include: [
               {
                 model: users,
+                attributes: ["user_seq", "user_id"],
                 as: "user",
-                required: true,
               },
             ],
           },
           {
             model: category,
-            as: "child_category",
-            include: [
-              {
-                model: category,
-                as: "child_category",
-                include: [
-                  {
-                    model: category,
-                    as: "child_category",
-                    include: [
-                      {
-                        model: category,
-                        as: "child_category",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
+            as: "childCategory",
           },
         ],
         order: [["category_seq", "ASC"]],

@@ -1,6 +1,5 @@
-if (process.env.STAGE === "development") {
-  require("dotenv").config();
-}
+// include this only in local
+require("dotenv").config();
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
