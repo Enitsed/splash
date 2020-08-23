@@ -90,7 +90,7 @@ const resolvers = {
 
       return BoardService.removeBoard(_, {
         board_seq,
-        user_seq: _.user_seq,
+        user_seq: context.user.user_seq,
       });
     },
   },
