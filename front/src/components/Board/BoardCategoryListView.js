@@ -9,7 +9,7 @@ export default class BoardCategoryListView extends React.Component {
 
     return (
       <div className="board_category_box">
-        {categoryData.map((category) => (
+        {categoryData.map((category, i) => (
           <table className="board_table" key={category.category_seq}>
             <caption>
               <Link to={`/board/boardList/${category.category_name}`}>
@@ -38,7 +38,7 @@ export default class BoardCategoryListView extends React.Component {
             <tbody className="board_table_body">
               {category.listOfBoard.length > 0 ? (
                 category.listOfBoard.map((board) => {
-                  return BoardListItem(board);
+                  return <BoardListItem data={board} key={board.board_seq} />;
                 })
               ) : (
                 <tr className="board_table_row">

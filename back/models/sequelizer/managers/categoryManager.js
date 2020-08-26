@@ -132,6 +132,7 @@ const CategoryManager = {
           {
             model: board,
             attributes: [
+              "board_seq",
               "category_seq",
               "board_title",
               "board_content",
