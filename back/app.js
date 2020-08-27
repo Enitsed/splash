@@ -1,5 +1,9 @@
-// include this only in local
-require("dotenv").config();
+try {
+  // include this only in development
+  require("dotenv").config();
+} catch (e) {
+  console.log("This is required in development");
+}
 
 const express = require("express");
 const cookieParser = require("cookie-parser");

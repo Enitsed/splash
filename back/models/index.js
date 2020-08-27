@@ -1,7 +1,11 @@
 "use strict";
 
-// include this only in local
-require("dotenv").config();
+try {
+  // include this only in development
+  require("dotenv").config();
+} catch (e) {
+  console.log("This is required in development");
+}
 
 const fs = require("fs");
 const path = require("path");
